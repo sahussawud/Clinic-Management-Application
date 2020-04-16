@@ -8,6 +8,10 @@ from django.conf import settings
 class User(AbstractUser):
     phone = models.CharField(_("Phone numbers"), max_length=10)
     address = models.TextField(_("Address"))
+    image_url = models.ImageField(upload_to="")
+    idcard_number = models.CharField(_("ID card number"), max_length=13)
+    race = models.CharField(_("Race"), max_length=255)
+    nationality = models.CharField(_("Nationality"), max_length=255)
 
 class Nurse(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("User"), on_delete=models.CASCADE)

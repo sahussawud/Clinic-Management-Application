@@ -25,7 +25,7 @@ SECRET_KEY = 'r6-(xb_2@la%j!bn+v%xo@^j*j=-ffl1q3*0xe+g&hojbeh$zq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'borrabeer.ddns.net']
 
 
 # Application definition
@@ -82,8 +82,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cths',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'PASSWORD': 'Bk.122789zaza',
+        'HOST': 'borrabeer.ddns.net',
+        'PORT': '3306',
     }
 }
 
@@ -127,3 +128,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'User_app.User'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
