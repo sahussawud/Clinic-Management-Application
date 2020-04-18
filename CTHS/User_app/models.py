@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+import datetime
 # Create your models here.
 
 class User(AbstractUser):
@@ -46,6 +47,11 @@ class Patient(models.Model):
     address = models.TextField(_("Address"))
     public_health_id = models.ForeignKey(Public_Health, verbose_name=_("Creator ID"), on_delete=models.DO_NOTHING)
     date = models.DateField(_("Created Date"), auto_now=True)
+
+    def age(self):
+        return int((datetime.date.today() - self.birth_day).days / 365.25 )
+    age = property(age)
+
 
 class Congenital_disease(models.Model):
     name = models.CharField(_("Congenital disease name"), max_length=255)
