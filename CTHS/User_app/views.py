@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
+
 @login_required
 def my_logout(request):
     logout(request)
@@ -21,7 +25,7 @@ def my_login(request):
             if next_url:
                 return redirect(next_url)
             else:
-                return redirect('homepage')
+                return redirect('index')
         else:
             context['username'] = username
             context['password'] = password
@@ -32,7 +36,7 @@ def my_login(request):
         context['next_url'] = next_url
             
      
-    return render(request, 'login/login.html',context = context)
+    return render(request, 'User_app/login.html',context = context)
 
 def createAccount(request):
     context={}
@@ -92,3 +96,7 @@ def ChangePassword(request):
             return redirect('my_logout')
 
     return render(request, 'login/changepassword.html', context=context)
+
+def homepage(request):
+    contexts = {}
+    return render(request, 'User_app/index.html', context=contexts)

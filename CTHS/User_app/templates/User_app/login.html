@@ -13,12 +13,13 @@
             {{ request.session.success }}{% endif %}
           </div>
 </div>
-<div class="container text-center w-25 " style="background: #1af0b073; border-radius: 20px;">
+<div class="container text-center w-25" style="">
+  <!-- <form class="form-signin mt-5" method="POST" action="{% url 'my_login' %}" > -->
     <form class="form-signin mt-5" method="POST" action="{% url 'my_login' %}" >
         {% csrf_token %}
         
         
-        <img class="mb-4" src="{% static 'base_component/logo.png'%}" alt="" width="72" height="72">
+        <img class="mb-4" src="{% static 'base_component/logo.png'%}" alt="" width="70%" height="">
         <h1 class="h3 mb-3 font-weight-normal">Clinic Treatment History System</h1>
         <label for="inputEmail" class="sr-only">Username</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="{{username}}" required autofocus>
