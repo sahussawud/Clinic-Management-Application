@@ -1,16 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
 {% block content %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
     <div class="container">
         <!-- topic and filter option -->
-        <div class="row mb-4 mt-4">
+        <div class="row mb-5 mt-5">
             <div class="col-lg-3">
                 <h1>OVERVIEW</h1>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-8 mt-3">
                 <div class="row">
-                    fileter
+                    <div class="mr-3">
+                        ช่วงที่ต้องการค้นหา :
+                    </div>
+                      
+                      <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 38%">
+                        <i class="fa fa-calendar"></i>&nbsp;
+                        <span></span> <i class="fa fa-caret-down"></i>
+                    </div>
+
+                    <div class="form-check form-check-inline ml-3">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                        <label class="form-check-label" for="inlineCheckbox1">อาการ</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                        <label class="form-check-label" for="inlineCheckbox2">ลักษณะผู้ป่วย</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+                        <label class="form-check-label" for="inlineCheckbox3">เทรน</label>
+                      </div>
+             
                 </div>
             </div>
         </div>
@@ -19,31 +51,31 @@
             <div class="col-lg-3 m-auto">
                 <div class="card text-white bg-success" style="width: 18rem;">
                     <div class="card-body">
-                      <h5 class="card-title">รักษาไปเเล้ว</h5>
-                      <h6 class="card-subtitle mb-2">Recovery</h6>
-                      <h1 class="card-text" >200</h1>
-              
+                        <h5 class="card-title">รักษาไปเเล้ว</h5>
+                        <h6 class="card-subtitle mb-2">Recovery</h6>
+                        <h1 class="card-text">200</h1>
+
                     </div>
-                  </div>
+                </div>
             </div>
             <div class="col-lg-3  m-auto">
                 <div class="card text-white bg-danger" style="width: 18rem;">
                     <div class="card-body">
-                      <h5 class="card-title">ผู้ป่วยฉุกเฉิน</h5>
-                      <h6 class="card-subtitle mb-2">Emergency</h6>
-                      <h1 class="card-text">200</h1>
+                        <h5 class="card-title">ผู้ป่วยฉุกเฉิน</h5>
+                        <h6 class="card-subtitle mb-2">Emergency</h6>
+                        <h1 class="card-text">200</h1>
 
                     </div>
-                  </div>
+                </div>
             </div>
             <div class="col-lg-3  m-auto">
                 <div class="card text-white bg-info" style="width: 18rem;">
                     <div class="card-body">
-                      <h5 class="card-title">จำนวนผู้ป่วย</h5>
-                      <h6 class="card-subtitle mb-2">Patient</h6>
-                      <h1 class="card-text">200</h1>
+                        <h5 class="card-title">จำนวนผู้ป่วย</h5>
+                        <h6 class="card-subtitle mb-2">Patient</h6>
+                        <h1 class="card-text">200</h1>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
         <!-- graph -->
@@ -56,14 +88,39 @@
 
 </main>
 
+
 {% endblock %}
 
 {% block footer %}
+<script type="text/javascript">
+    $(function() {
+    
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+    
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
+    
+        $('#reportrange').daterangepicker({
+            
+            startDate: start,
+            endDate: end,
+            ranges: {
+               'วันนี้': [moment(), moment()],
+               'เมื่อวาน': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+               'This Month': [moment().startOf('month'), moment().endOf('month')],
+               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+               'This Year': [moment().startOf('year'), moment().endOf('year')],
+            },
+            "alwaysShowCalendars": true,
+        }, cb);
+    
+        cb(start, end);
+    
+    });
+    </script>
 
 {% endblock %}
-
-
-
-
-
-

@@ -11,10 +11,26 @@
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
 
     <style>
         .bg-light {
             background-color: #bde4e2 !important;
+        }
+
+        .disable {
+            pointer-events: none;
+            cursor: default;
+            color: gray;
+        }
+
+            {
+            % block styles %
+            }
+
+            {
+            % endblock %
         }
     </style>
 
@@ -45,13 +61,13 @@
         </div>
     </nav>
     {% if user.is_authenticated %}
-        {% include 'sidebar.html' %}
+    {% include 'sidebar.html' %}
     {% endif %}
 
-             {% block content %}
-            {% endblock %}
-        
-       
+    {% block content %}
+    {% endblock %}
+
+
     <footer class="footer">
         <div class="container">
             <span class="text-muted">
