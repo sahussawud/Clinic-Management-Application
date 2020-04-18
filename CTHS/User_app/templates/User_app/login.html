@@ -1,37 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-12 pt-3 px-4">
 
-<div class="container" style="max-width: 35%;">
-  {% if error %}
-        <div class="alert alert-danger" role="alert">
-            {{ error }}
-          </div>
-        {% endif %}
-        {% if request.session.success %}
-        <div class="alert alert-success" role="alert">
-            {{ request.session.success }}{% endif %}
-          </div>
-</div>
-<div class="container text-center w-25" style="">
-  <!-- <form class="form-signin mt-5" method="POST" action="{% url 'my_login' %}" > -->
-    <form class="form-signin mt-5" method="POST" action="{% url 'my_login' %}" >
-        {% csrf_token %}
-        
-        
-        <img class="mb-4" src="{% static 'base_component/logo.png'%}" alt="" width="70%" height="">
-        <h1 class="h3 mb-3 font-weight-normal">Clinic Treatment History System</h1>
-        <label for="inputEmail" class="sr-only">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="{{username}}" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input type="hidden" name='next_url' value="{{next_url}}">
-        <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">Create your account <a href="{% url 'createAccount' %}">here</a> </p>
-        <p class="mt-2 mb-5 text-muted">&copy; 2017-2018</p>
+
+
+  <div class="container" style="max-width: 35%;">
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+      {{ error }}
+    </div>
+    {% endif %}
+    {% if request.session.success %}
+    <div class="alert alert-success" role="alert">
+      {{ request.session.success }}{% endif %}
+    </div>
+  </div>
+  <div class="container text-center w-25" style="">
+    <!-- <form class="form-signin mt-5" method="POST" action="{% url 'my_login' %}" > -->
+    <form class="form-signin mt-5" method="POST" action="{% url 'my_login' %}">
+      {% csrf_token %}
+
+
+      <img class="mb-4" src="{% static 'base_component/logo.png'%}" alt="" width="70%" height="">
+      <h1 class="h3 mb-3 font-weight-normal">Clinic Treatment History System</h1>
+      <label for="inputEmail" class="sr-only">Username</label>
+      <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="{{username}}"
+        required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input type="hidden" name='next_url' value="{{next_url}}">
+      <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">Create your account <a href="{% url 'createAccount' %}">here</a> </p>
+      <p class="mt-2 mb-5 text-muted">&copy; 2017-2018</p>
     </form>
-</div>
-
+  </div>
+</main>
 {% endblock %}
 
 {% block footer %}

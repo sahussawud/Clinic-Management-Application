@@ -12,11 +12,46 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 
+    <style>
+        .bg-light {
+            background-color: #bde4e2 !important;
+        }
+    </style>
+
 </head>
 
+
 <body>
-    {% block content %}
-    {% endblock %}
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">Clinic Treatment History</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01"
+            aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="navbarsExample01" style="">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">My Profile <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Manage Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">SignOut</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% if user.is_authenticated %}
+        {% include 'sidebar.html' %}
+    {% endif %}
+
+             {% block content %}
+            {% endblock %}
+        
+       
     <footer class="footer">
         <div class="container">
             <span class="text-muted">
@@ -25,6 +60,17 @@
             </span>
         </div>
     </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+
 
 </body>
 
