@@ -2,6 +2,6 @@ from django.urls import path
 from Treatment import views
   
 urlpatterns = [ 
-    # path('', views.my_login, name = 'my_login'),
+    path('/patient', views.home_patient, name = 'home_patient'),
 
 ] 
