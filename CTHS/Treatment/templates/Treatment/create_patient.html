@@ -54,10 +54,10 @@
                             <div class="col-md-5 mb-3">
                                 <label for="country">วัน/เดือน/ปี เกิด</label>
                                 <div id="dateofbirth"
-                            style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
-                            <i class="fa fa-calendar"></i>&nbsp;
-                            <span></span> <i class="fa fa-caret-down "></i>
-                        </div>
+                                    style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+                                    <i class="fa fa-calendar"></i>&nbsp;
+                                    <span></span> <i class="fa fa-caret-down "></i>
+                                </div>
                                 <div class="invalid-feedback">
                                     Please select a valid country.
                                 </div>
@@ -81,15 +81,15 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                     <div class="mb-4">
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="patient_role">สิทธิการรักษา</label>
                                 <div class="custom-control custom-radio">
-                                    <input id="kmtil" name="patient_role" type="radio" class="custom-control-input" checked=""
-                                        required="">
+                                    <input id="kmtil" name="patient_role" type="radio" class="custom-control-input"
+                                        checked="" required="">
                                     <label class="custom-control-label" for="kmtil">นักศึกษา</label>
                                 </div>
                                 <div class="custom-control custom-radio">
@@ -116,8 +116,8 @@
                             <div class="col-md-3">
                                 <label for="status">สถานะ</label>
                                 <div class="custom-control custom-radio">
-                                    <input id="single" name="paymentMethod" type="radio" class="custom-control-input" checked=""
-                                        required="">
+                                    <input id="single" name="paymentMethod" type="radio" class="custom-control-input"
+                                        checked="" required="">
                                     <label class="custom-control-label" for="single">โสด</label>
                                 </div>
                                 <div class="custom-control custom-radio">
@@ -133,10 +133,11 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="ref_code">รหัสประจำตัว</label>
-            
-                                <input type="text" class="form-control" id="ref_code" placeholder="ex. 61070238" required="">
+
+                                <input type="text" class="form-control" id="ref_code" placeholder="ex. 61070238"
+                                    required="">
                                 <div class="invalid-feedback">
-                                Please select a valid sub-district.
+                                    Please select a valid sub-district.
                                 </div>
                                 <br>
                                 <label for="ref_code">กลุ่มเลือด</label>
@@ -150,20 +151,24 @@
                                 </select>
 
                             </div>
-                            
+
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address">ที่อยู่</label>
-                        <input type="text" class="form-control" id="address" placeholder="ex. 111/11 ม.10" required="">
-                        <div class="invalid-feedback">
-                            Please enter your shipping address.
+                        <div class="col-md-6 pl-0">
+                            <label for="address">ที่อยู่</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                cols="3"></textarea>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3 mb-3">
+                        <!-- <div class="col-md-3 mb-3">
                             <label for="sub-district">ตำบล/เเขวง</label>
                             <input type="text" class="form-control" id="sub-district" placeholder="" required="">
                             <div class="invalid-feedback">
@@ -176,7 +181,7 @@
                             <div class="invalid-feedback">
                                 Please provide a valid district.
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-3 mb-3">
                             <label for="country">จังหวัด</label>
                             <input type="text" class="form-control" id="country" placeholder="" required="">
@@ -193,7 +198,7 @@
                         </div>
                     </div>
 
-                        
+
                     <hr class="mb-4">
                     <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
                 </form>
@@ -262,7 +267,7 @@
             "endDate": "04/19/2020",
             showDropdowns: true,
             minYear: 1901,
-            maxYear: parseInt(moment().format('YYYY'),10)
+            maxYear: parseInt(moment().format('YYYY'), 10)
             ,
             "alwaysShowCalendars": true,
         }, cb);
