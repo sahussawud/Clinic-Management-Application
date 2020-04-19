@@ -56,6 +56,7 @@ class Patient(models.Model):
         ('5', 'CMKL')
     ]
     patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
+    id_code = models.CharField(_("Personnal ID"), max_length=10, default="")
 
     def age(self):
         return int((datetime.date.today() - self.birth_day).days / 365.25 )
