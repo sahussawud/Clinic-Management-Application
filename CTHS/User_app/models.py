@@ -33,7 +33,8 @@ class Patient(models.Model):
     birth_day = models.DateField(_("Birth date"), auto_now=False, auto_now_add=False)
     PATIENT_STATUS_CHOICE = [
         ('S', 'Single'),
-        ('M', 'Married')
+        ('M', 'Married'),
+        ('O', 'Others')
     ]
     status = models.CharField(_("Patient Condition"), max_length=1, choices=PATIENT_STATUS_CHOICE)
     PATIENT_BLOOD_TYPE_CHOICE = [
@@ -42,11 +43,20 @@ class Patient(models.Model):
         ('O', 'O'),
         ('AB', 'AB')
     ]
-    blood_type = models.CharField(_("Patient Condition"), max_length=2, choices=PATIENT_BLOOD_TYPE_CHOICE)
+    blood_type = models.CharField(_("Blood Type"), max_length=2, choices=PATIENT_BLOOD_TYPE_CHOICE)
     phone = models.CharField(_("Phone"), max_length=10)
     address = models.TextField(_("Address"))
     public_health_id = models.ForeignKey(Public_Health, verbose_name=_("Creator ID"), on_delete=models.DO_NOTHING)
     date = models.DateField(_("Created Date"), auto_now=True)
+    PATIENT_ROLE_CHOICE = [
+        ('1', 'Student'),
+        ('2', 'Staff'),
+        ('3', 'KOSEN'),
+        ('4', 'KMIDS'),
+        ('5', 'CMKL')
+    ]
+    patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
+    id_code = models.CharField(_("Personnal ID"), max_length=10, default="")
 
     def age(self):
         return int((datetime.date.today() - self.birth_day).days / 365.25 )
