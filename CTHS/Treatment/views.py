@@ -6,3 +6,6 @@ def home_patient(request):
 
 def create_patient(request):
     return render(request, 'Treatment/create_patient.html')
+
+def create_treatment(request, patient_id):
+    return render(request, 'Treatment/create_treatment.html')

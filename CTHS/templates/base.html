@@ -13,7 +13,8 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     {% block scripts %}
     {% endblock %}
-
+    {% block style %}
+    {% endblock %}
     <style>
         .bg-light {
             background-color: #bde4e2 !important;
@@ -24,15 +25,9 @@
             cursor: default;
             color: gray;
         }
-
-            {
-            % block styles %
-            }
-
-            {
-            % endblock %
-        }
     </style>
+    
+
 
 </head>
 
@@ -85,6 +80,8 @@
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace()
+
+        
     </script>
 
 
