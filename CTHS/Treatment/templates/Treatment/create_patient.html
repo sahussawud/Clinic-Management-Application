@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block scripts %}
-
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 {% endblock %}
 
 {% block styles %}
@@ -14,12 +18,11 @@
         <div class="row">
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
-                <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
-                    {% csrf_token %}
+                <form class="needs-validation" novalidate="">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">ชื่อ</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="ชื่อ" value=""
+                            <input type="text" class="form-control" id="firstName" placeholder="ชื่อ" value=""
                                 required="">
                             <div class="invalid-feedback">
                                 Valid first name is required.
@@ -27,7 +30,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">นามสกุล</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="นามสกุล" value=""
+                            <input type="text" class="form-control" id="lastName" placeholder="นามสกุล" value=""
                                 required="">
                             <div class="invalid-feedback">
                                 Valid last name is required.
@@ -38,7 +41,7 @@
                     <div class="mb-3">
                         <label for="username">เลขบัตรประชาชน</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="ssid" name="ssid" placeholder="ตัวอย่าง 111-110-120-1111"
+                            <input type="text" class="form-control" id="ssid" placeholder="ตัวอย่าง 111-110-120-1111"
                                 required="">
                             <div class="invalid-feedback" style="width: 100%;">
                                 ssid is required.
@@ -50,14 +53,18 @@
                         <div class="row">
                             <div class="col-md-5 mb-3">
                                 <label for="country">วัน/เดือน/ปี เกิด</label>
-                                <input type="date" name="dateofbirth" class="form-control">
+                                <div id="dateofbirth"
+                                    style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+                                    <i class="fa fa-calendar"></i>&nbsp;
+                                    <span></span> <i class="fa fa-caret-down "></i>
+                                </div>
                                 <div class="invalid-feedback">
                                     Please select a valid country.
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="nation">สัญชาติ</label>
-                                <select class="custom-select d-block w-100" id="nation" name="nation" required="">
+                                <select class="custom-select d-block w-100" id="nation" required="">
                                     <option value="">Choose...</option>
                                     <option>California</option>
                                 </select>
@@ -67,7 +74,7 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="mature_land">เชื้อชาติ</label>
-                                <select class="custom-select d-block w-100" id="mature_land" name="mature_land" required="">
+                                <select class="custom-select d-block w-100" id="mature_land" required="">
                                     <option value="">Choose...</option>
                                     <option>California</option>
                                 </select>
@@ -109,17 +116,17 @@
                             <div class="col-md-3">
                                 <label for="status">สถานะ</label>
                                 <div class="custom-control custom-radio">
-                                    <input id="single" name="patientStatus" type="radio" class="custom-control-input"
+                                    <input id="single" name="paymentMethod" type="radio" class="custom-control-input"
                                         checked="" required="">
                                     <label class="custom-control-label" for="single">โสด</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="marriage" name="patientStatus" type="radio" class="custom-control-input"
+                                    <input id="marriage" name="paymentMethod" type="radio" class="custom-control-input"
                                         required="">
                                     <label class="custom-control-label" for="marriage">สมรส</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="other" name="patientStatus" type="radio" class="custom-control-input"
+                                    <input id="other" name="paymentMethod" type="radio" class="custom-control-input"
                                         required="">
                                     <label class="custom-control-label" for="other">อื่นๆ</label>
                                 </div>
@@ -127,14 +134,14 @@
                             <div class="col-md-4">
                                 <label for="ref_code">รหัสประจำตัว</label>
 
-                                <input type="text" class="form-control" id="ref_code" name="ref_code" placeholder="ex. 61070238"
+                                <input type="text" class="form-control" id="ref_code" placeholder="ex. 61070238"
                                     required="">
                                 <div class="invalid-feedback">
                                     Please select a valid sub-district.
                                 </div>
                                 <br>
                                 <label for="ref_code">กลุ่มเลือด</label>
-                                <select class="custom-select d-block w-100" id="bloodType" name="bloodType" required="">
+                                <select class="custom-select d-block w-100" id="nation" required="">
                                     <option value="">Choose...</option>
                                     <option>A</option>
                                     <option>B</option>
@@ -151,7 +158,7 @@
                     <div class="mb-3">
                         <div class="col-md-6 pl-0">
                             <label for="address">ที่อยู่</label>
-                            <textarea class="form-control" id="address" name="address" rows="3"
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                                 cols="3"></textarea>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
@@ -176,15 +183,15 @@
                             </div>
                         </div> -->
                         <div class="col-md-3 mb-3">
-                            <label for="province">จังหวัด</label>
-                            <input type="text" class="form-control" id="province" name="province" placeholder="" required="">
+                            <label for="country">จังหวัด</label>
+                            <input type="text" class="form-control" id="country" placeholder="" required="">
                             <div class="invalid-feedback">
                                 Zip code required.
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="zip">รหัสไปรษณีย์</label>
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="">
+                            <input type="text" class="form-control" id="zip" placeholder="" required="">
                             <div class="invalid-feedback">
                                 Zip code required.
                             </div>
@@ -243,5 +250,32 @@
 {% endblock %}
 
 {% block footer %}
+<script>
+    $(function () {
+
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+
+        function cb(start, end) {
+            $('#dateofbirth span').html(start.format('D MMMM, YYYY'));
+        }
+
+        $('#dateofbirth').daterangepicker({
+
+            "singleDatePicker": true,
+            "startDate": "04/13/2020",
+            "endDate": "04/19/2020",
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'), 10)
+            ,
+            "alwaysShowCalendars": true,
+        }, cb);
+
+        cb(start, end);
+
+
+    });
+</script>
 
 {% endblock %}
