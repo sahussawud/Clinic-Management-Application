@@ -14,7 +14,8 @@
         <div class="row">
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
-                <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
+                {{ form }}
+                {% comment %} <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -150,6 +151,17 @@
 
                     <div class="mb-3">
                         <div class="col-md-6 pl-0">
+                            <label for="telephone">เบอร์โทรศัพท์</label>
+                            <input type="text" name="telephone" id="" class="form-control">
+                            <div class="invalid-feedback">
+                                Please enter your telephone.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="col-md-6 pl-0">
                             <label for="address">ที่อยู่</label>
                             <textarea class="form-control" id="address" name="address" rows="3"
                                 cols="3"></textarea>
@@ -161,20 +173,6 @@
                     </div>
 
                     <div class="row">
-                        <!-- <div class="col-md-3 mb-3">
-                            <label for="sub-district">ตำบล/เเขวง</label>
-                            <input type="text" class="form-control" id="sub-district" placeholder="" required="">
-                            <div class="invalid-feedback">
-                                Please select a valid sub-district.
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="district">อำเภอ/เขต</label>
-                            <input type="text" class="form-control" id="district" placeholder="" required="">
-                            <div class="invalid-feedback">
-                                Please provide a valid district.
-                            </div>
-                        </div> -->
                         <div class="col-md-3 mb-3">
                             <label for="province">จังหวัด</label>
                             <input type="text" class="form-control" id="province" name="province" placeholder="" required="">
@@ -194,7 +192,7 @@
 
                     <hr class="mb-4">
                     <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
-                </form>
+                </form> {% endcomment %}
             </div>
 
             <div class="col-md-4 mb-4">

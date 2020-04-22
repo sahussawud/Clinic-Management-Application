@@ -1,9 +1,12 @@
-from django.contrib.auth.models import User
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import AbstractUser
-from django.conf import settings
 import datetime
+
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser, User
+from django.db import models
+from django.forms import ModelForm
+from django.forms.widgets import Select, Textarea, TextInput
+from django.utils.translation import gettext_lazy as _
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -29,12 +32,15 @@ class Patient(models.Model):
     p_id = models.CharField(_("Patient ID"), max_length=6, primary_key=True)
     fname = models.CharField(_("Firstname"), max_length=255)
     lname = models.CharField(_("Lastname"), max_length=255)
+    idcard_number = models.CharField(_("ID card number"), max_length=13, default="")
     age = models.IntegerField(_("Age"))
     birth_day = models.DateField(_("Birth date"), auto_now=False, auto_now_add=False)
+    nationality = models.CharField(_("Nationality"), max_length=255, default="")
+    race = models.CharField(_("Race"), max_length=255, default="")
     PATIENT_STATUS_CHOICE = [
-        ('S', 'Single'),
-        ('M', 'Married'),
-        ('O', 'Others')
+        ('S', 'โสด'),
+        ('M', 'สมรส'),
+        ('O', 'อื่นๆ')
     ]
     status = models.CharField(_("Patient Condition"), max_length=1, choices=PATIENT_STATUS_CHOICE)
     PATIENT_BLOOD_TYPE_CHOICE = [
@@ -49,21 +55,55 @@ class Patient(models.Model):
     public_health_id = models.ForeignKey(Public_Health, verbose_name=_("Creator ID"), on_delete=models.DO_NOTHING)
     date = models.DateField(_("Created Date"), auto_now=True)
     PATIENT_ROLE_CHOICE = [
-        ('1', 'Student'),
-        ('2', 'Staff'),
-        ('3', 'KOSEN'),
-        ('4', 'KMIDS'),
-        ('5', 'CMKL')
+        ('1', 'นักศึกษา'),
+        ('2', 'พนักงานเงินงบประมาณ'),
+        ('3', 'ข้าราชการ'),
+        ('4', 'พนักงานเงินได้'),
+        ('5', 'ประกันสังคม'),
+        ('6', 'พนักงานพิเศษ'),
+        ('7', 'พนักงานเปลี่ยนสภาพ'),
+        ('8', 'อื่นๆ')
     ]
     patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
-    id_code = models.CharField(_("Personnal ID"), max_length=10, default="")
+    id_code = models.CharField(_("Personnal ID"), max_length=10, default="", null=True, unique=True)
 
     def age(self):
         return int((datetime.date.today() - self.birth_day).days / 365.25 )
     age = property(age)
 
+class PatientForm(ModelForm):
+    class Meta:
+        model = Patient
+        exclude = ['p_id', 'age', 'public_health_id', 'date']
+        labels = {
+            'fname': _('ชื่อ'),
+            'lname': _('นามสกุล'),
+            'idcard_number': _('รหัสบัตรประชาชน'),
+            'birth_day': _('วัน/เดือน/ปี เกิด'),
+            'race': _('เชื้อชาติ'),
+            'nationality': _('สัญชาติ'),
+            'status': _('สถานะ'),
+            'blood_type': _('กลุ่มเลือด'),
+            'phone': _('เบอร์โทรศัพท์'),
+            'address': _('ที่อยู่'),
+            'patient_role': _('สิทธิการรักษา'),
+            'id_code': _('รหัสประจำตัว'),
+        }
+        widgets = {
+            'fname': TextInput(attrs={'class': 'form-control'}),
+            'lname': TextInput(attrs={'class': 'form-control'}),
+            'idcard_number': TextInput(attrs={'class': 'form-control'}),
+            'birth_day': TextInput(attrs={'class': 'form-control'}),
+            'nationality': TextInput(attrs={'class': 'form-control'}),
+            'race': TextInput(attrs={'class': 'form-control'}),
+            'status': Select(attrs={'class': 'custom-select d-block w-100'}),
+            'blood_type': Select(attrs={'class': 'custom-select d-block w-100'}),
+            'phone': TextInput(attrs={'class': 'form-control'}),
+            'address': Textarea(attrs={'class': 'form-control'}),
+            'patient_role': Select(attrs={'class': 'form-control'}),
+            'id_code': TextInput(attrs={'class': 'form-control'}),
+        }
 
 class Congenital_disease(models.Model):
     name = models.CharField(_("Congenital disease name"), max_length=255)
     patient_id = models.ManyToManyField(Patient, verbose_name=_("Patient ID"))
-
