@@ -3,6 +3,7 @@
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 {% endblock %}
 
 {% block style %}
@@ -12,7 +13,7 @@
 {% block content %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
     <div class="container mt-3 mb-5">
-        <div class="row">
+        <div class="row" id='diagnosis'>
             <div class="col-md-6">
                 <h2 class="mb-2">สร้างการวินิจฉัย CN : CN0001</h2>
                 <form class="needs-validation" novalidate="">
@@ -108,35 +109,37 @@
             </div>
 
             <!-- ทั่วไป -->
-            <div class="col-md-5 ml-3 mt-5">
+            <div class="col-md-5 ml-3 mt-5" v-if='page1'>
                 <div class="row">
                     <div class="card w-100">
-                        <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx  <a href="#" class="btn btn-info btn-sm"
-                            style="">สร้างใบสั่งยา</a></h5>
+                        <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx <a href="#"
+                                class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
 
                         <div class="card-body">
                             <div class="row">
-                                    <div class="col-md-3">
-                                        อาการสำคัญ :
-                                    </div>
-                                    <div class="col-md-8">
-                                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="15" cols="4"></textarea>  
+                                <div class="col-md-3">
+                                    อาการสำคัญ :
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="15"
+                                        cols="4"></textarea>
 
-                                    </div>
+                                </div>
                             </div>
                             <div class="row mt-4">
                                 <div class="col-md-3">
                                     คำเเนะนำ :
                                 </div>
                                 <div class="col-md-8">
-                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="13" cols="4"></textarea>  
+                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="13"
+                                        cols="4"></textarea>
                                 </div>
-                        </div>
+                            </div>
                         </div>
 
                     </div>
                 </div>
-                
+
             </div>
 
             <div class="col-md-11 mt-3 ml-2">
@@ -153,7 +156,8 @@
             </div>
 
             <hr class="mb-4">
-                    <a class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2" href="{% url 'create_diagnosis' 1 %}">ยืนยัน</a>
+            <a class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2"
+                href="{% url 'create_diagnosis' 1 %}">ยืนยัน</a>
         </div>
         </form>
 
@@ -165,7 +169,17 @@
 </main>
 {% endblock %}
 <script>
+    var app = new Vue({
+        el: '#diagnosis',
+        data: {
+            page1: true,
+            page1: true,
+            page1: true,
+            page1: true,
+            page1: true,
 
+        }
+    })
 </script>
 {% block footer %}
 
