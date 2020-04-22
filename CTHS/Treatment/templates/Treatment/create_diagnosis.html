@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+    <div class="container mt-3 mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="mb-2">สร้างการวินิจฉัย CN : CN0001</h2>
+                <form class="needs-validation" novalidate="">
+                    <!-- ROWS OF PATIENT INFORMATION -->
+                    <div class="row">
+                        <div class="card w-100">
+                            <h5 class="card-header">ข้อมูลผู้ป่วย <a href="#" class="btn btn-info btn-sm"
+                                    style="">ข้อมูลเพิ่มเติม</a></h5>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">นายสหัสวรรษ ขันรักษา (นักศึกษา)</h5>
+                                        <p class="card-text">อายุ 18 ปี 6 เดือน กลุ่มเลือด A</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="card-text">เเพ้ยา : -</p>
+                                        <p class="card-text">โรคประจำตัว : -</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="card w-100">
+                            <h5 class="card-header">ข้อมูลเบื้องต้น <a href="#" class="btn btn-info btn-sm"
+                                    style="">ข้อมูลเพิ่มเติม</a></h5>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">ลักษณะอาการ : ทั่วไป</h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="card-text">สภาวะ : ไม่ฉุกเฉิน</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">น้ำหนัก</th>
+                                                    <td>69.5</td>
+                                                    <th scope="row">ส่วนสูง</th>
+                                                    <td>173</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">ความดันโลหิต</th>
+                                                    <td>150</td>
+                                                    <th scope="row">อัตราชีพจร</th>
+                                                    <td>95</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">อุณหภูมิร่างกาย</th>
+                                                    <td>36.5</td>
+                                                    <th scope="row">อัตรการหายใจ</th>
+                                                    <td>70</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">ดัชนีมวลกาย</th>
+                                                    <td>27.5</td>
+                                                    <th scope="row">ออกซิเจนในเลือด</th>
+                                                    <td>45%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        อาการสำคัญ :
+                                    </div>
+                                    <div class="col-md-8">
+                                        nternal Server Error: /treatment/create/1/diagnosis
+                                        Traceback (most recent call last):
+                                        File
+                                        "C:\Users\Hp\AppData\Local\Programs\Python\Python38-32\lib\site-packages\django\core\handlers\exception.py",
+                                        line 34, in inner
+                                        response = get_response(request)
+                                        File
+                                        "C:\Users\Hp\AppData\Local\Programs\Python\Python38-32\lib\site-packages\django\core\handlers\base.py",
+                                        line 115, in _get_response
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- ทั่วไป -->
+            <div class="col-md-5 ml-3 mt-5">
+                <div class="row">
+                    <div class="card w-100">
+                        <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx  <a href="#" class="btn btn-info btn-sm"
+                            style="">สร้างใบสั่งยา</a></h5>
+
+                        <div class="card-body">
+                            <div class="row">
+                                    <div class="col-md-3">
+                                        อาการสำคัญ :
+                                    </div>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="15" cols="4"></textarea>  
+
+                                    </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-3">
+                                    คำเเนะนำ :
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="13" cols="4"></textarea>  
+                                </div>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="col-md-11 mt-3 ml-2">
+                <div class="row">
+                    <div class="card w-100">
+                        <h5 class="card-header">ใบสั่งยา</h5>
+
+                        <div class="card-body" style='color:red'>
+                            สร้างใบสั่งยาตรงนี้
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+                    <a class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2" href="{% url 'create_diagnosis' 1 %}">ยืนยัน</a>
+        </div>
+        </form>
+
+
+    </div>
+
+    </div>
+
+</main>
+{% endblock %}
+<script>
+
+</script>
+{% block footer %}
+
+
+
+{% endblock %}

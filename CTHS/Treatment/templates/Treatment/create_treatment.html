@@ -126,7 +126,7 @@
     <div class="container mt-3 mb-5">
         <div class="row">
             <div class="col-md-8">
-                <h2 class="mb-3">สร้างประวัติการรักษา</h2>
+                <h2 class="mb-3">สร้างประวัติการรักษา CN : CN0001</h2>
                 <form class="needs-validation" novalidate="">
                     <!-- ROWS OF PATIENT INFORMATION -->
                     <div class="row">
@@ -281,7 +281,8 @@
                             อาการสำคัญ :
                         </div>
                         <div class="col-md-10 mb-3">
-                            <textarea class="form-control " id="exampleFormControlTextarea1" rows="4" cols="4"></textarea>
+                            <textarea class="form-control " id="exampleFormControlTextarea1" rows="4"
+                                cols="4"></textarea>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>
@@ -304,20 +305,35 @@
                         </div>
 
                     </div>
+                    <div class="row mt-4 mb-4 form-inline">
+                        <div class="mr-3">
+                            ประเภทการเข้ารับการรักษา :
+                        </div>
+                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                            <option selected>Choose...</option>
+                            <option value="1">ทั่วไป</option>
+                            <option value="2">ผิวหนัง</option>
+                            <option value="3">อุบัติเหตุ</option>
+                            <option value="4">ผิวหนัง</option>
+                            <option value="5">ดวงตา</option>
+                            <option value="6">ผิวหนัง</option>
+                            <option value="7">อาการไข้</option>
+                            <option value="8">ท้องเสีย</option>
+                            <option value="9">อาการปวดทุกเเห่ง</option>
+                        </select>
+                    </div>
 
-
+                    <hr class="mb-4">
+                    <a class="btn btn-info btn-lg btn-block" href="{% url 'create_diagnosis' 1 %}">ขั้นตอนถัดไป</a>
             </div>
 
-
-
-
-            <hr class="mb-4">
-            <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
             </form>
+
+            
         </div>
 
     </div>
-    </div>
+    
 </main>
 {% endblock %}
 <script>
