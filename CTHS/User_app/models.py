@@ -38,9 +38,9 @@ class Patient(models.Model):
     nationality = models.CharField(_("Nationality"), max_length=255, default="")
     race = models.CharField(_("Race"), max_length=255, default="")
     PATIENT_STATUS_CHOICE = [
-        ('S', 'Single'),
-        ('M', 'Married'),
-        ('O', 'Others')
+        ('S', 'โสด'),
+        ('M', 'สมรส'),
+        ('O', 'อื่นๆ')
     ]
     status = models.CharField(_("Patient Condition"), max_length=1, choices=PATIENT_STATUS_CHOICE)
     PATIENT_BLOOD_TYPE_CHOICE = [
@@ -55,14 +55,14 @@ class Patient(models.Model):
     public_health_id = models.ForeignKey(Public_Health, verbose_name=_("Creator ID"), on_delete=models.DO_NOTHING)
     date = models.DateField(_("Created Date"), auto_now=True)
     PATIENT_ROLE_CHOICE = [
-        ('1', 'Student'),
-        ('2', 'Budgetary Staff'),
-        ('3', 'Official Staff'),
-        ('4', 'Employee'),
-        ('5', 'Social Security'),
-        ('6', 'Special Staff'),
-        ('7', 'Changed Employee'),
-        ('8', 'Others')
+        ('1', 'นักศึกษา'),
+        ('2', 'พนักงานเงินงบประมาณ'),
+        ('3', 'ข้าราชการ'),
+        ('4', 'พนักงานเงินได้'),
+        ('5', 'ประกันสังคม'),
+        ('6', 'พนักงานพิเศษ'),
+        ('7', 'พนักงานเปลี่ยนสภาพ'),
+        ('8', 'อื่นๆ')
     ]
     patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
     id_code = models.CharField(_("Personnal ID"), max_length=10, default="", null=True, unique=True)
