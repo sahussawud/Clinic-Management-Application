@@ -3,4 +3,4 @@ CTHS\Medicine\__pycache__\*.pyc
 CTHS\Summary_app\__pycache__\*.pyc
 CTHS\Treatment\__pycache__\*.pyc
 CTHS\User_app\__pycache__\*.pyc
-env\*
+*.pyc
