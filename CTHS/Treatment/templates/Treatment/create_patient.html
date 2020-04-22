@@ -2,11 +2,7 @@
 {% load static %}
 
 {% block scripts %}
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 {% endblock %}
 
 {% block styles %}
@@ -54,11 +50,7 @@
                         <div class="row">
                             <div class="col-md-5 mb-3">
                                 <label for="country">วัน/เดือน/ปี เกิด</label>
-                                <div id="dateofbirth"
-                                    style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
-                                    <i class="fa fa-calendar"></i>&nbsp;
-                                    <span></span> <i class="fa fa-caret-down "></i>
-                                </div>
+                                <input type="date" name="dateofbirth" class="form-control">
                                 <div class="invalid-feedback">
                                     Please select a valid country.
                                 </div>
@@ -251,32 +243,5 @@
 {% endblock %}
 
 {% block footer %}
-<script>
-    $(function () {
-
-        var start = moment().subtract(29, 'days');
-        var end = moment();
-
-        function cb(start, end) {
-            $('#dateofbirth span').html(start.format('D MMMM, YYYY'));
-        }
-
-        $('#dateofbirth').daterangepicker({
-
-            "singleDatePicker": true,
-            "startDate": "04/13/2020",
-            "endDate": "04/19/2020",
-            showDropdowns: true,
-            minYear: 1901,
-            maxYear: parseInt(moment().format('YYYY'), 10)
-            ,
-            "alwaysShowCalendars": true,
-        }, cb);
-
-        cb(start, end);
-
-
-    });
-</script>
 
 {% endblock %}

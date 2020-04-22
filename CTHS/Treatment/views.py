@@ -9,7 +9,7 @@ def create_patient(request):
         firstName = request.POST.get('firstName')
         lastName = request.POST.get('lastName')
         ssid = request.POST.get('ssid')
-        # dateofbirth = request.POST.get('dateofbirth')
+        dateofbirth = request.POST.get('dateofbirth')
         nation = request.POST.get('nation')
         mature_land = request.POST.get('mature_land')
         patientRole = request.POST.get('patientRole')
