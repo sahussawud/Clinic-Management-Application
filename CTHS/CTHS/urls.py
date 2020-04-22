@@ -25,6 +25,7 @@ urlpatterns = [
     path('summary/', include('Summary_app.urls')),
     path('treatment/', include('Treatment.urls')),
     path('medicine/', include('Medicine.urls')),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
