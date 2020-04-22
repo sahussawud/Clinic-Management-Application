@@ -14,7 +14,8 @@
         <div class="row">
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
-                <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
+                {{ form }}
+                {% comment %} <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -191,7 +192,7 @@
 
                     <hr class="mb-4">
                     <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
-                </form>
+                </form> {% endcomment %}
             </div>
 
             <div class="col-md-4 mb-4">
