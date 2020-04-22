@@ -1,2 +1,6 @@
 
 *.pyc
+CTHS/Treatment/__pycache__/urls.cpython-38.pyc
+CTHS/Treatment/__pycache__/views.cpython-38.pyc
+CTHS/User_app/__pycache__/models.cpython-38.pyc
+CTHS/User_app/migrations/0003_patient_id_code.py
