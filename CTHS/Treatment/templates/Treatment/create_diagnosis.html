@@ -159,8 +159,7 @@
                                         ประเภทการเข้ารับการรักษา :
                                     </div>
                                     <div class="col-md-8">
-                                        <select v-model="selected" class="custom-select my-1 mr-sm-2"
-                                           >
+                                        <select v-model="selected" class="custom-select my-1 mr-sm-2">
                                             <option v-for="option in options" v-bind:value="option.value">
                                                 [[option.text]]
                                             </option>
@@ -207,7 +206,7 @@
                 </div>
 
             </div>
-            <!-- อุบัติเหตุ -->
+            <!-- อาการผื่น -->
             <div class="col-md-5 ml-3 mt-5" v-if='selected=="A"'>
                 <div class="row">
                     <div class="card w-100">
@@ -243,38 +242,38 @@
                                 <div class="col-md-3">
                                     อาการร่วม :
                                 </div>
-                                <div class="col-md-8 form-check-inline" >
+                                <div class="col-md-8 form-check-inline">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                         <label class="form-check-label" for="defaultCheck1">
-                                          คัน
+                                            คัน
                                         </label>
-                                      </div>
-                                      <div class="form-check">
+                                    </div>
+                                    <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
                                         <label class="form-check-label" for="defaultCheck2">
-                                          ปวด
+                                            ปวด
                                         </label>
-                                      </div>
-                                      <div class="form-check">
+                                    </div>
+                                    <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
                                         <label class="form-check-label" for="defaultCheck3">
-                                          เเสบ
+                                            เเสบ
                                         </label>
-                                      </div>
-                                      <div class="form-check">
+                                    </div>
+                                    <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
                                         <label class="form-check-label" for="defaultCheck4">
-                                          ไข้
+                                            ไข้
                                         </label>
-                                      </div>
-                                      <div class="form-check">
+                                    </div>
+                                    <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
                                         <label class="form-check-label" for="defaultCheck5">
-                                          บวม
+                                            บวม
                                         </label>
-                                      </div>
-                                      
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="row mt-5">
@@ -293,92 +292,144 @@
 
             </div>
 
-                        <!-- ผื่น -->
-                        <div class="col-md-5 ml-3 mt-5" v-if='selected=="B"'>
+            <!-- อุบัติเหตุ -->
+            <div class="col-md-5 ml-3 mt-5" v-if='selected=="A"'>
+                <div class="row">
+                    <div class="card w-100">
+                        <h5 class="card-header">ลักษณะอาการเบื้องต้น : อุบัติเหตุ</h5>
+
+                        <div class="card-body">
                             <div class="row">
-                                <div class="card w-100">
-                                    <h5 class="card-header">ลักษณะอาการเบื้องต้น : อาการผื่น</h5>
-            
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                อาการสำคัญ :
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="form-group">
-                                                    <label for="disabledTextInput">ผื่นบริเวณ</label>
-                                                    <input type="text" id="disabledTextInput" class="form-control"
-                                                        placeholder="ผื่นบริเวณ">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="disabledTextInput">เป็นมานาน (วัน)</label>
-                                                    <input type="number" id="disabledTextInput" class="form-control"
-                                                        placeholder="เป็นมานาน">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="disabledTextInput">สัมผัสโดน</label>
-                                                    <input type="text" id="disabledTextInput" class="form-control"
-                                                        placeholder="สัมผัสโดน">
-                                                </div>
-            
-            
-            
-                                            </div>
-                                        </div>
-                                        <div class="row mt-4">
-                                            <div class="col-md-3">
-                                                อาการร่วม :
-                                            </div>
-                                            <div class="col-md-8 form-check-inline" >
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
-                                                      คัน
-                                                    </label>
-                                                  </div>
-                                                  <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                                                    <label class="form-check-label" for="defaultCheck2">
-                                                      ปวด
-                                                    </label>
-                                                  </div>
-                                                  <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
-                                                    <label class="form-check-label" for="defaultCheck3">
-                                                      เเสบ
-                                                    </label>
-                                                  </div>
-                                                  <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
-                                                    <label class="form-check-label" for="defaultCheck4">
-                                                      ไข้
-                                                    </label>
-                                                  </div>
-                                                  <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
-                                                    <label class="form-check-label" for="defaultCheck5">
-                                                      บวม
-                                                    </label>
-                                                  </div>
-                                                  
-                                            </div>
-                                        </div>
-                                        <div class="row mt-5">
-                                            <div class="col-md-3">
-                                                PE :
-                                            </div>
-                                            <div class="col-md-8">
-                                                <textarea class="form-control " id="exampleFormControlTextarea1" rows="6"
-                                                    cols="4"></textarea>
-            
-                                            </div>
-                                        </div>
+                                <div class="col-md-6">
+                                    กรณีอุบัติเหตุจากยานพาหนะ :
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mediprint" id="mediprint1"
+                                            value="option1">
+                                        <label class="form-check-label"
+                                            for="mediprint1">สวมหมวกกันน็อค/คาดเข็มขัดนิรภัย</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mediprint" id="mediprint2"
+                                            value="option2">
+                                        <label class="form-check-label"
+                                            for="mediprint2">ไม่สวมหมวกกันน็อค/ไม่คาดเข็มขัดนิรภัย</label>
                                     </div>
                                 </div>
                             </div>
-            
+
+
+                
+                            <div class="row mt-5">
+                                <div class="col-md-4">
+                                    บาดเเผลบริเวณ
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" id="disabledTextInput" class="form-control"
+                                        placeholder="บาดเเผลบริเวณ">
+                                </div>
+                            </div>
+                            <div class="row mt-5">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">บาดเเผล</th>
+                                            <th scope="col">บริเวณ</th>
+                                            <th scope="col">ขนาด(ซ.ม)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>1</th>
+                                            <th><select class="custom-select">
+                                                    <option value="1">ถลอก</option>
+                                                    <option value="2">ฉีกขาด</option>
+                                                    <option value="3">จากของมีคม</option>
+                                                    <option value="3">อื่นๆ</option>
+                                                </select></th>
+                                            <td><input type="text" id="disabledTextInput" class="form-control"
+                                                    placeholder="ผื่นบริเวณ"></td>
+                                            <td class="form-inline">
+                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
+                                                    placeholder="กว้าง">
+                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
+                                                    placeholder="ยาว"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>2</th>
+                                            <th><select class="custom-select">
+                                                    <option value="1">ถลอก</option>
+                                                    <option value="2">ฉีกขาด</option>
+                                                    <option value="3">จากของมีคม</option>
+                                                    <option value="3">อื่นๆ</option>
+                                                </select></th>
+                                            <td><input type="text" id="disabledTextInput" class="form-control"
+                                                    placeholder="ผื่นบริเวณ"></td>
+                                            <td class="form-inline">
+                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
+                                                    placeholder="กว้าง">
+                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
+                                                    placeholder="ยาว"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>3</th>
+                                            <th><select class="custom-select">
+                                                    <option value="1">ถลอก</option>
+                                                    <option value="2">ฉีกขาด</option>
+                                                    <option value="3">จากของมีคม</option>
+                                                    <option value="3">อื่นๆ</option>
+                                                </select></th>
+                                            <td><input type="text" id="disabledTextInput" class="form-control"
+                                                    placeholder="ผื่นบริเวณ"></td>
+                                            <td class="form-inline">
+                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
+                                                    placeholder="กว้าง">
+                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
+                                                    placeholder="ยาว"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-5">
+                                วันที่เกิดเหตุ : <input type="date" name="date"  class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                สถานที่เกิดเหตุ : <input type="text" name="location" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    การเจ็บป่วย/บาดเจ็บ ครั้งนี้ :
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="recured"
+                                            id="recured1" value="true" checked>
+                                        <label class="form-check-label" for="recured1">ไม่เคยรักษาที่ใดมาก่อน</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="recured"
+                                            id="recured2" value="true">
+                                        <label class="form-check-label" for="recured2">เคยรักษามาก่อน</label>
+                                    </div>
+                                    <div>
+                                        ที่ : <input type="text" class="form-control"> เวลา : <input type="time" name="recured_time" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-            
+                    </div>
+                </div>
+
+            </div>
+
 
             <!-- เเพทย์ -->
             <div class="col-md-11 mt-3 ml-2">
