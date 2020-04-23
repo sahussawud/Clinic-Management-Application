@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block styles %}
+    {% endblock %}
+  
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+    <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">จัดการยา</h1>
+          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+        </div>
+      </div>
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>เพิ่มยาใหม่ในระบบ</h2>
+            <p>เพิ่มยาใหม่ในระบบ นำเข้ายาใหม่สู่ระบบ</p>
+            <p><a class="btn btn-success" href="{% url 'add_medicine'%}" role="button">สร้าง »</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>อัปเดตปริมาณยาใน stock</h2>
+            <p>สำหรับค้นหาผู้ป่วยที่เคยลงทะเบียนเเล้ว เพื่อบันทึกข้อมูลส่วนบุคคลของผู้ที่เข้ารับการรักษา</p>
+            <p><a class="btn btn-info" href="{% url 'update_medicine' %}" role="button">ค้นหา »</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
