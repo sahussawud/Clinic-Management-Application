@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block styles %}
+    {% endblock %}
+  
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+    <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">การวินิจฉัย</h1>
+          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+        </div>
+      </div>
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>ห้องตรวจ1</h2>
+            <p>เข้าห้องการรักษา</p>
+            <p><a class="btn btn-success" href="{% url 'examination_room' 1 %}" role="button">เข้าสู่ห้อง »</a></p>
+          </div>
+         
+          <div class="col-md-4">
+            <h2>ห้องตรวจ2</h2>
+            <p>เข้าห้องการรักษา</p>
+            <p><a class="btn btn-success" href="{% url 'examination_room' 2 %}" role="button">เข้าสู่ห้อง »</a></p>
+          </div>
+
+          <div class="col-md-4">
+            <h2>ห้องจิตเวช</h2>
+            <p>เข้าห้องการรักษา</p>
+            <p><a class="btn btn-success" href="{% url 'examination_room' 3 %}" role="button">เข้าสู่ห้อง »</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
