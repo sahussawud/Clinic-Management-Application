@@ -10,7 +10,8 @@ def home_patient(request):
 def find_patient(request):
     return render(request, 'Treatment/find_patient.html')
 
-
+def find_treatment(request):
+    return render(request, 'Treatment/find_treatment.html')
 
 def create_patient(request):
     if request.method == 'POST':

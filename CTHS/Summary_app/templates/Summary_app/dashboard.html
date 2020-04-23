@@ -20,31 +20,72 @@
             <div class="col-lg-3">
                 <h1>OVERVIEW</h1>
             </div>
-            <div class="col-lg-8 mt-3">
-                <div class="row">
-                    <div class="mr-3">
-                        ช่วงที่ต้องการค้นหา :
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                 <h5>ตัวกรองการค้นหา</h5>
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                          <input type="checkbox" aria-label="Checkbox for following text input" id='keyword'>
+                        </div>
+                      </div>
+                    <div class="input-group-append">
+                        <label class="input-group-text" for="keyword">ค้นหาตามคำค้น</label>
+                      </div>
+                    
+                    <div class="input-group-append">
+                        <select class="custom-select" id="inputGroupSelect02">
+                            <option selected>ทั้งหมด</option>
+                            <option value="1">โรค</option>
+                            <option value="2">สัญชาติ</option>
+                            <option value="3">ประเภทผู้ป่วย</option>
+                            <option value="3">ลักษณะการเข้ารักษา</option>
+
+                        </select>
                     </div>
 
-                    <div id="reportrange"
-                        style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 38%">
-                        <i class="fa fa-calendar"></i>&nbsp;
-                        <span></span> <i class="fa fa-caret-down"></i>
-                    </div>
 
-                    <div class="form-check form-check-inline ml-3">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                        <label class="form-check-label" for="inlineCheckbox1">อาการ</label>
+                    <div class="input-group-append w-50">
+                        <input type="text" class="form-control" placeholder="คำค้นหา" aria-label="Recipient's username"
+                            aria-describedby="basic-addon2">
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                        <label class="form-check-label" for="inlineCheckbox2">ลักษณะผู้ป่วย</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
-                        <label class="form-check-label" for="inlineCheckbox3">เทรน</label>
-                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                          <input type="checkbox" aria-label="Checkbox for following text input" id='duration'>
+                        </div>
+                      </div>
+                    <div class="input-group-append">
+                        <label class="input-group-text" for="duration">ค้นหาตามช่วงเวลา</label>
+                      </div>
+                    
 
+
+                    <div class="input-group-append">
+                        <input type="date" class="form-control" placeholder="" aria-label=""
+                            aria-describedby="">
+                    </div>
+                    <div class="input-group-append">
+                        
+                    </div>
+                        <label class="input-group-text">ถึง</label>
+                    <div class="input-group-append">
+                        <input type="date" class="form-control" placeholder="" aria-label=""
+                            aria-describedby="">
+                    </div>
+                    
                 </div>
             </div>
         </div>
