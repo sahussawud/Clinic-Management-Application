@@ -97,7 +97,7 @@ def ChangePassword(request):
 
     return render(request, 'login/changepassword.html', context=context)
 
-
+@login_required
 def homepage(request):
     contexts = {}
     return render(request, 'User_app/index.html', context=contexts)
