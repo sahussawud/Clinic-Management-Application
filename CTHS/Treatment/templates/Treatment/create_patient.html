@@ -14,7 +14,11 @@
         <div class="row">
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
-                <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
+                {% if update %}
+                    <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' p_id %}">
+                {% else %}
+                    <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
+                {% endif %}
                     {% csrf_token %}
                     {{ form }}
                     {% comment %}

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'User_app',
     'Treatment',
     'Medicine',
-    'Summary_app'
+    'Summary_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

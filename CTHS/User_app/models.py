@@ -1,7 +1,8 @@
-import datetime
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, User
+from django import forms
 from django.db import models
 from django.forms import ModelForm
 from django.forms.widgets import (DateInput, RadioSelect, Select, Textarea,
@@ -167,6 +168,11 @@ class PatientForm(ModelForm):
             'patient_role': RadioSelect(attrs={'class': 'custom-control custom-radio'}),
             'id_code': TextInput(attrs={'class': 'form-control'}),
         }
+    def clean_birth_day(self):
+        current_date = datetime.now().date()
+        if self.cleaned_data['birth_day'] >= current_date:
+            raise forms.ValidationError("วัน/เดือน/ปี เกิดไม่ถูกต้อง !")
+        return self.cleaned_data['birth_day']
 
 class Congenital_disease(models.Model):
     name = models.CharField(_("Congenital disease name"), max_length=255)
