@@ -1,525 +1,530 @@
-{% extends "base.html" %}
-{% load static %}
+<!-- อาการทั่วไป -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="A"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx <a href="#" class="btn btn-info btn-sm"
+                    style="">สร้างใบสั่งยา</a></h5>
 
-{% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-{% endblock %}
-
-{% block style %}
-
-{% endblock %}
-
-{% block content %}
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
-    <div class="container mt-3 mb-5">
-        <div class="row" id='app'>
-            <div class="col-md-6">
-                <h2 class="mb-2">สร้างการวินิจฉัย CN : CN0001</h2>
-                <form class="needs-validation" novalidate="">
-                    <!-- ROWS OF PATIENT INFORMATION -->
-                    <div class="row">
-                        <div class="card w-100">
-                            <h5 class="card-header">ข้อมูลผู้ป่วย <a href="#" class="btn btn-info btn-sm"
-                                    style="">ข้อมูลเพิ่มเติม</a></h5>
-
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">นายสหัสวรรษ ขันรักษา (นักศึกษา)</h5>
-                                        <p class="card-text">อายุ 18 ปี 6 เดือน กลุ่มเลือด A</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p class="card-text">เเพ้ยา : -</p>
-                                        <p class="card-text">โรคประจำตัว : -</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="card w-100">
-                            <h5 class="card-header">ข้อมูลเบื้องต้น <a href="#" class="btn btn-info btn-sm"
-                                    style="">ข้อมูลเพิ่มเติม</a></h5>
-
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">Vital Sign :</h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">น้ำหนัก</th>
-                                                    <td> <input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input">
-                                                    </td>
-                                                    <th scope="row">ส่วนสูง</th>
-                                                    <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">ความดันโลหิต</th>
-                                                    <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input">
-                                                    </td>
-                                                    <th scope="row">อัตราชีพจร</th>
-                                                    <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">อุณหภูมิร่างกาย</th>
-                                                    <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input">
-                                                    </td>
-                                                    <th scope="row">อัตรการหายใจ</th>
-                                                    <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">ดัชนีมวลกาย</th>
-                                                    <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input"
-                                                            disabled></td>
-                                                    <th scope="row">ออกซิเจนในเลือด</th>
-                                                    <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="Another input">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        สภาพผู้ป่วย :
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                                id="inlineRadio1" value="option1" checked>
-                                            <label class="form-check-label" for="inlineRadio1">มาด้วยตนเอง</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                                id="inlineRadio2" value="option2">
-                                            <label class="form-check-label" for="inlineRadio2">รถพยาบาล</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                                id="inlineRadio3" value="option3">
-                                            <label class="form-check-label" for="inlineRadio3">เปลนอน</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
-                                        สภาวะผู้ป่วย :
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="emergency"
-                                                id="emergency1" value="option1" checked>
-                                            <label class="form-check-label" for="emergency1">ไม่ฉุกเฉิน</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="emergency"
-                                                id="emergency2" value="option2">
-                                            <label class="form-check-label" for="emergency2">ฉุกเฉิน</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
-                                        ใบรับรองเเพทย์ :
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="mediprint"
-                                                id="mediprint1" value="option1" checked>
-                                            <label class="form-check-label" for="mediprint1">ไม่ต้องการ</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="mediprint"
-                                                id="mediprint2" value="option2">
-                                            <label class="form-check-label" for="mediprint2">ต้องการ</label>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-5">
-                                        ประเภทการเข้ารับการรักษา :
-                                    </div>
-                                    <div class="col-md-8">
-                                        <select v-model="selected" class="custom-select my-1 mr-sm-2">
-                                            <option v-for="option in options" v-bind:value="option.value">
-                                                [[option.text]]
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                        </div>
-                    </div>
-            </div>
-
-            <!-- ทั่วไป -->
-            <div class="col-md-5 ml-3 mt-5" v-if='selected=="A"'>
+            <div class="card-body">
                 <div class="row">
-                    <div class="card w-100">
-                        <h5 class="card-header">ลักษณะอาการเบื้องต้น</h5>
-
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    อาการสำคัญ :
-                                </div>
-                                <div class="col-md-8">
-                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="15"
-                                        cols="4"></textarea>
-
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-3">
-                                    ประวัติปัจจุบัน :
-                                </div>
-                                <div class="col-md-8">
-                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="13"
-                                        cols="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-3">
+                        Treatment :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="8" cols="4"></textarea>
 
                     </div>
                 </div>
-
-            </div>
-            <!-- อาการผื่น -->
-            <div class="col-md-5 ml-3 mt-5" v-if='selected=="A"'>
-                <div class="row">
-                    <div class="card w-100">
-                        <h5 class="card-header">ลักษณะอาการเบื้องต้น : อาการผื่น</h5>
-
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    อาการสำคัญ :
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label for="disabledTextInput">ผื่นบริเวณ</label>
-                                        <input type="text" id="disabledTextInput" class="form-control"
-                                            placeholder="ผื่นบริเวณ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="disabledTextInput">เป็นมานาน (วัน)</label>
-                                        <input type="number" id="disabledTextInput" class="form-control"
-                                            placeholder="เป็นมานาน">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="disabledTextInput">สัมผัสโดน</label>
-                                        <input type="text" id="disabledTextInput" class="form-control"
-                                            placeholder="สัมผัสโดน">
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-3">
-                                    อาการร่วม :
-                                </div>
-                                <div class="col-md-8 form-check-inline">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            คัน
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                                        <label class="form-check-label" for="defaultCheck2">
-                                            ปวด
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
-                                        <label class="form-check-label" for="defaultCheck3">
-                                            เเสบ
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
-                                        <label class="form-check-label" for="defaultCheck4">
-                                            ไข้
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
-                                        <label class="form-check-label" for="defaultCheck5">
-                                            บวม
-                                        </label>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-md-3">
-                                    PE :
-                                </div>
-                                <div class="col-md-8">
-                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="6"
-                                        cols="4"></textarea>
-
-                                </div>
-                            </div>
-                        </div>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="8" cols="4"></textarea>
                     </div>
                 </div>
 
-            </div>
-
-            <!-- อุบัติเหตุ -->
-            <div class="col-md-5 ml-3 mt-5" v-if='selected=="A"'>
-                <div class="row">
-                    <div class="card w-100">
-                        <h5 class="card-header">ลักษณะอาการเบื้องต้น : อุบัติเหตุ</h5>
-
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    กรณีอุบัติเหตุจากยานพาหนะ :
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="mediprint" id="mediprint1"
-                                            value="option1">
-                                        <label class="form-check-label"
-                                            for="mediprint1">สวมหมวกกันน็อค/คาดเข็มขัดนิรภัย</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="mediprint" id="mediprint2"
-                                            value="option2">
-                                        <label class="form-check-label"
-                                            for="mediprint2">ไม่สวมหมวกกันน็อค/ไม่คาดเข็มขัดนิรภัย</label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                
-                            <div class="row mt-5">
-                                <div class="col-md-4">
-                                    บาดเเผลบริเวณ
-                                </div>
-                                <div class="col-md-7">
-                                    <input type="text" id="disabledTextInput" class="form-control"
-                                        placeholder="บาดเเผลบริเวณ">
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">บาดเเผล</th>
-                                            <th scope="col">บริเวณ</th>
-                                            <th scope="col">ขนาด(ซ.ม)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>1</th>
-                                            <th><select class="custom-select">
-                                                    <option value="1">ถลอก</option>
-                                                    <option value="2">ฉีกขาด</option>
-                                                    <option value="3">จากของมีคม</option>
-                                                    <option value="3">อื่นๆ</option>
-                                                </select></th>
-                                            <td><input type="text" id="disabledTextInput" class="form-control"
-                                                    placeholder="ผื่นบริเวณ"></td>
-                                            <td class="form-inline">
-                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                                    placeholder="กว้าง">
-                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                                    placeholder="ยาว"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>2</th>
-                                            <th><select class="custom-select">
-                                                    <option value="1">ถลอก</option>
-                                                    <option value="2">ฉีกขาด</option>
-                                                    <option value="3">จากของมีคม</option>
-                                                    <option value="3">อื่นๆ</option>
-                                                </select></th>
-                                            <td><input type="text" id="disabledTextInput" class="form-control"
-                                                    placeholder="ผื่นบริเวณ"></td>
-                                            <td class="form-inline">
-                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                                    placeholder="กว้าง">
-                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                                    placeholder="ยาว"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>3</th>
-                                            <th><select class="custom-select">
-                                                    <option value="1">ถลอก</option>
-                                                    <option value="2">ฉีกขาด</option>
-                                                    <option value="3">จากของมีคม</option>
-                                                    <option value="3">อื่นๆ</option>
-                                                </select></th>
-                                            <td><input type="text" id="disabledTextInput" class="form-control"
-                                                    placeholder="ผื่นบริเวณ"></td>
-                                            <td class="form-inline">
-                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                                    placeholder="กว้าง">
-                                                <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                                    placeholder="ยาว"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col-md-5">
-                                วันที่เกิดเหตุ : <input type="date" name="date"  class="form-control">
-                                </div>
-                                <div class="col-md-4">
-                                สถานที่เกิดเหตุ : <input type="text" name="location" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    การเจ็บป่วย/บาดเจ็บ ครั้งนี้ :
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="recured"
-                                            id="recured1" value="true" checked>
-                                        <label class="form-check-label" for="recured1">ไม่เคยรักษาที่ใดมาก่อน</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="recured"
-                                            id="recured2" value="true">
-                                        <label class="form-check-label" for="recured2">เคยรักษามาก่อน</label>
-                                    </div>
-                                    <div>
-                                        ที่ : <input type="text" class="form-control"> เวลา : <input type="time" name="recured_time" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
                     </div>
-                </div>
-
-            </div>
-
-
-            <!-- เเพทย์ -->
-            <div class="col-md-11 mt-3 ml-2">
-                <div class="row">
-                    <div class="card w-100">
-                        <h5 class="card-header">คำวินิจฉัย(ผื่น) โดย นพ.xxxx xxxxx <a href="#"
-                                class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
-
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    อาการสำคัญ :
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label for="disabledTextInput">ผื่นบริเวณ</label>
-                                        <input type="text" id="disabledTextInput" class="form-control"
-                                            placeholder="ผื่นบริเวณ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="disabledTextInput">เป็นมานาน</label>
-                                        <input type="text" id="disabledTextInput" class="form-control"
-                                            placeholder="เป็นมานาน">
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-3">
-                                    คำเเนะนำ :
-                                </div>
-                                <div class="col-md-8">
-                                    <textarea class="form-control " id="exampleFormControlTextarea1" rows="13"
-                                        cols="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
                     </div>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-11 mt-3 ml-2">
-                <div class="row">
-                    <div class="card w-100">
-                        <h5 class="card-header">ใบสั่งยา</h5>
-
-                        <div class="card-body" style='color:red'>
-                            สร้างใบสั่งยาตรงนี้
-                        </div>
-
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
                     </div>
                 </div>
             </div>
 
-            <hr class="mb-4">
-            <a class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2"
-                href="{% url 'create_diagnosis' 1 %}">ยืนยัน</a>
         </div>
-        </form>
-
-
     </div>
 
+</div>
+
+<!-- อาการผื่น/ตุ่มเเผล -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="B"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(อาการผื่น/ตุ่มเเผล) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class=" bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        L209 dermatitis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        L24 Irritant contact dermatitis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        L23 Allergic contact dermatitis
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck4">
+                                    <label class="form-check-label" for="defaultCheck4">
+                                        L50 Urticaria
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class=" bd-highlight ml-5">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="righteye"
+                                        id="defaultCheck2">
+                                    <label class="form-check-label" for="defaultCheck2">
+                                        L08 Skin infection
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck4">
+                                    <label class="form-check-label" for="defaultCheck4">
+                                        Others, please specify
+                                    </label>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Detail :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-</main>
-{% endblock %}
-{% block footer %}
-<script>
-    var app = new Vue({
-        delimiters: ['[[', ']]'],
-        el: '#app',
-        data: {
-            selected: 'A',
-            options: [
-                { text: 'ทั่วไป', value: 'A' },
-                { text: 'ผิวหนัง', value: 'B' },
-                { text: 'อุบัติเหตุ', value: 'C' },
-                { text: 'ดวงตา', value: 'D' },
-                { text: 'อาการไข้', value: 'E' },
-                { text: 'ท้องเสีย', value: 'F' },
-                { text: 'อาการปวดทุกเเห่ง', value: 'G' }
-            ]
-        }
-    })
-</script>
+</div>
 
-{% endblock %}
+<!-- ทำเเผล/เกิดอุบัติเหตุครั้งเเรก -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="C0"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ทำเเผล/เกิดอุบัติเหตุครั้งเเรก) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Detail :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Doctor Fee :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="doctor_fee" id="" class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ทำเเผลต่อเนื่อง -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="C1"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ทำเเผล/เกิดอุบัติเหตุครั้งเเรก) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Other Z480 :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- เจ็บที่ดวงตา -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="D"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ดวงตา) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Other :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- อาการไข้ -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="E"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(อาการไข้) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class="bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        J00 Acute nasopharyngitis [common cold]
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        J02.8 Acute pharyngitis due to other specified organisms
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        Other
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ท้องเสีย/โรคทางช่องท้อง -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="F"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ท้องเสีย/โรคทางช่องท้อง) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class="bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        K30 Dyspepsia
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        K52 Acute Gastroenteritis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        N30 Acute cystitis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        Other
+                                    </label>
+                                    <input type="text" name="others" id="" class="form-control" placeholder="other">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- อาการปวดทุกตำเเหน่ง -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="G"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ท้องเสีย/โรคทางช่องท้อง) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class="bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        R51 Headache
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        G43.6 Migraine
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        M62.6 Muscle strain
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        L600 Ingrowing nail
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        other
+                                    </label>
+                                    <input type="text" name="others" id="" class="form-control" placeholder="other">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+

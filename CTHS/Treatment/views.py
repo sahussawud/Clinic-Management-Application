@@ -27,5 +27,3 @@ def create_patient(request):
 def create_treatment(request, patient_id):
     return render(request, 'Treatment/create_treatment.html')
 
-def create_diagnosis(request, treatment_id):
-    return render(request, 'Treatment/create_diagnosis.html')

@@ -2,137 +2,26 @@
 {% load static %}
 
 {% block scripts %}
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 {% endblock %}
 
 {% block style %}
-<style>
-    :root {
-        --color__accent: #6200ee;
 
-        --field__background: #f5f5f5;
-        --field__background--hover: #e9e9e9;
-        --input__border: rgba(0, 0, 0, 0.42);
-        --input__border--hover: rgba(0, 0, 0, 0.62);
-        --label__color: #222;
-
-        --font__size: 16px;
-        --font__family: Roboto, Arial, sans-serif;
-    }
-
-    .floating {
-        margin-bottom: 2rem;
-        background-color: var(--field__background);
-        transition: background-color 0.2s ease;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-    }
-
-    .floating:hover,
-    .floating:focus-within {
-        background-color: var(--field__background--hover);
-    }
-
-    .floating__input {
-        padding: 0.8rem 1rem 0.6rem;
-        font-size: 1rem;
-        border-bottom: 0.1rem solid var(--input__border);
-        transition: border-color 0.2s ease;
-        caret-color: var(--color__accent);
-    }
-
-    .floating:hover .floating__input {
-        border-color: var(--input__border--hover);
-    }
-
-    .floating__input::placeholder {
-        color: rgba(0, 0, 0, 0);
-    }
-
-    .floating__label {
-        display: block;
-        position: relative;
-        max-height: 0;
-        font-weight: 500;
-        pointer-events: none;
-    }
-
-    .floating__label::before {
-        color: var(--label__color);
-        content: attr(data-content);
-        display: inline-block;
-        filter: blur(0);
-        backface-visibility: hidden;
-        transform-origin: left top;
-        transition: transform 0.2s ease;
-        left: 1rem;
-        position: relative;
-    }
-
-    .floating__label::after {
-        bottom: 1rem;
-        content: "";
-        height: 0.1rem;
-        position: absolute;
-        transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
-            opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
-        opacity: 0;
-        left: 0;
-        top: 100%;
-        margin-top: -0.1rem;
-        transform: scale3d(0, 1, 1);
-        width: 100%;
-        background-color: var(--color__accent);
-    }
-
-    .floating__input:focus+.floating__label::after {
-        transform: scale3d(1, 1, 1);
-        opacity: 1;
-    }
-
-    .floating__input:placeholder-shown+.floating__label::before {
-        transform: translate3d(0, -2.2rem, 0) scale3d(1, 1, 1);
-    }
-
-    .floating__label::before,
-    .floating__input:focus+.floating__label::before {
-        transform: translate3d(0, -3.12rem, 0) scale3d(0.82, 0.82, 1);
-    }
-
-    .floating__input:focus+.floating__label::before {
-        color: var(--color__accent);
-    }
-
-    .hidden--visually {
-        border: 0;
-        clip: rect(1px 1px 1px 1px);
-        clip: rect(1px, 1px, 1px, 1px);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-</style>
 {% endblock %}
 
 {% block content %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
     <div class="container mt-3 mb-5">
-        <div class="row">
-            <div class="col-md-8">
-                <h2 class="mb-3">สร้างประวัติการรักษา CN : CN0001</h2>
+        <div class="row" id='app'>
+            <div class="col-md-6">
+                <h2 class="mb-2">สร้างการวินิจฉัย CN : CN0001</h2>
                 <form class="needs-validation" novalidate="">
                     <!-- ROWS OF PATIENT INFORMATION -->
                     <div class="row">
                         <div class="card w-100">
                             <h5 class="card-header">ข้อมูลผู้ป่วย <a href="#" class="btn btn-info btn-sm"
-                                    style="position:relative; left:75%;">ช้อมูลเพิ่มเติม</a></h5>
+                                    style="">ข้อมูลเพิ่มเติม</a></h5>
 
                             <div class="card-body">
                                 <div class="row">
@@ -149,198 +38,194 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="card w-100">
+                            <h5 class="card-header">ข้อมูลเบื้องต้น <a href="#" class="btn btn-info btn-sm"
+                                    style="">ข้อมูลเพิ่มเติม</a></h5>
 
-                    <hr>
-                    <div class="mb-4">
-                        <div class="row mt-4">
-                            <div class="mr-3">
-                                สภาพผู้ป่วย :
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1" checked>
-                                <label class="form-check-label" for="inlineRadio1">มาด้วยตนเอง</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2">
-                                <label class="form-check-label" for="inlineRadio2">รถพยาบาล</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                                    value="option3">
-                                <label class="form-check-label" for="inlineRadio3">เปลนอน</label>
-                            </div>
-
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="mr-3">
-                                สภาวะผู้ป่วย :
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="emergency" id="emergency1"
-                                    value="option1" checked>
-                                <label class="form-check-label" for="emergency1">ไม่ฉุกเฉิน</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="emergency" id="emergency2"
-                                    value="option2">
-                                <label class="form-check-label" for="emergency2">ฉุกเฉิน</label>
-                            </div>
-
-                        </div>
-                        <div class="row mt-4">
-                            <div class="mr-3">
-                                Vital Sign :
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <div class="floating">
-                                    <input type='number' id="inputId" class="floating__input" name="input name"
-                                        placeholder="น้ำหนัก(kg)" />
-                                    <label for="inputId" class="floating__label" data-content="น้ำหนัก(kg)">
-                                        <span class="hidden--visually">น้ำหนัก(kg)</span>
-                                    </label>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">Vital Sign :</h5>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 mb-3 mr-2">
-                                <div class="floating">
-                                    <input type='number' id="inputId" class="floating__input" name="input name"
-                                        placeholder="ส่วนสูง(cm)" />
-                                    <label for="inputId" class="floating__label" data-content="ส่วนสูง(cm)">
-                                        <span class="hidden--visually">ส่วนสูง(cm)</span>
-                                    </label>
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">น้ำหนัก</th>
+                                                    <td> <input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="น้ำหนัก">
+                                                    </td>
+                                                    <th scope="row">ส่วนสูง</th>
+                                                    <td><input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="ส่วนสูง">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">ความดันโลหิต</th>
+                                                    <td><input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="ความดันโลหิต">
+                                                    </td>
+                                                    <th scope="row">อัตราชีพจร</th>
+                                                    <td><input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="อัตราชีพจร">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">อุณหภูมิร่างกาย</th>
+                                                    <td><input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="อุณหภูมิร่างกาย">
+                                                    </td>
+                                                    <th scope="row">อัตราการหายใจ</th>
+                                                    <td><input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="อัตราการหายใจ">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">ดัชนีมวลกาย</th>
+                                                    <td><input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย"
+                                                            disabled></td>
+                                                    <th scope="row">ออกซิเจนในเลือด</th>
+                                                    <td><input type="number" class="form-control"
+                                                            id="formGroupExampleInput2" placeholder="ออกซิเจนในเลือด">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 mb-3 mr-2">
-                                <div class="floating">
-                                    <input type='number' id="inputId" class="floating__input" name="input name"
-                                        placeholder="ความดันโลหิต(mmHg)" />
-                                    <label for="inputId" class="floating__label" data-content="ความดันโลหิต(mmHg)">
-                                        <span class="hidden--visually">ความดันโลหิต(mmHg)</span>
-                                    </label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        สภาพผู้ป่วย :
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio1" value="option1" checked>
+                                            <label class="form-check-label" for="inlineRadio1">มาด้วยตนเอง</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio2" value="option2">
+                                            <label class="form-check-label" for="inlineRadio2">รถพยาบาล</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio3" value="option3">
+                                            <label class="form-check-label" for="inlineRadio3">เปลนอน</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 mb-3 mr-2">
-                                <div class="floating">
-                                    <input type='number' id="inputId" class="floating__input" name="input name"
-                                        placeholder="อัตราการเต้นชีพจร(rpm)" />
-                                    <label for="inputId" class="floating__label" data-content="อัตราการเต้นชีพจร(rpm)">
-                                        <span class="hidden--visually">อัตราการเต้นชีพจร(rpm)</span>
-                                    </label>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        สภาวะผู้ป่วย :
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="emergency"
+                                                id="emergency1" value="option1" checked>
+                                            <label class="form-check-label" for="emergency1">ไม่ฉุกเฉิน</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="emergency"
+                                                id="emergency2" value="option2">
+                                            <label class="form-check-label" for="emergency2">ฉุกเฉิน</label>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        ใบรับรองเเพทย์ :
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="mediprint"
+                                                id="mediprint1" value="option1" checked>
+                                            <label class="form-check-label" for="mediprint1">ไม่ต้องการ</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="mediprint"
+                                                id="mediprint2" value="option2">
+                                            <label class="form-check-label" for="mediprint2">ต้องการ</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-5">
+                                        ประเภทการเข้ารับการรักษา :
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select v-model="selected" class="custom-select my-1 mr-sm-2">
+                                            <option v-for="option in options" v-bind:value="option.value">
+                                                [[option.text]]
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
                             </div>
                         </div>
                     </div>
-
-                    <div class="row mt-4">
-                        <div class="mr-3" style='color: white;'>
-                            Vital Sign :
-                        </div>
-                        <div class="col-md-2 mb-3">
-                            <div class="floating">
-                                <input type='number' id="inputId" class="floating__input" name="input name"
-                                    placeholder="อุณหภูมิร่างกาย" />
-                                <label for="inputId" class="floating__label" data-content="อุณหภูมิร่างกาย">
-                                    <span class="hidden--visually">อุณหภูมิร่างกาย</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-2 mb-3 mr-2">
-                            <div class="floating">
-                                <input type='number' id="inputId" class="floating__input" name="input name"
-                                    placeholder="อัตราการหายใจ" />
-                                <label for="inputId" class="floating__label" data-content="อัตราการหายใจ">
-                                    <span class="hidden--visually">อัตราการหายใจ</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3 mr-2">
-                            <div class="floating">
-                                <input type='number' id="inputId" class="floating__input" name="input name"
-                                    placeholder="ดัชนีมวลกาย(bmi)" value='12.0' />
-                                <label for="inputId" class="floating__label" data-content="ดัชนีมวลกาย(bmi)">
-                                    <span class="hidden--visually">ดัชนีมวลกาย(bmi)</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3 mr-2">
-                            <div class="floating">
-                                <input type='number' id="inputId" class="floating__input" name="input name"
-                                    placeholder="ออกซิเจนในเลือด" />
-                                <label for="inputId" class="floating__label" data-content="ออกซิเจนในเลือด">
-                                    <span class="hidden--visually">ออกซิเจนในเลือด</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- text box symstom -->
-                    <div class="row mt-4">
-                        <div class="mr-3">
-                            อาการสำคัญ :
-                        </div>
-                        <div class="col-md-10 mb-3">
-                            <textarea class="form-control " id="exampleFormControlTextarea1" rows="4"
-                                cols="4"></textarea>
-                            <div class="invalid-feedback">
-                                Please enter your shipping address.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4 mb-4">
-                        <div class="mr-3">
-                            ต้องการใบรับรองเเพทย์ :
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="emergency" id="emergency1"
-                                value="option1" checked>
-                            <label class="form-check-label" for="emergency1">ไม่ต้องการ</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="emergency" id="emergency2"
-                                value="option2">
-                            <label class="form-check-label" for="emergency2">ต้องการ</label>
-                        </div>
-
-                    </div>
-                    <div class="row mt-4 mb-4 form-inline">
-                        <div class="mr-3">
-                            ประเภทการเข้ารับการรักษา :
-                        </div>
-                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                            <option selected>Choose...</option>
-                            <option value="1">ทั่วไป</option>
-                            <option value="2">ผิวหนัง</option>
-                            <option value="3">อุบัติเหตุ</option>
-                            <option value="4">ผิวหนัง</option>
-                            <option value="5">ดวงตา</option>
-                            <option value="6">ผิวหนัง</option>
-                            <option value="7">อาการไข้</option>
-                            <option value="8">ท้องเสีย</option>
-                            <option value="9">อาการปวดทุกเเห่ง</option>
-                        </select>
-                    </div>
-
-                    <hr class="mb-4">
-                    <a class="btn btn-info btn-lg btn-block" href="{% url 'create_diagnosis' 1 %}">ขั้นตอนถัดไป</a>
             </div>
 
-            </form>
+            {% include "Treatment/create_pre_diagnosis.html" %}
 
-            
+            {% include "Treatment/create_diagnosis.html" %}
+
+
+            <div class="col-md-11 mt-3 ml-2">
+                <div class="row">
+                    <div class="card w-100">
+                        <h5 class="card-header">ใบสั่งยา</h5>
+
+                        <div class="card-body" style='color:red'>
+                            สร้างใบสั่งยาตรงนี้
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <a class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2"
+                href="">ยืนยัน</a>
         </div>
 
+
+        </form>
+
+
     </div>
-    
+
+    </div>
+
 </main>
 {% endblock %}
-<script>
-
-</script>
 {% block footer %}
-
-
+<script>
+    var app = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        data: {
+            selected: 'A',
+            options: [
+                { text: 'ทั่วไป', value: 'A' },
+                { text: 'ผิวหนัง', value: 'B' },
+                { text: 'อุบัติเหตุ', value: 'C0' },
+                { text: 'อุบัติเหตุต่อเนื่อง', value: 'C1' },
+                { text: 'ดวงตา', value: 'D' },
+                { text: 'อาการไข้', value: 'E' },
+                { text: 'ท้องเสีย', value: 'F' },
+                { text: 'อาการปวดทุกเเห่ง', value: 'G' }
+            ]
+        }
+    })
+</script>
 
 {% endblock %}
