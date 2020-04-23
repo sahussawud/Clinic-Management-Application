@@ -1,0 +1,530 @@
+<!-- อาการทั่วไป -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="A"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx <a href="#" class="btn btn-info btn-sm"
+                    style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Treatment :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="8" cols="4"></textarea>
+
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="8" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- อาการผื่น/ตุ่มเเผล -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="B"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(อาการผื่น/ตุ่มเเผล) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class=" bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        L209 dermatitis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        L24 Irritant contact dermatitis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        L23 Allergic contact dermatitis
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck4">
+                                    <label class="form-check-label" for="defaultCheck4">
+                                        L50 Urticaria
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class=" bd-highlight ml-5">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="righteye"
+                                        id="defaultCheck2">
+                                    <label class="form-check-label" for="defaultCheck2">
+                                        L08 Skin infection
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck4">
+                                    <label class="form-check-label" for="defaultCheck4">
+                                        Others, please specify
+                                    </label>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Detail :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ทำเเผล/เกิดอุบัติเหตุครั้งเเรก -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="C0"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ทำเเผล/เกิดอุบัติเหตุครั้งเเรก) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Detail :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Doctor Fee :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="doctor_fee" id="" class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ทำเเผลต่อเนื่อง -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="C1"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ทำเเผล/เกิดอุบัติเหตุครั้งเเรก) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Other Z480 :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- เจ็บที่ดวงตา -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="D"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ดวงตา) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Other :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- อาการไข้ -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="E"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(อาการไข้) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class="bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        J00 Acute nasopharyngitis [common cold]
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        J02.8 Acute pharyngitis due to other specified organisms
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        Other
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ท้องเสีย/โรคทางช่องท้อง -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="F"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ท้องเสีย/โรคทางช่องท้อง) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class="bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        K30 Dyspepsia
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        K52 Acute Gastroenteritis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        N30 Acute cystitis
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        Other
+                                    </label>
+                                    <input type="text" name="others" id="" class="form-control" placeholder="other">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- อาการปวดทุกตำเเหน่ง -->
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="G"'>
+    <div class="row">
+        <div class="card w-100">
+            <h5 class="card-header">คำวินิจฉัย(ท้องเสีย/โรคทางช่องท้อง) โดย นพ.xxxx xxxxx <a href="#"
+                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Diagosis :
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="d-flex flex-row bd-highlight mb-2">
+                            <div class="bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
+                                        id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        R51 Headache
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck3">
+                                    <label class="form-check-label" for="defaultCheck3">
+                                        G43.6 Migraine
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        M62.6 Muscle strain
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        L600 Ingrowing nail
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
+                                        id="defaultCheck5">
+                                    <label class="form-check-label" for="defaultCheck5">
+                                        other
+                                    </label>
+                                    <input type="text" name="others" id="" class="form-control" placeholder="other">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Advice :
+                    </div>
+                    <div class="col-md-8">
+                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        Follow Up Date :
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="followup" id="" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        For :
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="for_followup" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
