@@ -7,6 +7,11 @@ from User_app.models import PatientForm, Public_Health
 def home_patient(request):
     return render(request, 'Treatment/home_patient.html')
 
+def find_patient(request):
+    return render(request, 'Treatment/find_patient.html')
+
+
+
 def create_patient(request):
     if request.method == 'POST':
         form = PatientForm(request.POST)
