@@ -11,199 +11,231 @@
 
 {% block styles %}
 {% endblock %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+  <div class="container">
+    <!-- topic and filter option -->
+    <div class="row mb-3 mt-3">
+      <div class="col-lg-3">
+        <h1>จัดการคลังยา</h1>
+      </div>
+      <div class="col-lg-8 mt-3">
+        <div class="row">
+          <div class="mr-3">
+            ช่วงที่ต้องการค้นหา :
+          </div>
 
-<main role="main" class="col-md-10 ml-sm-auto col-lg-14">
-
-  <div class="row justify-content-center p-3  border ">
-
-    <div class="col-6 ">
-      <div class="row justify-content p-3 border ">
-        <div class="container">
-          <div class="row">
-            <div class="col-4">
-              <h2 class="display-7"> จัดการคลังยา</h2>
-            </div>
-            <div class="col-3 ">
-              <div class="form-group row">
-                <div class="col-sm-9">
-                  <select class="form-control form-control-sm" required="">
-                    <option value="">ค้นตาม</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-5">
-              <div class="form-group mx-sm-2 mb-2">
-                <input type="text" class="form-control" name="search" placeholder="Search...">
-              </div>
+          <div id="reportrange">
+            <div class="col-sm-12">
+              <select class="form-control form-control-ml" required="">
+                <option value="">ค้นตาม</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
             </div>
           </div>
+
+          <div class="form-check form-check-inline ml-3">
+            <input type="text" class="form-control" name="search" placeholder="Search...">
+
+          </div>
         </div>
-      </div><br>
+      </div>
+    </div>
+    <hr>
+    <!-- status -->
+
+    <!-- table -->
+    <div class="row">
+
+      <hr>
       <p class="text-right text-danger">กดเลือกรายการที่ต้องการจัดการยา</p>
-      <table class="table table-bordered table table-sm table table-striped">
-        <thead>
-          <tr>
-            <th class="table-success" scope="col">รหัสมาตรฐาน 24 หลัก</th>
-            <th class="table-success" scope="col">ชื่อยา</th>
-            <th class="table-success" scope="col">จำนวน</th>
-            <th class="table-success" scope="col">รายละเอียด</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th>100942000001010110181</th>
-            <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-            <td>10</td>
-            <td>@mdo</td>
-          </tr>
 
-        </tbody>
-      </table>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination row justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th class="table-dark">No.</th>
+              <th class="table-dark">รหัสมาตรฐาน 24 หลัก</th>
+              <th class="table-dark">ชื่อยา</th>
+              <th class="table-dark">จำนวน</th>
+              <th class="table-dark">รายละเอียด</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="table-info">1</td>
+              <td class="table-info">100942000001010110181</td>
+              <td class="table-info">3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td class="table-info">10</td>
+              <td class="table-info">@</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>100942000001010110181</td>
+              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+              <td>10</td>
+              <td>@</td>
+            </tr>
 
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination row justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
-    <div class="col-4 ">
-      <h2>การทำรายการ</h2>
-      <hr class="mb-2">
-      <table class="table table-bordered table table-sm table table-striped">
-        <thead>
-          <tr>
-            <th class="table-warning" scope="col">วันที่</th>
-            <th class="table-warning" scope="col">ประเภท</th>
-            <th class="table-warning" scope="col">หมายเลขอ้างอิง</th>
-            <th class="table-warning" scope="col">จำนวน</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-
-            <th>11/11/2020</th>
-            <td>สร้างยา</td>
-            <td>pt0001</td>
-            <td>+1000</td>
-          </tr>
-          <tr>
-            <th>11/11/2020</th>
-            <td>อัพเดจ</td>
-            <td>pt0002</td>
-            <td>-15</td>
-          </tr>
-          <tr>
-            <th>11/11/2020</th>
-            <td>ใบสั่งยา</td>
-            <td>pt0003</td>
-            <td>+500</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="p-4 border ">
-      <h3>อัพเดจจำนวนยา : </h3>
-      <p>3% NaCl (Sodium Chloride) 3 % x 1 ขวด(ขนาด 500 ml.)</p>
-      
-      <form>
-
-        <div class="form-group row">
-          <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ประเภท</label>
-          <div class="col-sm-5">
-            <select class="form-control form-control-sm" required="">
-              <option value="">ประเภทรายการ</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
-          <div class="col-sm-2">
-            <input class="form-control form-control-sm" placeholder="15">
-          </div>
-        </div>
-        <hr class="mb-4">
-        <button class="btn btn-success btn-lg btn-block" type="submit">ยืนยัน</button>
-      </form>
+    <hr>
+    <div class="col-lg-3">
+      <h3>การทำรายการล่าสุด</h3>
     </div>
+    <div class="row">
+      <div class="col-6 ">
+        <table class="table table-bordered table table-sm table table-striped">
+          <thead>
+            <tr>
+              <th class="table-dark" scope="col">วันที่</th>
+              <th class="table-dark" scope="col">ประเภท</th>
+              <th class="table-dark" scope="col">หมายเลขอ้างอิง</th>
+              <th class="table-dark" scope="col">จำนวน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <th>11/11/2020</th>
+              <td>สร้างยา</td>
+              <td>pt0001</td>
+              <td>+1000</td>
+            </tr>
+            <tr>
+              <th>11/11/2020</th>
+              <td>อัพเดจ</td>
+              <td>pt0002</td>
+              <td>-15</td>
+            </tr>
+            <tr>
+              <th>11/11/2020</th>
+              <td>ใบสั่งยา</td>
+              <td>pt0003</td>
+              <td>+500</td>
+            </tr>
+            <tr>
+              <th class="table-info" colspan="3">จำนวนปัจจุบัน</th>
+              <td class="table-info">251</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-6 ">
+        <div class="p-4 border ">
+          <h3>อัพเดจจำนวนยา : </h3>
+          <p>3% NaCl (Sodium Chloride) 3 % x 1 ขวด(ขนาด 500 ml.)</p>
+
+          <form>
+
+            <div class="form-group row">
+              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ประเภท</label>
+              <div class="col-sm-5">
+                <select class="form-control form-control-sm" required="">
+                  <option value="">ประเภทรายการ</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
+              <div class="col-sm-2">
+                <input class="form-control form-control-sm" placeholder="15">
+              </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-success btn-lg btn-block" type="submit">ยืนยัน</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
 
-
-
-
-
-
-
-
-
 </main>
-
 
 {% endblock %}
