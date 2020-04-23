@@ -19,3 +19,12 @@ def create_patient(request):
 def create_treatment(request, patient_id):
     return render(request, 'Treatment/create_treatment.html')
 
+def home_treatment(request):
+    return render(request, 'Treatment/home_treatment.html')
+
+
+def home_diagnosis(request):
+    return render(request, 'Treatment/home_diagnosis.html')
+
+def examination_room(request, room_id):
+    return render(request, 'Treatment/examination_room.html')
