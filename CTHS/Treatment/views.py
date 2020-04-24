@@ -134,10 +134,15 @@ class DrugAPIView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+'''update api to filter data'''
 class DrugWithoutPatientAPIView(APIView):
     """ API ยาทั้งหมด """
     def get(self, request):
-        items = Drug.objects.all()
+        print(request.GET.get('keywords'))
+        if request.GET.get('keywords'):
+            items = Drug.objects.filter(name__icontains=request.GET['keywords']).order_by('name')
+        else:
+            items = Drug.objects.all().order_by('name')
         serializer = DrugSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

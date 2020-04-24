@@ -9,34 +9,65 @@
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#progress_bar',
         data: {
-            form: ['', '', '', '', '', '', '', '', '', '', '', '', '', '']
-            ,
+            keywords: '',
+            filter_drug: [],
+            allegic_med: [
+                { name: 'paracetamol', detail: 'หนัก' },
+                { name: 'Adopamin', detail: 'ปานกลาง' },
+                { name: 'cecil', detail: 'น้อย' }
+            ],
+            cog_di: [
+                { name: 'โรคห่า', detail: 'หนัก' },
+                { name: 'โรคเหว', detail: 'ปานกลาง' },
+                { name: 'โรคย้า', detail: 'น้อย' }
+            ],
+            form: ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
             percent: 0
         },
         methods: {
             // a computed getter
-            update: function (weight) {
+            update: function () {
                 // `this` points to the vm instance
                 console.log('in update')
                 app.percent = 0
                 this.form.forEach(myFunction)
 
                 function myFunction(item, index, arr) {
-                    if(arr[index] != ''){
-                        app.percent = app.percent+5;
+                    if (arr[index] != '') {
+                        app.percent = app.percent + 5;
                         console.log('this.percent += 5;')
                     }
-                       
+
                 }
-                document.querySelector('.progress-bar').style.width = this.percent+'%'
-            }
+                document.querySelector('.progress-bar').style.width = this.percent + '%'
+            },
+            drug_search: function () {
+                axios.get('/treatment/patient/update/drug/?keywords=' + this.keywords, {
+
+                })
+                    .then(function (response) {
+                        console.log(response.data);
+                        app.filter_drug = response.data
+
+                        })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    },
+                        cog_add_func: function () {
+                            // `app` points to the vm instance
+                            app.cog_di_add = !(app.cog_di_add)
+
+                        }
         }
-    })
+        })
 </script>
 {% endblock %}
 {% block content %}
@@ -49,8 +80,8 @@
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
-                        aria-valuemin="0" aria-valuemax="100">[[percent]] %</div>
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100">[[percent]] %</div>
                 </div>
                 <hr>
                 {% if update %}
@@ -275,41 +306,92 @@
 
 
             </div>
+
             <div class="col-md-4 mb-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">เเพ้ยา</span>
-                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Paracetamol</h6>
-                            <small class="text-muted">รุนเเรง</small>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Adopamin</h6>
-                            <small class="text-muted">ปานกลาง</small>
-                        </div>
-                    </li>
-                </ul>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                        data-target="#exampleModalScrollable">เพิ่ม</button>
 
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalScrollableTitle">เเพ้ยา</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <!-- เมนูค้นหา -->
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="ชื่อยา" aria-label="ชื่อยา"
+                                            aria-describedby="button-addon2" v-model='keywords'>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                                v-on:click='drug_search'>ค้นหา</button>
+                                        </div>
+                                    </div>
+                                    <ol>
+                                        <li v-for='drug in filter_drug'>
+                                            [[ drug.name ]] <button>เพิ่ม</button>
+                                        </li>
+                                    </ol>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h4>
+
+                <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='med in allegic_med'>
+                    <div>
+                        <h6 class="my-0">[[ med.name ]] </h6>
+
+                    </div>
+                </li>
+
+                </ul>
+                <hr>
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">โรคประจำตัว</span>
-                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                        data-target="#disease_add">เพิ่ม</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="disease_add" tabindex="-1" role="dialog"
+                        aria-labelledby="disease_addTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="disease_addTitle">เพิ่มโรคประจำตัว</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </h4>
                 <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='disease in cog_di'>
                         <div>
-                            <h6 class="my-0">โรคปอด</h6>
-                            <small class="text-muted">ตั้งเเต่ปี 2018</small>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">โควิด-19</h6>
-                            <small class="text-muted">เดือน มีนาคม 2020</small>
+                            <h6 class="my-0">[[ disease.name ]] </h6>
+
                         </div>
                     </li>
                 </ul>
