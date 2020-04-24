@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'CTHS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cths',
+        'NAME': 'clinic',
         'USER': 'root',
         'PASSWORD': 'Bk.122789zaza',
         'HOST': 'borrabeer.ddns.net',

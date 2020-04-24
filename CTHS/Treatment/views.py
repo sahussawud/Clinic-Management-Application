@@ -63,12 +63,15 @@ def update_patient(request, patient_id):
     return render(request, 'Treatment/create_patient.html', context=context) 
 
 class Conginetal_diseaseAPIView(APIView):
+    
     def get(self, request, patient_id):
         patient = Patient.objects.get(p_id=patient_id)
         items = Congenital_disease.objects.filter(patient_id=patient)
         serializer = Congenital_diseaseSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    """
+    ต้องการเพิ่มโรคประจำตัวจากรายชื่อโรคที่มีอยู่ให้ใช้ post 
+    """
     def post(self, request, patient_id):
         print(request.data)
         serializer = Congenital_diseaseSerializer(data=request.data)
@@ -79,7 +82,9 @@ class Conginetal_diseaseAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+    """
+    ต้องการเพิ่มโรคประจำตัวใหม่ที่ไม่มีในรายชื่อโรคประจำตัวให้ใช้ patch 
+    """
     def patch(self, request, patient_id):
         print(request.data)
         serializer = Congenital_diseaseSerializer(data=request.data)

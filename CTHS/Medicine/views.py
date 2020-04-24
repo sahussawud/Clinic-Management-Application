@@ -9,3 +9,6 @@ def update_medicine(request):
 
 def home_medicine(request):
     return render(request, 'Medicine/home_medicine.html')
+
+def comfirm_dispensing(request):
+    return render(request, 'Medicine/comfirm_dispensing.html')

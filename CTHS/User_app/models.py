@@ -131,9 +131,9 @@ class Patient(models.Model):
     ]
     patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
     id_code = models.CharField(_("Personnal ID"), max_length=10, default="", null=True, unique=True)
-    hospital_refer = models.CharField(_('้hospital_refer'), max_length=255)
-    gold_card_no = models.CharField(_('gold_card_no'), max_length=10)
-
+    hospital_refer = models.CharField(_('Hospital Refer'), max_length=255, default="")
+    gold_card_no = models.CharField(_('Gold card no.'), max_length=10, default="")
+    gold_card_expire = models.DateField(_("Gold card expire date"), auto_now=False, auto_now_add=False, null=True)
 
 
     def age(self):
@@ -157,9 +157,9 @@ class PatientForm(ModelForm):
             'address': _('ที่อยู่'),
             'patient_role': _('สิทธิการรักษา'),
             'id_code': _('รหัสประจำตัว'),
-            'address': _('ที่อยู่'),
-            'hospital_refer': _('โรงพยาบาลส่งตัว'),
-            'gold_card_no': _('หมายเลขบัตรทอง'),
+            'hospital_refer': _('โรงพยาบาลที่ส่งต่อ'),
+            'gold_card_no': _('เลขที่บัตรทอง'),
+            'gold_card_expire': _('วันหมดอายุบัตรทอง'),
         }
         widgets = {
             'fname': TextInput(attrs={'class': 'form-control'}),
@@ -176,6 +176,7 @@ class PatientForm(ModelForm):
             'id_code': TextInput(attrs={'class': 'form-control'}),
             'hospital_refer': TextInput(attrs={'class': 'form-control'}),
             'gold_card_no': TextInput(attrs={'class': 'form-control'}),
+            'gold_card_expire': DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
     def clean_birth_day(self):
         current_date = datetime.now().date()

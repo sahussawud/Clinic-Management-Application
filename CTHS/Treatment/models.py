@@ -58,7 +58,7 @@ class Diagnosis(models.Model):
     diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
     advice = models.CharField(_("advice"), max_length=255)
     doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
-    follow_up = models.DateField(_("Follow up"))
+    follow_up = models.DateField(_("Follow up"), null=True)
     follow_up_for = models.CharField(_("for"), max_length=100)
 
 
