@@ -131,6 +131,10 @@ class Patient(models.Model):
     ]
     patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
     id_code = models.CharField(_("Personnal ID"), max_length=10, default="", null=True, unique=True)
+    hospital_refer = models.CharField(_('้hospital_refer'), max_length=255)
+    gold_card_no = models.CharField(_('gold_card_no'), max_length=10)
+
+
 
     def age(self):
         return int((datetime.date.today() - self.birth_day).days / 365.25 )
