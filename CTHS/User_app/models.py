@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, User
 from django import forms
@@ -133,13 +132,12 @@ class Patient(models.Model):
     id_code = models.CharField(_("Personnal ID"), max_length=10, default="", null=True, unique=True)
     hospital_refer = models.CharField(_('Hospital Refer'), max_length=255, default="")
     gold_card_no = models.CharField(_('Gold card no.'), max_length=10, default="")
-    gold_card_expire = models.DateField(_("Gold card expire date"), auto_now=False, auto_now_add=False, null=True)
+    gold_card_expire = models.DateField(_("Gold card expire date"), auto_now=False, auto_now_add=False, null=True, blank=True)
 
 
     def age(self):
         return int((datetime.date.today() - self.birth_day).days / 365.25 )
     age = property(age)
-
 
 class Congenital_disease(models.Model):
     name = models.CharField(_("Congenital disease name"), max_length=255)

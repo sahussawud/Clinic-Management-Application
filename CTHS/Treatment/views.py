@@ -6,10 +6,12 @@ from User_app.forms import PatientForm
 
 from User_app.models import Patient, Public_Health, Congenital_disease
 
+from Medicine.models import Drug
+
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import Congenital_diseaseSerializer, Congenital_diseaseSerializerWithoutPatient
+from .serializers import Congenital_diseaseSerializer, Congenital_diseaseSerializerWithoutPatient, DrugSerializer
 
 # Create your views here.
 def home_patient(request):
@@ -65,7 +67,7 @@ def update_patient(request, patient_id):
     return render(request, 'Treatment/create_patient.html', context=context) 
 
 class Conginetal_diseaseAPIView(APIView):
-    
+    """ API โรคประจำตัวของแต่ละ Patient """
     def get(self, request, patient_id):
         patient = Patient.objects.get(p_id=patient_id)
         items = Congenital_disease.objects.filter(patient_id=patient)
@@ -97,6 +99,7 @@ class Conginetal_diseaseAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class Conginetal_diseaseWithoutPatientAPIView(APIView):
+    """ API โรคประจำตัวทั้งหมด """
     def get(self, request):
         items = Congenital_disease.objects.all()
         serializer = Congenital_diseaseSerializerWithoutPatient(items, many=True)
@@ -110,6 +113,33 @@ class Conginetal_diseaseWithoutPatientAPIView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class DrugAPIView(APIView):
+    """ API ยาของแต่ละ Patient """
+    def get(self, request, patient_id):
+        patient = Patient.objects.get(p_id=patient_id)
+        items = Drug.objects.filter(patient=patient)
+        serializer = DrugSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    """
+    ต้องการเพิ่มแพ้ยาจากรายชื่อยาที่มีอยู่
+    """
+    def post(self, request, patient_id):
+        print(request.data)
+        serializer = DrugSerializer(data=request.data)
+        if 'med_sup_id' in request.data:
+            drug_data = Drug.objects.get(med_sup_id=request.data['med_sup_id'])
+            drug_data.patient.add(request.data['patient'])
+        if serializer.is_valid():
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DrugWithoutPatientAPIView(APIView):
+    """ API ยาทั้งหมด """
+    def get(self, request):
+        items = Drug.objects.all()
+        serializer = DrugSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 def create_treatment(request, patient_id):
     return render(request, 'Treatment/create_treatment.html')
