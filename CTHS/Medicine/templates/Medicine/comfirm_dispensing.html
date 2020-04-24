@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+    <div class="container mt-3 mb-5">
+        <div class="row" id='app'>
+            <div class="col-md-6">
+                <h2 class="mb-2">ยืนยันการจ่ายยา</h2>
+                <form class="needs-validation" novalidate="">
+                    <!-- ROWS OF PATIENT INFORMATION -->
+                    <div class="row">
+                        <div class="card w-100">
+                            <h5 class="card-header">รายการใบสั่งยา <a href="#" class="btn btn-info btn-sm"
+                                    style="">ข้อมูลเพิ่มเติม</a></h5>
+                            <div class="card-body">
+                                <table class="table table-bordered table table-sm table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-dark" scope="col">ลำดับที่</th>
+                                            <th class="table-dark" scope="col">รหัสการรักษา</th>
+                                            <th class="table-dark" scope="col">รหัสใบสั่งยา</th>
+                                            <th class="table-dark" scope="col">ชื่อผู้รับยา</th>
+                                            <th class="table-dark" scope="col">สถานะ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                            <th class="text-center">101</th>
+                                            <td class="text-center">CN0101</td>
+                                            <td class="text-center">PT0001</td>
+                                            <td class="text-center">สหัสวรรษ</td>
+                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">102</th>
+                                            <td class="text-center">CN0102</td>
+                                            <td class="text-center">ภูมิพงศ์ วีรพันธ์</td>
+                                            <td class="text-center">-15</td>
+                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">104</th>
+                                            <td class="text-center">CN0104</td>
+                                            <td class="text-center">PT0003</td>
+                                            <td class="text-center">เด่นภูมิ</td>
+                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">104</th>
+                                            <td class="text-center">CN0106</td>
+                                            <td class="text-center">pt0003</td>
+                                            <td class="text-center">อู๋</td>
+                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center"></br></th>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                            <td class="text-center"></br></td>
+                                        </tr>
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                                
+
+                            </div><br>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-5 ml-3 mt-5">
+                <div class="row">
+                    <div class="card w-100">
+                        <h5 class="card-header">รายละเอียดใบสั่งยา</h5>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <p><b>ใบสั่งยาเลขที่ :</b> PT0003 โดย นพ.XXXX XXXXX </p>
+                                <p><b>ให้เเก่ :</b> นาย เด่นภูมิ ศรีเมือง</p>
+                                <p><b>ลักษณะอาการเบื้องต้น :</b> ไข้มีเสมหะ ปวดหัว ตัวร้อน เป้นไข้ นอนไม่หลับ กระส่ายกระสับ</p>
+                                <p><b>คำวินิจฉัยจากเเพทย์ :</b> Negative coronavirus detect, but positive HIV</p>
+
+                            </div>
+                            <div class="row mt-4">
+                                <div class="card-body" style='color:red'>
+                                    <table class="table table-bordered table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th class="table-dark">ลำดับ</th>
+                                                <th class="table-dark">ชื่อยา/เวชภัทฑ์</th>
+                                                <th class="table-dark">จำนวน</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td class="table-info">Acetazolamide (อะเซตาโซลาไมด์) 3 % x 1 ขวด</td>
+                                                <td class="text-center">1
+
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td>Albumin (อัลบูมิน) x 1 ขวด (500 ml.)</td>
+                                                <td class="text-center">
+                                                    1
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">3</td>
+                                                <td>Aminoglycosides (อะมิโนไกลโคไซด์)</td>
+                                                <td class="text-center">
+                                                    1
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">4</td>
+                                                <td>หน้ากากอนามัย</td>
+                                                <td class="text-center">1</td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td><br /></td>
+                                                <td><br /></td>
+                                                <td><br /></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <button  type="button" class="btn btn-success btn-sm " style="float: right;">ยืนยันการจ่ายยา</button><br><br>
+                                    <p class="text-right ">โดย พว. XXXXXXXX XXXXXX</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+</main>
+
+{% endblock content %}
+
+{% block footer %}
+
+{% endblock footer %}
