@@ -128,7 +128,7 @@
                                         <span class="radio">{{ radio.tag }}</span>
                                         <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
                                     </div>
-                                    
+
                                     {% endfor %}
                                 </div>
                                 <div class="col-md-3">
@@ -138,7 +138,7 @@
                                         <span class="radio">{{ radio.tag }}</span>
                                         <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
                                     </div>
-                                    
+
                                     {% endfor %}
                                     <!-- <label for="status">สถานะ</label>
                                     <div class="custom-control custom-radio">
@@ -175,99 +175,115 @@
                                     </div>
 
 
+
+
                                 </div>
 
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <div class="col-md-6 pl-0">
-                                <label for="telephone">เบอร์โทรศัพท์</label>
-                                <input type="text" name="telephone" id="" class="form-control">
+                        <div class="row mb-3">
+                            <div class="col-md-6 ml-1">
+                                {{ form.phone.label_tag }}
+                                {{ form.phone }}
                                 <div class="invalid-feedback">
-                                    Please enter your telephone.
+                                    {{ form.phone.errors }}
                                 </div>
                             </div>
 
-                        </div>
+                            <div class="col-md-5 ml-5">
+                                {{ form.hospital_refer.label_tag }}
 
-                        <div class="mb-3">
-                            <div class="col-md-6 pl-0">
-                                <label for="address">ที่อยู่</label>
-                                <textarea class="form-control" id="address" name="address" rows="3" cols="3"></textarea>
+                                {{ form.hospital_refer }}
                                 <div class="invalid-feedback">
-                                    Please enter your shipping address.
+                                    {{ form.hospital_refer.errors }}
                                 </div>
+
                             </div>
+
+
 
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="province">จังหวัด</label>
-                                <input type="text" class="form-control" id="province" name="province" placeholder=""
-                                    required="">
+                        <div class="row mb-3">
+
+                            <div class="col-md-6 ml-1">
+                                {{ form.address.label_tag }}
+                                {{ form.address }}
                                 <div class="invalid-feedback">
-                                    Zip code required.
+                                    {{ form.address.errors }}
                                 </div>
+
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="zip">รหัสไปรษณีย์</label>
-                                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="">
+
+                            <div class="col-md-5 ml-5">
+                                {{ form.gold_card_no.label_tag }}
+
+                                {{ form.gold_card_no }}
                                 <div class="invalid-feedback">
-                                    Zip code required.
+                                    {{ form.gold_card_no.errors }}
                                 </div>
+
+                            
+
+
                             </div>
+
+
                         </div>
 
 
-                        <hr class="mb-4">
-                        <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
-                    </form>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">เเพ้ยา</span>
-                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Paracetamol</h6>
-                            <small class="text-muted">รุนเเรง</small>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Adopamin</h6>
-                            <small class="text-muted">ปานกลาง</small>
-                        </div>
-                    </li>
-                </ul>
-
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">โรคประจำตัว</span>
-                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">โรคปอด</h6>
-                            <small class="text-muted">ตั้งเเต่ปี 2018</small>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">โควิด-19</h6>
-                            <small class="text-muted">เดือน มีนาคม 2020</small>
-                        </div>
-                    </li>
-                </ul>
 
             </div>
-        </div>
+<div class="col-md-4 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">เเพ้ยา</span>
+            <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
+        </h4>
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Paracetamol</h6>
+                    <small class="text-muted">รุนเเรง</small>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Adopamin</h6>
+                    <small class="text-muted">ปานกลาง</small>
+                </div>
+            </li>
+        </ul>
+
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">โรคประจำตัว</span>
+            <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
+        </h4>
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">โรคปอด</h6>
+                    <small class="text-muted">ตั้งเเต่ปี 2018</small>
+                </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">โควิด-19</h6>
+                    <small class="text-muted">เดือน มีนาคม 2020</small>
+                </div>
+            </li>
+        </ul>
+
     </div>
+
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
+        </form>
+    </div>
+
+    
 </main>
 {% endblock %}
 

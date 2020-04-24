@@ -157,6 +157,9 @@ class PatientForm(ModelForm):
             'address': _('ที่อยู่'),
             'patient_role': _('สิทธิการรักษา'),
             'id_code': _('รหัสประจำตัว'),
+            'address': _('ที่อยู่'),
+            'hospital_refer': _('โรงพยาบาลส่งตัว'),
+            'gold_card_no': _('หมายเลขบัตรทอง'),
         }
         widgets = {
             'fname': TextInput(attrs={'class': 'form-control'}),
@@ -168,9 +171,11 @@ class PatientForm(ModelForm):
             'status': RadioSelect(attrs={'class': ''}),
             'blood_type': Select(attrs={'class': 'custom-select d-block w-100'}),
             'phone': TextInput(attrs={'class': 'form-control'}),
-            'address': Textarea(attrs={'class': 'form-control'}),
+            'address': Textarea(attrs={'class': 'form-control','rows':'4'}),
             'patient_role': RadioSelect(attrs={'class': ''}),
             'id_code': TextInput(attrs={'class': 'form-control'}),
+            'hospital_refer': TextInput(attrs={'class': 'form-control'}),
+            'gold_card_no': TextInput(attrs={'class': 'form-control'}),
         }
     def clean_birth_day(self):
         current_date = datetime.now().date()
