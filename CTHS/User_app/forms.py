@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.forms import ModelForm
 from django.forms.widgets import (DateInput, RadioSelect, Select, Textarea,
                                   TextInput)
@@ -47,3 +48,15 @@ class PatientForm(ModelForm):
         if self.cleaned_data['birth_day'] >= current_date:
             raise forms.ValidationError("วัน/เดือน/ปี เกิดไม่ถูกต้อง !")
         return self.cleaned_data['birth_day']
+
+    def clean_gold_card_expire(self):
+        current_date = datetime.now().date()
+        if self.cleaned_data['gold_card_expire']:
+            if self.cleaned_data['gold_card_expire'] >= current_date:
+                raise forms.ValidationError("วันหมดอายุบัตรทองไม่ถูกต้อง !")
+        else:
+            if "-" in self.cleaned_data['gold_card_no']:
+                return self.cleaned_data['gold_card_expire']
+            else:
+                raise forms.ValidationError("กรุณากรอกวันหมดอายุบัตรทอง !")
+        return self.cleaned_data['gold_card_expire']
