@@ -223,11 +223,17 @@
                                 <div class="invalid-feedback">
                                     {{ form.gold_card_no.errors }}
                                 </div>
-
-                            
+                                <br>
+                                {{ form.gold_card_expire.label_tag }}
+                               
+                                {{ form.gold_card_expire }}
+                                <div class="invalid-feedback">
+                                    {{ form.gold_card_expire.errors }}
+                                </div>
 
 
                             </div>
+
 
 
                         </div>
@@ -235,46 +241,46 @@
 
 
             </div>
-<div class="col-md-4 mb-4">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">เเพ้ยา</span>
-            <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
-        </h4>
-        <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                    <h6 class="my-0">Paracetamol</h6>
-                    <small class="text-muted">รุนเเรง</small>
-                </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                    <h6 class="my-0">Adopamin</h6>
-                    <small class="text-muted">ปานกลาง</small>
-                </div>
-            </li>
-        </ul>
+            <div class="col-md-4 mb-4">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">เเพ้ยา</span>
+                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Paracetamol</h6>
+                            <small class="text-muted">รุนเเรง</small>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Adopamin</h6>
+                            <small class="text-muted">ปานกลาง</small>
+                        </div>
+                    </li>
+                </ul>
 
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">โรคประจำตัว</span>
-            <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
-        </h4>
-        <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                    <h6 class="my-0">โรคปอด</h6>
-                    <small class="text-muted">ตั้งเเต่ปี 2018</small>
-                </div>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                    <h6 class="my-0">โควิด-19</h6>
-                    <small class="text-muted">เดือน มีนาคม 2020</small>
-                </div>
-            </li>
-        </ul>
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">โรคประจำตัว</span>
+                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">โรคปอด</h6>
+                            <small class="text-muted">ตั้งเเต่ปี 2018</small>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">โควิด-19</h6>
+                            <small class="text-muted">เดือน มีนาคม 2020</small>
+                        </div>
+                    </li>
+                </ul>
 
-    </div>
+            </div>
 
         </div>
 
@@ -283,7 +289,7 @@
         </form>
     </div>
 
-    
+
 </main>
 {% endblock %}
 

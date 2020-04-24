@@ -2,7 +2,9 @@ from datetime import datetime
 
 from django.shortcuts import redirect, render
 
-from User_app.models import Patient, PatientForm, Public_Health, Congenital_disease
+from User_app.forms import PatientForm
+
+from User_app.models import Patient, Public_Health, Congenital_disease
 
 from rest_framework import status
 from rest_framework.views import APIView

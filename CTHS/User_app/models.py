@@ -176,7 +176,7 @@ class PatientForm(ModelForm):
             'id_code': TextInput(attrs={'class': 'form-control'}),
             'hospital_refer': TextInput(attrs={'class': 'form-control'}),
             'gold_card_no': TextInput(attrs={'class': 'form-control'}),
-            'gold_card_expire': DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'gold_card_expire': DateInput(attrs={'class': 'form-control', 'type': 'date' }),
         }
     def clean_birth_day(self):
         current_date = datetime.now().date()
