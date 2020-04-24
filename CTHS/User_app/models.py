@@ -1,7 +1,8 @@
-import datetime
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, User
+from django import forms
 from django.db import models
 from django.forms import ModelForm
 from django.forms.widgets import (DateInput, RadioSelect, Select, Textarea,
@@ -99,14 +100,14 @@ class Patient(models.Model):
     idcard_number = models.CharField(_("ID card number"), max_length=13, default="")
     age = models.IntegerField(_("Age"))
     birth_day = models.DateField(_("Birth date"), auto_now=False, auto_now_add=False)
-    nationality = models.CharField(_("Nationality"), max_length=25, default="", choices=NATIONALITIES_CHOICE)
-    race = models.CharField(_("Race"), max_length=25, default="", choices=NATIONALITIES_CHOICE)
+    nationality = models.CharField(_("Nationality"), max_length=25, choices=NATIONALITIES_CHOICE, default='Thai')
+    race = models.CharField(_("Race"), max_length=25, choices=NATIONALITIES_CHOICE, default='Thai')
     PATIENT_STATUS_CHOICE = [
         ('S', 'โสด'),
         ('M', 'สมรส'),
         ('O', 'อื่นๆ')
     ]
-    status = models.CharField(_("Patient Condition"), max_length=1, choices=PATIENT_STATUS_CHOICE)
+    status = models.CharField(_("Patient Condition"), max_length=1, choices=PATIENT_STATUS_CHOICE, default='1')
     PATIENT_BLOOD_TYPE_CHOICE = [
         ('A', 'A'),
         ('B', 'B'),
@@ -130,6 +131,10 @@ class Patient(models.Model):
     ]
     patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
     id_code = models.CharField(_("Personnal ID"), max_length=10, default="", null=True, unique=True)
+    hospital_refer = models.CharField(_('้hospital_refer'), max_length=255)
+    gold_card_no = models.CharField(_('gold_card_no'), max_length=10)
+
+
 
     def age(self):
         return int((datetime.date.today() - self.birth_day).days / 365.25 )
@@ -160,13 +165,18 @@ class PatientForm(ModelForm):
             'birth_day': DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'nationality': Select(attrs={'class': 'custom-select d-block w-100'}),
             'race': Select(attrs={'class': 'custom-select d-block w-100'}),
-            'status': Select(attrs={'class': 'custom-select d-block w-100'}),
+            'status': RadioSelect(attrs={'class': ''}),
             'blood_type': Select(attrs={'class': 'custom-select d-block w-100'}),
             'phone': TextInput(attrs={'class': 'form-control'}),
             'address': Textarea(attrs={'class': 'form-control'}),
-            'patient_role': RadioSelect(attrs={'class': 'custom-control custom-radio'}),
+            'patient_role': RadioSelect(attrs={'class': ''}),
             'id_code': TextInput(attrs={'class': 'form-control'}),
         }
+    def clean_birth_day(self):
+        current_date = datetime.now().date()
+        if self.cleaned_data['birth_day'] >= current_date:
+            raise forms.ValidationError("วัน/เดือน/ปี เกิดไม่ถูกต้อง !")
+        return self.cleaned_data['birth_day']
 
 class Congenital_disease(models.Model):
     name = models.CharField(_("Congenital disease name"), max_length=255)

@@ -12,77 +12,93 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
     <div class="container mt-3 mb-5">
         <div class="row">
+            <div class="col-md-12">
+                {{ form.non_field_errors }}
+            </div>
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
-                <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
-                    {% csrf_token %}
-                    {{ form }}
-                    {% comment %}
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="firstName">ชื่อ</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="ชื่อ" value=""
-                                required="">
-                            <div class="invalid-feedback">
-                                Valid first name is required.
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="lastName">นามสกุล</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="นามสกุล" value=""
-                                required="">
-                            <div class="invalid-feedback">
-                                Valid last name is required.
-                            </div>
-                        </div>
-                    </div>
+                {% if update %}
+                <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' p_id %}">
+                    {% else %}
+                    <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
+                        {% endif %}
+                        {% csrf_token %}
 
-                    <div class="mb-3">
-                        <label for="username">เลขบัตรประชาชน</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="ssid" name="ssid" placeholder="ตัวอย่าง 111-110-120-1111"
-                                required="">
-                            <div class="invalid-feedback" style="width: 100%;">
-                                ssid is required.
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="mb-3">
+
                         <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label for="country">วัน/เดือน/ปี เกิด</label>
-                                <input type="date" name="dateofbirth" class="form-control">
+                            <div class="col-md-6 mb-3">
+                                {{ form.fname.label_tag }}
+                                <!-- <input type="text" class="form-control" id="{{form.fname.name}}" name="{{ form.fname.name }}" placeholder="ชื่อ" value="" required=""> -->
+                                {{form.fname}}
                                 <div class="invalid-feedback">
-                                    Please select a valid country.
+                                    {{ form.fname.errors }}
                                 </div>
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="nation">สัญชาติ</label>
-                                <select class="custom-select d-block w-100" id="nation" name="nation" required="">
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select>
+                            <div class="col-md-6 mb-3">
+                                {{ form.lname.label_tag }}
+                                <!-- <input type="text" class="form-control" id="{{form.lname.name}}" name="{{form.lname.name}}" placeholder="นามสกุล" value=""
+                                required=""> -->
+                                {{form.lname}}
                                 <div class="invalid-feedback">
-                                    Please provide a valid state.
+                                    {{ form.lname.errors }}
                                 </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="mature_land">เชื้อชาติ</label>
-                                <select class="custom-select d-block w-100" id="mature_land" name="mature_land" required="">
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select>
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            {{ form.idcard_number.label_tag }}
+                            <div class="input-group">
+                                <!-- <input type="text" class="form-control" id="ssid" name="ssid" placeholder="ตัวอย่าง 111-110-120-1111"
+                                required=""> -->
+                                {{form.idcard_number}}
+                                <div class="invalid-feedback" style="width: 100%;">
+                                    {{ form.idcard_number.errors }}
+                                </div>
+                            </div>
+                        </div>
 
-                    </div>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="patient_role">สิทธิการรักษา</label>
-                                <div class="custom-control custom-radio">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-5 mb-3">
+                                    {{ form.birth_day.label_tag }}
+                                    <!-- <input type="date" name="dateofbirth" class="form-control"> -->
+                                    {{ form.birth_day }}
+                                    <div class="invalid-feedback">
+                                        {{ form.birth_day.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {{ form.nationality.label_tag }}
+                                    <!-- <select class="custom-select d-block w-100" id="nation" name="nation" required="">
+                                    <option value="">Choose...</option>
+                                    <option>California</option>
+                                </select> -->
+                                    {{ form.nationality }}
+                                    <div class="invalid-feedback">
+                                        {{ form.nationality.errors }}
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    {{ form.race.label_tag }}
+                                    <!-- <select class="custom-select d-block w-100" id="mature_land" name="mature_land" required="">
+                                    <option value="">Choose...</option>
+                                    <option>California</option>
+                                </select> -->
+                                    {{ form.race }}
+                                    <div class="invalid-feedback">
+                                        {{ form.race.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    {{ form.patient_role.label_tag }}
+                                    <!-- <div class="custom-control custom-radio">
                                     <input id="kmtil" name="patient_role" type="radio" class="custom-control-input"
                                         checked="" required="">
                                     <label class="custom-control-label" for="kmtil">นักศึกษา</label>
@@ -106,94 +122,108 @@
                                     <input id="cmkl" name="patient_role" type="radio" class="custom-control-input"
                                         required="">
                                     <label class="custom-control-label" for="cmkl">CMKL</label>
+                                </div> -->
+                                    {% for radio in form.patient_role %}
+                                    <div class="custom-control custom-radio pl-1">
+                                        <span class="radio">{{ radio.tag }}</span>
+                                        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                    </div>
+                                    
+                                    {% endfor %}
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="status">สถานะ</label>
-                                <div class="custom-control custom-radio">
-                                    <input id="single" name="patientStatus" type="radio" class="custom-control-input"
-                                        checked="" required="">
-                                    <label class="custom-control-label" for="single">โสด</label>
+                                <div class="col-md-3">
+                                    {{ form.status.label_tag }}
+                                    {% for radio in form.status %}
+                                    <div class="custom-control custom-radio pl-1">
+                                        <span class="radio">{{ radio.tag }}</span>
+                                        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                    </div>
+                                    
+                                    {% endfor %}
+                                    <!-- <label for="status">สถานะ</label>
+                                    <div class="custom-control custom-radio">
+                                        <input id="single" name="patientStatus" type="radio"
+                                            class="custom-control-input" checked="" required="">
+                                        <label class="custom-control-label" for="single">โสด</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="marriage" name="patientStatus" type="radio"
+                                            class="custom-control-input" required="">
+                                        <label class="custom-control-label" for="marriage">สมรส</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="other" name="patientStatus" type="radio" class="custom-control-input"
+                                            required="">
+                                        <label class="custom-control-label" for="other">อื่นๆ</label>
+                                    </div> -->
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="marriage" name="patientStatus" type="radio" class="custom-control-input"
-                                        required="">
-                                    <label class="custom-control-label" for="marriage">สมรส</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="other" name="patientStatus" type="radio" class="custom-control-input"
-                                        required="">
-                                    <label class="custom-control-label" for="other">อื่นๆ</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="ref_code">รหัสประจำตัว</label>
+                                <div class="col-md-4">
+                                    {{ form.id_code.label_tag }}
 
-                                <input type="text" class="form-control" id="ref_code" name="ref_code" placeholder="ex. 61070238"
+                                    {{ form.id_code }}
+                                    <div class="invalid-feedback">
+                                        {{ form.id_code.errors }}
+                                    </div>
+
+                                    <br>
+
+                                    {{ form.blood_type.label_tag }}
+
+                                    {{ form.blood_type }}
+                                    <div class="invalid-feedback">
+                                        {{ form.blood_type.errors }}
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="col-md-6 pl-0">
+                                <label for="telephone">เบอร์โทรศัพท์</label>
+                                <input type="text" name="telephone" id="" class="form-control">
+                                <div class="invalid-feedback">
+                                    Please enter your telephone.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="col-md-6 pl-0">
+                                <label for="address">ที่อยู่</label>
+                                <textarea class="form-control" id="address" name="address" rows="3" cols="3"></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter your shipping address.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="province">จังหวัด</label>
+                                <input type="text" class="form-control" id="province" name="province" placeholder=""
                                     required="">
                                 <div class="invalid-feedback">
-                                    Please select a valid sub-district.
+                                    Zip code required.
                                 </div>
-                                <br>
-                                <label for="ref_code">กลุ่มเลือด</label>
-                                <select class="custom-select d-block w-100" id="bloodType" name="bloodType" required="">
-                                    <option value="">Choose...</option>
-                                    <option>A</option>
-                                    <option>B</option>
-                                    <option>AB</option>
-                                    <option>O</option>
-
-                                </select>
-
                             </div>
-
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="col-md-6 pl-0">
-                            <label for="telephone">เบอร์โทรศัพท์</label>
-                            <input type="text" name="telephone" id="" class="form-control">
-                            <div class="invalid-feedback">
-                                Please enter your telephone.
+                            <div class="col-md-3 mb-3">
+                                <label for="zip">รหัสไปรษณีย์</label>
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="">
+                                <div class="invalid-feedback">
+                                    Zip code required.
+                                </div>
                             </div>
                         </div>
 
-                    </div>
 
-                    <div class="mb-3">
-                        <div class="col-md-6 pl-0">
-                            <label for="address">ที่อยู่</label>
-                            <textarea class="form-control" id="address" name="address" rows="3"
-                                cols="3"></textarea>
-                            <div class="invalid-feedback">
-                                Please enter your shipping address.
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label for="province">จังหวัด</label>
-                            <input type="text" class="form-control" id="province" name="province" placeholder="" required="">
-                            <div class="invalid-feedback">
-                                Zip code required.
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="zip">รหัสไปรษณีย์</label>
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="">
-                            <div class="invalid-feedback">
-                                Zip code required.
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <hr class="mb-4">{% endcomment %}
-                    <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
-                </form>
+                        <hr class="mb-4">
+                        <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
+                    </form>
             </div>
 
             <div class="col-md-4 mb-4">
