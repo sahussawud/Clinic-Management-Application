@@ -1,30 +1,64 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block scripts %}
-
-{% endblock %}
 
 {% block styles %}
 {% endblock %}
 
+
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var app = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#progress_bar',
+        data: {
+            form: ['', '', '', '', '', '', '', '', '', '', '', '', '', '']
+            ,
+            percent: 0
+        },
+        methods: {
+            // a computed getter
+            update: function (weight) {
+                // `this` points to the vm instance
+                console.log('in update')
+                app.percent = 0
+                this.form.forEach(myFunction)
+
+                function myFunction(item, index, arr) {
+                    if(arr[index] != ''){
+                        app.percent = app.percent+5;
+                        console.log('this.percent += 5;')
+                    }
+                       
+                }
+                document.querySelector('.progress-bar').style.width = this.percent+'%'
+            }
+        }
+    })
+</script>
+{% endblock %}
 {% block content %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
     <div class="container mt-3 mb-5">
-        <div class="row">
+        <div class="row" id="progress_bar">
             <div class="col-md-12">
                 {{ form.non_field_errors }}
             </div>
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
+                        aria-valuemin="0" aria-valuemax="100">[[percent]] %</div>
+                </div>
+                <hr>
                 {% if update %}
                 <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' p_id %}">
                     {% else %}
                     <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
                         {% endif %}
                         {% csrf_token %}
-
-
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -225,7 +259,7 @@
                                 </div>
                                 <br>
                                 {{ form.gold_card_expire.label_tag }}
-                               
+
                                 {{ form.gold_card_expire }}
                                 <div class="invalid-feedback">
                                     {{ form.gold_card_expire.errors }}
