@@ -100,14 +100,14 @@ class Patient(models.Model):
     idcard_number = models.CharField(_("ID card number"), max_length=13, default="")
     age = models.IntegerField(_("Age"))
     birth_day = models.DateField(_("Birth date"), auto_now=False, auto_now_add=False)
-    nationality = models.CharField(_("Nationality"), max_length=25, default="", choices=NATIONALITIES_CHOICE)
-    race = models.CharField(_("Race"), max_length=25, default="", choices=NATIONALITIES_CHOICE)
+    nationality = models.CharField(_("Nationality"), max_length=25, choices=NATIONALITIES_CHOICE, default='Thai')
+    race = models.CharField(_("Race"), max_length=25, choices=NATIONALITIES_CHOICE, default='Thai')
     PATIENT_STATUS_CHOICE = [
         ('S', 'โสด'),
         ('M', 'สมรส'),
         ('O', 'อื่นๆ')
     ]
-    status = models.CharField(_("Patient Condition"), max_length=1, choices=PATIENT_STATUS_CHOICE)
+    status = models.CharField(_("Patient Condition"), max_length=1, choices=PATIENT_STATUS_CHOICE, default='1')
     PATIENT_BLOOD_TYPE_CHOICE = [
         ('A', 'A'),
         ('B', 'B'),
@@ -168,11 +168,11 @@ class PatientForm(ModelForm):
             'birth_day': DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'nationality': Select(attrs={'class': 'custom-select d-block w-100'}),
             'race': Select(attrs={'class': 'custom-select d-block w-100'}),
-            'status': Select(attrs={'class': 'custom-select d-block w-100'}),
+            'status': RadioSelect(attrs={'class': ''}),
             'blood_type': Select(attrs={'class': 'custom-select d-block w-100'}),
             'phone': TextInput(attrs={'class': 'form-control'}),
             'address': Textarea(attrs={'class': 'form-control'}),
-            'patient_role': RadioSelect(attrs={'class': 'custom-control custom-radio'}),
+            'patient_role': RadioSelect(attrs={'class': ''}),
             'id_code': TextInput(attrs={'class': 'form-control'}),
             'hospital_refer': TextInput(attrs={'class': 'form-control'}),
             'gold_card_no': TextInput(attrs={'class': 'form-control'}),
