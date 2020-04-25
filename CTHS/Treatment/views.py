@@ -90,7 +90,8 @@ def update_patient(request, patient_id):
 
 class Conginetal_diseaseAPIView(APIView):
     """ API โรคประจำตัวของแต่ละ Patient 
-    25/4/2020 9.38 เเก้ให้ filter เฉพาะ โรคที่ ผป ไม่เป็นอยู่ออกไป"""
+    25/4/2020 9.38 เเก้ให้ filter เฉพาะ โรคที่ ผป ไม่เป็นอยู่ออกไป
+    """
     def get(self, request, patient_id):
         patient = Patient.objects.get(p_id=patient_id)
         if request.GET.get('keywords') or request.GET.get('add'):
@@ -101,27 +102,52 @@ class Conginetal_diseaseAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     """
     ต้องการเพิ่มโรคประจำตัวจากรายชื่อโรคที่มีอยู่ให้ใช้ post 
+    DATA REQUIRED:  id : <int: ID ของโรคประจำตัวที่ต้องการเพิ่ม>
+                    name : <string: ชื่อของโรคที่ต้องการเพิ่ม>
+    *** เพิ่มโรคประจำตัวจากรายชื่อที่มีอยู่ให้กับผู้ป่วยที่ส่งมาพร้อม Path เท่านั้น ***
     """
     def post(self, request, patient_id):
         print(request.data)
         serializer = Congenital_diseaseSerializer(data=request.data)
+        patient_data = Patient.objects.get(p_id=patient_id)
         if 'id' in request.data:
             cd_data = Congenital_disease.objects.get(id=request.data['id'])
-            cd_data.patient_id.add(request.data['patient_id'])
+            cd_data.patient_id.add(patient_data)
         if serializer.is_valid():
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     """
-    ต้องการเพิ่มโรคประจำตัวใหม่ที่ไม่มีในรายชื่อโรคประจำตัวให้ใช้ patch 
+    ต้องการเพิ่มโรคประจำตัวใหม่ที่ไม่มีในรายชื่อโรคประจำตัวให้ใช้ patch
+    DATA REQUIRED: name : <string: ชื่อของโรคประจำตัวที่ต้องการเพิ่ม>
+    *** เพิ่มโรคประจำตัวจากรายชื่อที่มีอยู่ให้กับผู้ป่วยที่ส่งมาพร้อม Path เท่านั้น ***
     """
     def patch(self, request, patient_id):
         print(request.data)
+        patient_data = Patient.objects.get(p_id=patient_id)
         serializer = Congenital_diseaseSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            cd_data = serializer.save()
+            cd_data.patient_id.add(patient_data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    """
+    ลบประวัติโรคประจำตัวจากคนไข้
+    DATA REQUIRED:  id : <int: ID ของโรคประจำตัวนั้นๆ>
+                    name : <string: ชื่อของโรคที่ต้องการลบ>
+    *** ลบโรคประจำตัวจากผู้ป่วยที่ส่งมาพร้อม Path เท่านั้น ***
+    """
+    def delete(self, request, patient_id):
+        print(request.data)
+        serializer = Congenital_diseaseSerializer(data=request.data)
+        patient_data = Patient.objects.get(p_id=patient_id)
+        if 'id' in request.data:
+            cd_data = Congenital_disease.objects.get(id=request.data['id'])
+            cd_data.patient_id.remove(patient_data)
+        if serializer.is_valid():
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class Conginetal_diseaseWithoutPatientAPIView(APIView):
