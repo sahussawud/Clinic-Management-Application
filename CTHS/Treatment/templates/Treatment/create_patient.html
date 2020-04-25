@@ -171,8 +171,10 @@
                 let self = this;
                 console.log(id, name)
                 axios.delete('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
-                    id: self.id,
-                    name: self.name
+                    data: {
+                        id: self.id,
+                        name: self.name
+                    }
                 }).then(function (response) {
                     console.log(response.data);
                     self.cog_di = response.data
@@ -185,8 +187,11 @@
                 // รอเบียร์เเก้ api
                 let self = this;
                 axios.delete('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
-                    med_sup_id: self.med_sup_id,
-                    name: self.name
+                    data: {
+                        med_sup_id: self.med_sup_id,
+                    name: self.name 
+                    }
+                   
                 }).then(function (response) {
                     console.log(response.data);
                     self.allegic_med = response.data
@@ -486,7 +491,8 @@
                         [[ med.name ]]
 
                     </div>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click='delete_allegy_drug(med.med_sup_id, med.name)'>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                        v-on:click='delete_allegy_drug(med.med_sup_id, med.name)'>
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </li>
@@ -547,7 +553,8 @@
                     <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='disease in cog_di'>
                         <div>[[ disease.name ]]
                         </div>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click='delete_congenital_disease(disease.id, disease.name)'>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                            v-on:click='delete_congenital_disease(disease.id, disease.name)'>
                             <span aria-hidden="true">&times;</span>
                         </button>
 
