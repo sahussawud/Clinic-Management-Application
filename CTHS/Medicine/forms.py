@@ -23,7 +23,7 @@ class  MedicineSupplyForm(forms.ModelForm):
             'description': Textarea(attrs={'class': 'form-control form-control-sm','rows':'5',}),
         }
         lebels={
-            'sup_id': 'รหัสยา',
+            'sup_id': 'รหัสเวชภัณฑ์',
             'name': 'ชื่อยา',
             'amount': 'จำนวน',
             'description': 'รายระเอียด',
