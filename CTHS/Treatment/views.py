@@ -73,13 +73,13 @@ def update_patient(request, patient_id):
             form.save_m2m()
             context['form'] = PatientForm(instance=update_data)
             context['update'] = True
-            context['p_id'] = patient_id
+            context['patient_id'] = patient_id
             context['status'] = "อัพเดทข้อมูลเรียบร้อย !"
     else:
         if patient_data:
             context['form'] = PatientForm(instance=patient_data)
             context['update'] = True
-            context['p_id'] = patient_id
+            context['patient_id'] = patient_id
             return render(request, 'Treatment/create_patient.html', context=context)
         else:
             context['form'] = PatientForm()
