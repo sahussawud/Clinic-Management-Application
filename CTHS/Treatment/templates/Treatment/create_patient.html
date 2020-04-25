@@ -107,7 +107,7 @@
             },
             my_congenital_disease: function () {
                 // `app` points to the vm instance
-                axios.get('/treatment/patient/update/'+ this.patient_id+'/cd_api/', {
+                axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
 
                 }).then(function (response) {
                     console.log(response.data);
@@ -132,15 +132,32 @@
             }, add_congenital_disease: function (id) {
                 // รอเบียร์เเก้ api
                 congenital_disease_id = id
-                axios.post('/treatment/patient/update/'+this.patient_id+'/cd_api/', {
+                axios.post('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
                     id: congenital_disease_id,
-                          
+
                 }).then(function (response) {
                     app.allegic_med = response.data
                     console.log(response.data);
                 }).catch(function (error) {
                     console.log(error);
                 });
+            }, add_new_congenital_disease: function (id) {
+                // รอเบียร์เเก้ api
+                if (this.disease_keywords === '') {
+                    alert('กรุณากรอกชื่อโรคที่ต้องการเพิ่ม')
+                    document.getElementById('searchaddbox').focus()
+                } else {
+                    congenital_disease_id = id
+                    axios.patch('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
+                        id: congenital_disease_id,
+                        name: this.disease_keywords
+                    }).then(function (response) {
+                        console.log(response.data);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+
             }
         }
     })
@@ -455,11 +472,16 @@
                                     <!-- เมนูค้นหา -->
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="ชื่อโรค"
-                                            aria-label="ชื่อโรค" aria-describedby="button-addon2"
+                                            aria-label="ชื่อโรค" id="searchaddbox" 
                                             v-model='disease_keywords'>
+
                                         <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                            <button class="btn btn-outline-info" type="button" id="button-addon2"
                                                 v-on:click='disease_search'>ค้นหา</button>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success" type="button" id="button-addon3"
+                                                v-on:click='add_new_congenital_disease'>เพิ่ม</button>
                                         </div>
                                     </div>
                                     <ol>
