@@ -248,6 +248,16 @@ class PatientSearchAPIView(APIView):
         serializer = PatientSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class PatientAPIView(APIView):
+    """ 
+    API ดึงข้อมูลคนไข้ 
+    """
+    def get(self, request, patient_id):
+        print(request.data)
+        items = Patient.objects.get(p_id=patient_id)
+        serializer = PatientSerializer(items)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 def create_treatment(request, patient_id):
     return render(request, 'Treatment/create_treatment.html')
 

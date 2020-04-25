@@ -6,7 +6,7 @@ from User_app.models import Patient, Nurse, Doctor
 # Create your models here.
 
 class Treatment(models.Model):
-    cn = models.IntegerField(_("Clinic number"), primary_key=True)
+    cn = models.AutoField(_("Clinic number"), primary_key=True)
     weight = models.FloatField(_("Weight"))
     Height = models.FloatField(_("Height"))
     bp = models.IntegerField(_("Blood pressures"))
