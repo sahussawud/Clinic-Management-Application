@@ -212,6 +212,8 @@ class DrugAPIView(APIView):
             drug_data = Drug.objects.get(med_sup_id=request.data['med_sup_id'])
             drug_data.patient.remove(patient_data)
         if serializer.is_valid():
+            items = Drug.objects.filter(patient=patient_data).order_by('name')
+            serializer = DrugSerializer(items, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
