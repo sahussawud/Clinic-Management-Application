@@ -11,7 +11,8 @@ from Medicine.models import Drug
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import Congenital_diseaseSerializer, Congenital_diseaseSerializerWithoutPatient, DrugSerializer
+from .serializers import Congenital_diseaseSerializer, Congenital_diseaseSerializerWithoutPatient, DrugSerializer, PatientSerializer
+from django.db.models import Q
 
 # Create your views here.
 def home_patient(request):
@@ -124,11 +125,13 @@ class DrugAPIView(APIView):
     ต้องการเพิ่มแพ้ยาจากรายชื่อยาที่มีอยู่
     """
     def post(self, request, patient_id):
+        print(patient_id)
         print(request.data)
         serializer = DrugSerializer(data=request.data)
         if 'med_sup_id' in request.data:
             drug_data = Drug.objects.get(med_sup_id=request.data['med_sup_id'])
-            drug_data.patient.add(request.data['patient'])
+            patient_data = Patient.objects.get(p_id=patient_id)
+            drug_data.patient.add(patient_data)
         if serializer.is_valid():
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
@@ -139,6 +142,15 @@ class DrugWithoutPatientAPIView(APIView):
     def get(self, request):
         items = Drug.objects.all()
         serializer = DrugSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class PatientSearchAPIView(APIView):
+    """ API ค้นหาคนไข้ """
+    def get(self, request):
+        print(request.data)
+        items = Patient.objects.filter(Q(fname__icontains=request.data['search']) | Q(lname__icontains=request.data['search']) | Q(idcard_number__icontains=request.data['search'])
+        | Q(phone__icontains=request.data['search']) | Q(id_code__icontains=request.data['search']))
+        serializer = PatientSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 def create_treatment(request, patient_id):

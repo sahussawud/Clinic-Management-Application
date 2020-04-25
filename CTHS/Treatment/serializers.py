@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from User_app.models import Congenital_disease
+from User_app.models import Congenital_disease, Patient
 from Medicine.models import Drug
 
 class Congenital_diseaseSerializerWithoutPatient(serializers.Serializer):
@@ -25,4 +25,10 @@ class DrugSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drug
         fields = ['med_sup_id', 'name', 'patient']
-        read_only_fields = ['med_sup_id']
+        read_only_fields = ['med_sup_id', 'name', 'patient']
+
+class PatientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        fields = ['__all__']
+        read_only_fields = ['p_id']
