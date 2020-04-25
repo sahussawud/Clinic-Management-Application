@@ -16,7 +16,7 @@ class Dispense(models.Model):
     prescription_id = models.ForeignKey(Prescription, verbose_name=_("Prescription ID"), on_delete=models.CASCADE)
 
 class Med_supply(models.Model):
-    med_sup_id = models.IntegerField(_("Medical supply ID"), primary_key=True)
+    med_sup_id = models.AutoField(_("Medical supply ID"), primary_key=True)
     sup_id = models.CharField(_("Medical Supply ID"), max_length=24, null=True)
     name = models.CharField(_("Medical supply name"), max_length=255)
     description = models.CharField(_("Medical Supply Description"), max_length=255, default="")
@@ -24,7 +24,7 @@ class Med_supply(models.Model):
     dis_med_id = models.ManyToManyField(Dispense, verbose_name=_("Dispense ID"))
 
 class Drug(models.Model):
-    med_sup_id = models.IntegerField(_("Drug ID"), primary_key=True)
+    med_sup_id = models.AutoField(_("Drug ID"), primary_key=True)
     drug_id = models.CharField(_("Drug ID"), max_length=24, null=True)
     description = models.CharField(_("Drug Description"), max_length=255, default="")
     name = models.CharField(_("Drug name"), max_length=255)
