@@ -127,6 +127,8 @@ class Conginetal_diseaseAPIView(APIView):
         if serializer.is_valid():
             cd_data = serializer.save()
             cd_data.patient_id.add(patient_data)
+            items = Congenital_disease.objects.filter(patient_id=patient_data)
+            serializer = Congenital_diseaseSerializer(items, many=True)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
