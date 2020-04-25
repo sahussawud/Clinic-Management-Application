@@ -11,7 +11,8 @@
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-    
+    {% block scripts %}
+    {% endblock %}
     {% block style %}
     {% endblock %}
     <style>
@@ -70,8 +71,7 @@
             </span>
         </div>
     </footer>
-    {% block scripts %}
-    {% endblock %}
+    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

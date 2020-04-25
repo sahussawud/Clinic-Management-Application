@@ -6,7 +6,7 @@ from User_app.models import Patient, Nurse, Doctor
 # Create your models here.
 
 class Treatment(models.Model):
-    cn = models.IntegerField(_("Clinic number"), primary_key=True)
+    cn = models.AutoField(_("Clinic number"), primary_key=True)
     weight = models.FloatField(_("Weight"))
     Height = models.FloatField(_("Height"))
     bp = models.IntegerField(_("Blood pressures"))
@@ -49,9 +49,6 @@ class Icd_10(models.Model):
     code = models.CharField(_("code"), max_length=25)
     detail = models.CharField(_("detail"), max_length=255)
 
-# class Symptom_detail(models.Model):
-#     treatment_cn = models.ForeignKey(Treatment, verbose_name=_("Treatment Clinic number"), on_delete=models.CASCADE)
-#     symptom_id = models.OneToOneField(Symptom, verbose_name=_("Symptom ID"), on_delete=models.CASCADE)
 
 class Diagnosis(models.Model):
     icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))

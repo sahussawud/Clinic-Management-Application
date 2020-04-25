@@ -72,18 +72,15 @@ def update_patient(request, patient_id):
             update_data.save()
             form.save_m2m()
             context['form'] = PatientForm(instance=update_data)
-            context['update'] = True
-            context['patient_id'] = patient_id
-            context['status'] = "อัพเดทข้อมูลเรียบร้อย !"
+            messages.success(request, 'อัพเดทข้อมูลเรียบร้อย!')
+        context['patient_id'] = patient_data.p_id
     else:
         if patient_data:
             context['form'] = PatientForm(instance=patient_data)
-            context['update'] = True
-            context['patient_id'] = patient_id
-            return render(request, 'Treatment/create_patient.html', context=context)
+            context['patient_id'] = patient_data.p_id
         else:
             context['form'] = PatientForm()
-            context['update'] = False
+    context['update'] = True       
     return render(request, 'Treatment/create_patient.html', context=context) 
 
 class Conginetal_diseaseAPIView(APIView):

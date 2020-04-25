@@ -63,9 +63,9 @@ class PatientForm(ModelForm):
                 raise forms.ValidationError("กรุณากรอกวันหมดอายุบัตรทอง !")
         return self.cleaned_data['gold_card_expire']
 
-    def clean_id_code(self):
-        try:
-            Patient.objects.get(id_code=self.cleaned_data['id_code'])
-            raise forms.ValidationError("รหัสประจำตัวนี้ เคยลงทะเบียนเเล้ว !")
-        except Patient.DoesNotExist:
-            return self.cleaned_data['id_code']
+    # def clean_id_code(self):
+    #     try:
+    #         Patient.objects.get(id_code=self.cleaned_data['id_code'])
+    #         raise forms.ValidationError("รหัสประจำตัวนี้ เคยลงทะเบียนเเล้ว !")
+    #     except Patient.DoesNotExist:
+    #         return self.cleaned_data['id_code']

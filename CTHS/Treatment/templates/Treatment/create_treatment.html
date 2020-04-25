@@ -3,8 +3,8 @@
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
 {% endblock %}
+
 
 {% block style %}
 
@@ -161,7 +161,7 @@
                                     <div class="col-md-8">
                                         <select v-model="selected" class="custom-select my-1 mr-sm-2">
                                             <option v-for="option in options" v-bind:value="option.value">
-                                                [[option.text]]
+                                                [[ option.text ]]
                                             </option>
                                         </select>
                                     </div>

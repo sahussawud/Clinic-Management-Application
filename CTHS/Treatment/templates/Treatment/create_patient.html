@@ -442,14 +442,14 @@
 
 
                         </div>
-                        <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
+                        <button class="btn btn-info btn-lg btn-block" type="submit">{% if update %}อัพเดตข้อมูล{% else %}ขั้นตอนถัดไป{% endif %}</button>
                     </form>
 
 
 
             </div>
 
-            <div class="col-md-4 mb-4" v-if=''>
+            <div class="col-md-4 mb-4" v-if='patient_id'>
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">เเพ้ยา</span>
                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
@@ -486,7 +486,6 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -549,7 +548,6 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
