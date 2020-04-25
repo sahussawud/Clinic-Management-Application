@@ -145,44 +145,44 @@
         <hr>
         <div class="col-8">
           <div class="p-2 border ">
-            <form>
+            <form action="{% url 'add_medicine' %}" method="post">
+              {% csrf_token %}
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสยา</label>
                 <div class="col-sm-10">
-                  <input class="form-control form-control-sm" placeholder="100942000001010110181">
+                  <input class="form-control form-control-sm" placeholder="100942000001010110181" name="med_sup_id">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ชื่อยา</label>
                 <div class="col-sm-10">
-                  <input class="form-control form-control-sm" placeholder="3% NaCl (Sodium Chloride) 3 % x 1 ขวด">
+                  <input class="form-control form-control-sm" placeholder="3% NaCl (Sodium Chloride) 3 % x 1 ขวด" name="name">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ประเภทยา</label>
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ประเภท</label>
                 <div class="col-sm-10">
-                  <select class="form-control form-control-sm" required="">
+                  <select class="form-control form-control-sm" required="" name="types">
                     <option value="">Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+                    <option value="Drug">ยา</option>
+                    <option value="Med_supply">เวชภัณฑ์</option>
+                    
                   </select>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
                 <div class="col-sm-2">
-                  <input class="form-control form-control-sm" placeholder="15">
+                  <input class="form-control form-control-sm " placeholder="15" name="amount">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ที่อยู่</label>
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รายละเอียด</label>
                 <div class="col-sm-10">
                   <textarea class="form-control form-control-sm" rows="5" cols="3"></textarea>
                 </div>
               </div>
-              <center><button type="submit" class="btn btn-success">บันทึก</button></center>
+              <center><input class="btn btn-success" type="submit" value="บันทัก"></center>
             </form>
           </div>
         </div>

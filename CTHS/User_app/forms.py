@@ -1,4 +1,5 @@
 from datetime import datetime
+from django import forms
 from django.forms import ModelForm
 from django.forms.widgets import (DateInput, RadioSelect, Select, Textarea,
                                   TextInput)
@@ -6,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from User_app.models import Patient
 
 class PatientForm(ModelForm):
+    
     class Meta:
         model = Patient
         exclude = ['p_id', 'age', 'public_health_id', 'date']
@@ -52,11 +54,18 @@ class PatientForm(ModelForm):
     def clean_gold_card_expire(self):
         current_date = datetime.now().date()
         if self.cleaned_data['gold_card_expire']:
-            if self.cleaned_data['gold_card_expire'] >= current_date:
+            if self.cleaned_data['gold_card_expire'] < current_date:
                 raise forms.ValidationError("วันหมดอายุบัตรทองไม่ถูกต้อง !")
         else:
-            if "-" in self.cleaned_data['gold_card_no']:
+            if "" in self.cleaned_data['gold_card_no']:
                 return self.cleaned_data['gold_card_expire']
             else:
                 raise forms.ValidationError("กรุณากรอกวันหมดอายุบัตรทอง !")
         return self.cleaned_data['gold_card_expire']
+
+    def clean_id_code(self):
+        try:
+            Patient.objects.get(id_code=self.cleaned_data['id_code'])
+            raise forms.ValidationError("รหัสประจำตัวนี้ เคยลงทะเบียนเเล้ว !")
+        except Patient.DoesNotExist:
+            return self.cleaned_data['id_code']

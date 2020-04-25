@@ -9,31 +9,95 @@
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#progress_bar',
         data: {
-            form: ['', '', '', '', '', '', '', '', '', '', '', '', '', '']
-            ,
+            patient_id: '{% if patient_id %}{{patient_id}}{% endif %}',
+            filter_drug: [],
+            filter_disease: [],
+            keywords: '',   
+            disease_keywords: '',
+
+            allegic_med: [
+            ],
+            cog_di: [
+            ],
+
+            form: ['{% if form.fname.value %}{{form.fname.value}}{% endif %}', 
+                   '{% if form.lname.value %}{{form.lname.value}}{% endif %}', 
+                   '{% if form.idcard_number.value %}{{form.idcard_number.value}}{% endif %}', 
+                   '{% if form.birth_day.value %}{{form.birth_day.value}}{% endif %}', 
+                   '{% if form.nationality.value %}{{form.nationality.value}}{% endif %}', 
+                   '{% if form.race.value %}{{form.race.value}}{% endif %}',
+                   '{% if form.status.value %}{{form.status.value}}{% endif %}',
+                   '{% if form.blood_type.value %}{{form.blood_type.value}}{% endif %}',
+                   '{% if form.phone.value %}{{form.phone.value}}{% endif %}',
+                   '{% if form.address.value %}{{form.address.value}}{% endif %}',
+                   '{% if form.patient_role.value %}{{form.patient_role.value}}{% endif %}',
+                   '{% if form.id_code.value %}{{form.id_code.value}}{% endif %}',
+                   '{% if form.hospital_refer.value %}{{form.hospital_refer.value}}{% endif %}',
+                   '{% if form.gold_card_no.value %}{{form.gold_card_no.value}}{% endif %}',
+                   '{% if form.gold_card_expire.value %}{{form.gold_card_expire.value}}{% endif %}'
+                   ],
             percent: 0
         },
         methods: {
             // a computed getter
-            update: function (weight) {
+            update: function () {
                 // `this` points to the vm instance
                 console.log('in update')
                 app.percent = 0
                 this.form.forEach(myFunction)
 
                 function myFunction(item, index, arr) {
-                    if(arr[index] != ''){
-                        app.percent = app.percent+5;
+                    if (arr[index] != '') {
+                        app.percent = app.percent + 5;
                         console.log('this.percent += 5;')
                     }
-                       
+
                 }
-                document.querySelector('.progress-bar').style.width = this.percent+'%'
+                document.querySelector('.progress-bar').style.width = this.percent + '%'
+            },
+            drug_search: function () {
+                axios.get('/treatment/patient/update/drug/?keywords=' + this.keywords, {
+
+                }).then(function (response) {
+                    console.log(response.data);
+                    app.filter_drug = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            disease_search: function () {
+                // `app` points to the vm instance
+                axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/?keywords=' + this.disease_keyword + '?add=True', {
+
+                }).then(function (response) {
+                    console.log(response.data);
+                    app.filter_disease = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            },
+            allegic_med_p: function () {
+                // `app` points to the vm instance
+                axios.get('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
+
+                }).then(function (response) {
+                    console.log(response.data);
+                    app.allegic_med = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
             }
         }
     })
@@ -45,12 +109,28 @@
         <div class="row" id="progress_bar">
             <div class="col-md-12">
                 {{ form.non_field_errors }}
+
+                {{ form.non_field_errors }}
+
+                {% if messages %}
+                    {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger {% else %}{{message.tags}} {% endif %}
+                alert-dismissible fade show" role="alert">
+                    <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}</strong> 
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  {% endfor %}
+
+                {% endif %}
             </div>
             <div class="col-md-8">
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
-                        aria-valuemin="0" aria-valuemax="100">[[percent]] %</div>
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100">[[percent]] %</div>
                 </div>
                 <hr>
                 {% if update %}
@@ -65,18 +145,22 @@
                                 {{ form.fname.label_tag }}
                                 <!-- <input type="text" class="form-control" id="{{form.fname.name}}" name="{{ form.fname.name }}" placeholder="ชื่อ" value="" required=""> -->
                                 {{form.fname}}
-                                <div class="invalid-feedback">
-                                    {{ form.fname.errors }}
-                                </div>
+
+                                {% if form.fname.errors %}
+                                <div class="text-danger"> {{ form.fname.errors }}</div>
+                                {% endif %}
+
+
                             </div>
                             <div class="col-md-6 mb-3">
                                 {{ form.lname.label_tag }}
                                 <!-- <input type="text" class="form-control" id="{{form.lname.name}}" name="{{form.lname.name}}" placeholder="นามสกุล" value=""
                                 required=""> -->
                                 {{form.lname}}
-                                <div class="invalid-feedback">
-                                    {{ form.lname.errors }}
-                                </div>
+                                {% if form.lname.errors %}
+                                <div class="text-danger"> {{ form.lname.errors }}</div>
+                                {% endif %}
+
                             </div>
                         </div>
 
@@ -86,9 +170,11 @@
                                 <!-- <input type="text" class="form-control" id="ssid" name="ssid" placeholder="ตัวอย่าง 111-110-120-1111"
                                 required=""> -->
                                 {{form.idcard_number}}
-                                <div class="invalid-feedback" style="width: 100%;">
-                                    {{ form.idcard_number.errors }}
-                                </div>
+                                {% if form.idcard_number.errors %}
+                                <div class="text-danger"> {{ form.idcard_number.errors }}</div>
+                                {% endif %}
+
+
                             </div>
                         </div>
 
@@ -96,33 +182,29 @@
                             <div class="row">
                                 <div class="col-md-5 mb-3">
                                     {{ form.birth_day.label_tag }}
-                                    <!-- <input type="date" name="dateofbirth" class="form-control"> -->
+
                                     {{ form.birth_day }}
-                                    <div class="invalid-feedback">
-                                        {{ form.birth_day.errors }}
-                                    </div>
+                                    {% if form.birth_day.errors %}
+                                    <div class="text-danger"> {{ form.birth_day.errors }}</div>
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     {{ form.nationality.label_tag }}
-                                    <!-- <select class="custom-select d-block w-100" id="nation" name="nation" required="">
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select> -->
+
                                     {{ form.nationality }}
-                                    <div class="invalid-feedback">
-                                        {{ form.nationality.errors }}
-                                    </div>
+                                    {% if form.nationality.errors %}
+                                    <div class="text-danger"> {{ form.nationality.errors }}</div>
+                                    {% endif %}
+
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     {{ form.race.label_tag }}
-                                    <!-- <select class="custom-select d-block w-100" id="mature_land" name="mature_land" required="">
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select> -->
+
                                     {{ form.race }}
-                                    <div class="invalid-feedback">
-                                        {{ form.race.errors }}
-                                    </div>
+                                    {% if form.race.errors %}
+                                    <div class="text-danger"> {{ form.race.errors }}</div>
+                                    {% endif %}
+
                                 </div>
                             </div>
 
@@ -132,31 +214,6 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     {{ form.patient_role.label_tag }}
-                                    <!-- <div class="custom-control custom-radio">
-                                    <input id="kmtil" name="patient_role" type="radio" class="custom-control-input"
-                                        checked="" required="">
-                                    <label class="custom-control-label" for="kmtil">นักศึกษา</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="employee" name="patient_role" type="radio" class="custom-control-input"
-                                        required="">
-                                    <label class="custom-control-label" for="employee">บุคลากร</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="kosen" name="patient_role" type="radio" class="custom-control-input"
-                                        required="">
-                                    <label class="custom-control-label" for="kosen">KOSEN</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="kmids" name="patient_role" type="radio" class="custom-control-input"
-                                        required="">
-                                    <label class="custom-control-label" for="kmids">KMIDS</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="cmkl" name="patient_role" type="radio" class="custom-control-input"
-                                        required="">
-                                    <label class="custom-control-label" for="cmkl">CMKL</label>
-                                </div> -->
                                     {% for radio in form.patient_role %}
                                     <div class="custom-control custom-radio pl-1">
                                         <span class="radio">{{ radio.tag }}</span>
@@ -174,39 +231,28 @@
                                     </div>
 
                                     {% endfor %}
-                                    <!-- <label for="status">สถานะ</label>
-                                    <div class="custom-control custom-radio">
-                                        <input id="single" name="patientStatus" type="radio"
-                                            class="custom-control-input" checked="" required="">
-                                        <label class="custom-control-label" for="single">โสด</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="marriage" name="patientStatus" type="radio"
-                                            class="custom-control-input" required="">
-                                        <label class="custom-control-label" for="marriage">สมรส</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="other" name="patientStatus" type="radio" class="custom-control-input"
-                                            required="">
-                                        <label class="custom-control-label" for="other">อื่นๆ</label>
-                                    </div> -->
+
                                 </div>
                                 <div class="col-md-4">
                                     {{ form.id_code.label_tag }}
 
                                     {{ form.id_code }}
-                                    <div class="invalid-feedback">
-                                        {{ form.id_code.errors }}
-                                    </div>
+                                    
+                                    {% if form.id_code.errors %}
+                                    <div class="text-danger"> {{ form.id_code.errors }}</div>
+                                    {% endif %}
+
 
                                     <br>
 
                                     {{ form.blood_type.label_tag }}
 
                                     {{ form.blood_type }}
-                                    <div class="invalid-feedback">
-                                        {{ form.blood_type.errors }}
-                                    </div>
+
+                                    {% if form.blood_type.errors %}
+                                    <div class="text-danger"> {{ form.blood_type.errors }}</div>
+                                    {% endif %}
+
 
 
 
@@ -220,18 +266,24 @@
                             <div class="col-md-6 ml-1">
                                 {{ form.phone.label_tag }}
                                 {{ form.phone }}
-                                <div class="invalid-feedback">
-                                    {{ form.phone.errors }}
-                                </div>
+
+
+                                {% if form.phone.errors %}
+                                <div class="text-danger"> {{ form.phone.errors }}</div>
+                                {% endif %}
+
                             </div>
 
                             <div class="col-md-5 ml-5">
                                 {{ form.hospital_refer.label_tag }}
 
                                 {{ form.hospital_refer }}
-                                <div class="invalid-feedback">
-                                    {{ form.hospital_refer.errors }}
-                                </div>
+
+
+                                {% if form.hospital_refer.errors %}
+                                <div class="text-danger"> {{ form.hospital_refer.errors }}</div>
+                                {% endif %}
+
 
                             </div>
 
@@ -244,9 +296,12 @@
                             <div class="col-md-6 ml-1">
                                 {{ form.address.label_tag }}
                                 {{ form.address }}
-                                <div class="invalid-feedback">
-                                    {{ form.address.errors }}
-                                </div>
+
+
+                                {% if form.address.errors %}
+                                <div class="text-danger"> {{ form.address.errors }}</div>
+                                {% endif %}
+
 
                             </div>
 
@@ -254,16 +309,22 @@
                                 {{ form.gold_card_no.label_tag }}
 
                                 {{ form.gold_card_no }}
-                                <div class="invalid-feedback">
-                                    {{ form.gold_card_no.errors }}
-                                </div>
+
+
+                                {% if form.gold_card_no.errors %}
+                                <div class="text-danger"> {{ form.gold_card_no.errors }}</div>
+                                {% endif %}
+
                                 <br>
                                 {{ form.gold_card_expire.label_tag }}
 
                                 {{ form.gold_card_expire }}
-                                <div class="invalid-feedback">
-                                    {{ form.gold_card_expire.errors }}
-                                </div>
+
+
+                                {% if form.gold_card_expire.errors %}
+                                <div class="text-danger"> {{ form.gold_card_expire.errors }}</div>
+                                {% endif %}
+
 
 
                             </div>
@@ -271,45 +332,115 @@
 
 
                         </div>
+                        <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
+                    </form>
 
 
 
             </div>
-            <div class="col-md-4 mb-4">
+
+            <div class="col-md-4 mb-4" v-if='patient_id'>
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">เเพ้ยา</span>
-                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Paracetamol</h6>
-                            <small class="text-muted">รุนเเรง</small>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Adopamin</h6>
-                            <small class="text-muted">ปานกลาง</small>
-                        </div>
-                    </li>
-                </ul>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                        data-target="#exampleModalScrollable">เพิ่ม</button>
 
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalScrollableTitle">เเพ้ยา</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <!-- เมนูค้นหา -->
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="ชื่อยา" aria-label="ชื่อยา"
+                                            aria-describedby="button-addon2" v-model='keywords'>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                                v-on:click='drug_search'>ค้นหา</button>
+                                        </div>
+                                    </div>
+                                    <ol>
+                                        <li v-for='drug in filter_drug'>
+                                            [[ drug.name ]] <button>เพิ่ม</button>
+                                        </li>
+                                    </ol>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h4>
+
+                <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='med in allegic_med'>
+                    <div>
+                        <h6 class="my-0">[[ med.name ]] </h6>
+
+                    </div>
+                </li>
+
+                </ul>
+                <hr>
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">โรคประจำตัว</span>
-                    <button type="button" class="btn btn-success btn-sm">เพิ่ม</button>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                        data-target="#disease_add">เพิ่ม</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="disease_add" tabindex="-1" role="dialog"
+                        aria-labelledby="disease_addTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="disease_addTitle">เพิ่มโรคประจำตัว</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- เมนูค้นหา -->
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="ชื่อโรค"
+                                            aria-label="ชื่อโรค" aria-describedby="button-addon2"
+                                            v-model='disease_keywords'>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                                v-on:click='disease_search'>ค้นหา</button>
+                                        </div>
+                                    </div>
+                                    <ol>
+                                        <p>
+                                            <li v-for='drug in filter_disease'>
+                                                [[ drug.name ]] <button>เพิ่ม</button>
+                                            </li>
+                                        </p>
+
+                                    </ol>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </h4>
                 <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                    <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='disease in cog_di'>
                         <div>
-                            <h6 class="my-0">โรคปอด</h6>
-                            <small class="text-muted">ตั้งเเต่ปี 2018</small>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">โควิด-19</h6>
-                            <small class="text-muted">เดือน มีนาคม 2020</small>
+                            <h6 class="my-0">[[ disease.name ]] </h6>
+
                         </div>
                     </li>
                 </ul>
@@ -318,9 +449,6 @@
 
         </div>
 
-        <hr class="mb-4">
-        <button class="btn btn-info btn-lg btn-block" type="submit">ขั้นตอนถัดไป</button>
-        </form>
     </div>
 
 

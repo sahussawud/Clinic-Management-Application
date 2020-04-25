@@ -131,7 +131,7 @@ class Patient(models.Model):
     patient_role = models.CharField(_("Patient Role"), max_length=2, choices=PATIENT_ROLE_CHOICE, default='1')
     id_code = models.CharField(_("Personnal ID"), max_length=10, default="", null=True, unique=True)
     hospital_refer = models.CharField(_('Hospital Refer'), max_length=255, default="")
-    gold_card_no = models.CharField(_('Gold card no.'), max_length=10, default="")
+    gold_card_no = models.CharField(_('Gold card no.'), max_length=10, blank=True)
     gold_card_expire = models.DateField(_("Gold card expire date"), auto_now=False, auto_now_add=False, null=True, blank=True)
 
 

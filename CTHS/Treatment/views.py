@@ -1,10 +1,20 @@
 from datetime import datetime
 
+from django.contrib import messages
+
+from django.contrib.messages.api import success
 from django.shortcuts import redirect, render
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from Medicine.models import Drug
 from User_app.forms import PatientForm
+from User_app.models import Congenital_disease, Patient, Public_Health
 
-from User_app.models import Patient, Public_Health, Congenital_disease
+from .serializers import (Congenital_diseaseSerializer,
+                          Congenital_diseaseSerializerWithoutPatient,
+                          DrugSerializer)
 
 from Medicine.models import Drug
 
@@ -25,20 +35,31 @@ def find_treatment(request):
     return render(request, 'Treatment/find_treatment.html')
 
 def create_patient(request):
+    contexts={}
     if request.method == 'POST':
         form = PatientForm(request.POST)
         if form.is_valid():
             if request.user.id:
-                print(request.user.id)
                 new_patient = form.save(commit=False)
                 creator = Public_Health.objects.get(user_id_id=request.user.id)
                 new_patient.public_health_id = creator
                 new_patient.save()
                 form.save_m2m()
-            return redirect('index')
+                messages.success(request, 'โปรไฟล์ผู้ป่วยถูกสร้างสำเร็จ!')
+                contexts['patient_id'] =  new_patient.p_id
+                print(new_patient)
+                form = form
+        else:
+            messages.error(request, 'โปรไฟล์ผู้ป่วยถูกสร้างไม่สำเร็จ!')
+            form = PatientForm(request.POST)
+                 
     else:
         form = PatientForm()
-    return render(request, 'Treatment/create_patient.html', {'form': form})
+
+    contexts['form'] = form
+
+
+    return render(request, 'Treatment/create_patient.html',context=contexts)
 
 def update_patient(request, patient_id):
     context = {}
@@ -68,10 +89,14 @@ def update_patient(request, patient_id):
     return render(request, 'Treatment/create_patient.html', context=context) 
 
 class Conginetal_diseaseAPIView(APIView):
-    """ API โรคประจำตัวของแต่ละ Patient """
+    """ API โรคประจำตัวของแต่ละ Patient 
+    25/4/2020 9.38 เเก้ให้ filter เฉพาะ โรคที่ ผป ไม่เป็นอยู่ออกไป"""
     def get(self, request, patient_id):
         patient = Patient.objects.get(p_id=patient_id)
-        items = Congenital_disease.objects.filter(patient_id=patient)
+        if request.GET.get('keywords') or request.GET.get('add'):
+            items = Congenital_disease.objects.exclude(patient_id=patient).order_by('name')
+        else:
+            items = Congenital_disease.objects.filter(patient_id=patient).order_by('name')
         serializer = Congenital_diseaseSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     """
@@ -100,9 +125,13 @@ class Conginetal_diseaseAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class Conginetal_diseaseWithoutPatientAPIView(APIView):
-    """ API โรคประจำตัวทั้งหมด """
+    """ API โรคประจำตัวทั้งหมด
+        25/4/2020 9.38 เเก้ให้ filter เฉพาะ โรคที่ ผป ไม่ """
     def get(self, request):
-        items = Congenital_disease.objects.all()
+        if request.GET.get('keywords'):
+            items = Congenital_disease.objects.filter(name__icontains=request.GET['keywords']).order_by('name')
+        else:
+            items = Congenital_disease.objects.all().order_by('name')
         serializer = Congenital_diseaseSerializerWithoutPatient(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -118,7 +147,7 @@ class DrugAPIView(APIView):
     """ API ยาของแต่ละ Patient """
     def get(self, request, patient_id):
         patient = Patient.objects.get(p_id=patient_id)
-        items = Drug.objects.filter(patient=patient)
+        items = Drug.objects.filter(patient=patient).order_by('name')
         serializer = DrugSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     """
@@ -137,10 +166,14 @@ class DrugAPIView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+'''update api to filter data'''
 class DrugWithoutPatientAPIView(APIView):
     """ API ยาทั้งหมด """
     def get(self, request):
-        items = Drug.objects.all()
+        if request.GET.get('keywords'):
+            items = Drug.objects.filter(name__icontains=request.GET['keywords']).order_by('name')
+        else:
+            items = Drug.objects.all().order_by('name')
         serializer = DrugSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
