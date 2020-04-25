@@ -19,8 +19,7 @@
         delimiters: ['[[', ']]'],
         el: '#progress_bar',
         data: {
-            // patient_id: '{% if patient_id %}{{patient_id}}{% endif %}',
-            patient_id:1 ,
+            patient_id: '{% if patient_id %}{{patient_id}}{% endif %}',
             filter_drug: {},
             filter_disease: [],
             keywords: '',
@@ -245,10 +244,10 @@
                 </div>
                 <hr>
                 {% if update %}
-                <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' p_id %}">
-                    {% else %}
+                    <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' patient_id %}">
+                {% else %}
                     <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
-                        {% endif %}
+                {% endif %}
                         {% csrf_token %}
 
                         <div class="row">
