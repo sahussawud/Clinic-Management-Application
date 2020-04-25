@@ -12,50 +12,57 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 
+    axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#progress_bar',
         data: {
             patient_id: '{% if patient_id %}{{patient_id}}{% endif %}',
-            filter_drug: [],
+            filter_drug: {},
             filter_disease: [],
-            keywords: '',   
+            keywords: '',
             disease_keywords: '',
 
-            allegic_med: [
-            ],
-            cog_di: [
-            ],
+            allegic_med: [],
+            cog_di: [],
 
-            form: ['{% if form.fname.value %}{{form.fname.value}}{% endif %}', 
-                   '{% if form.lname.value %}{{form.lname.value}}{% endif %}', 
-                   '{% if form.idcard_number.value %}{{form.idcard_number.value}}{% endif %}', 
-                   '{% if form.birth_day.value %}{{form.birth_day.value}}{% endif %}', 
-                   '{% if form.nationality.value %}{{form.nationality.value}}{% endif %}', 
-                   '{% if form.race.value %}{{form.race.value}}{% endif %}',
-                   '{% if form.status.value %}{{form.status.value}}{% endif %}',
-                   '{% if form.blood_type.value %}{{form.blood_type.value}}{% endif %}',
-                   '{% if form.phone.value %}{{form.phone.value}}{% endif %}',
-                   '{% if form.address.value %}{{form.address.value}}{% endif %}',
-                   '{% if form.patient_role.value %}{{form.patient_role.value}}{% endif %}',
-                   '{% if form.id_code.value %}{{form.id_code.value}}{% endif %}',
-                   '{% if form.hospital_refer.value %}{{form.hospital_refer.value}}{% endif %}',
-                   '{% if form.gold_card_no.value %}{{form.gold_card_no.value}}{% endif %}',
-                   '{% if form.gold_card_expire.value %}{{form.gold_card_expire.value}}{% endif %}'
-                   ],
+            form: ['{% if form.fname.value %}{{form.fname.value}}{% endif %}',
+                '{% if form.lname.value %}{{form.lname.value}}{% endif %}',
+                '{% if form.idcard_number.value %}{{form.idcard_number.value}}{% endif %}',
+                '{% if form.birth_day.value %}{{form.birth_day.value}}{% endif %}',
+                '{% if form.nationality.value %}{{form.nationality.value}}{% endif %}',
+                '{% if form.race.value %}{{form.race.value}}{% endif %}',
+                '{% if form.status.value %}{{form.status.value}}{% endif %}',
+                '{% if form.blood_type.value %}{{form.blood_type.value}}{% endif %}',
+                '{% if form.phone.value %}{{form.phone.value}}{% endif %}',
+                '{% if form.address.value %}{{form.address.value}}{% endif %}',
+                '{% if form.patient_role.value %}{{form.patient_role.value}}{% endif %}',
+                '{% if form.id_code.value %}{{form.id_code.value}}{% endif %}',
+                '{% if form.hospital_refer.value %}{{form.hospital_refer.value}}{% endif %}',
+                '{% if form.gold_card_no.value %}{{form.gold_card_no.value}}{% endif %}',
+                '{% if form.gold_card_expire.value %}{{form.gold_card_expire.value}}{% endif %}'
+            ],
             percent: 0
+        },
+        watch: {
+            // whenever question changes, this function will run
+            
+            
         },
         methods: {
             // a computed getter
             update: function () {
                 // `this` points to the vm instance
+                let self = this;
                 console.log('in update')
-                app.percent = 0
+                this.percent = 0
                 this.form.forEach(myFunction)
 
                 function myFunction(item, index, arr) {
                     if (arr[index] != '') {
-                        app.percent = app.percent + 5;
+                        self.percent = self.percent + 5;
                         console.log('this.percent += 5;')
                     }
 
@@ -63,11 +70,15 @@
                 document.querySelector('.progress-bar').style.width = this.percent + '%'
             },
             drug_search: function () {
-                axios.get('/treatment/patient/update/drug/?keywords=' + this.keywords, {
-
+                let self = this;
+                axios.get('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
+                    params:{
+                       keywords: self.keywords 
+                    }
+                    
                 }).then(function (response) {
                     console.log(response.data);
-                    app.filter_drug = response.data
+                    self.filter_drug = response.data
 
                 }).catch(function (error) {
                     console.log(error);
@@ -75,19 +86,22 @@
             },
             disease_search: function () {
                 // `app` points to the vm instance
-                axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/?keywords=' + this.disease_keyword + '?add=True', {
-
+                let self = this;
+                axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
+                    params: {
+                        keywords: self.disease_keywords
+                    }
                 }).then(function (response) {
                     console.log(response.data);
-                    app.filter_disease = response.data
+                    self.filter_disease = response.data
 
                 }).catch(function (error) {
                     console.log(error);
                 });
-
             },
-            allegic_med_p: function () {
+            my_allegic_drug: function () {
                 // `app` points to the vm instance
+                let self = this;
                 axios.get('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
 
                 }).then(function (response) {
@@ -97,9 +111,105 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            my_congenital_disease: function () {
+                // `self` points to the vm instance
+                let self = this;
+                axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
 
+                }).then(function (response) {
+                    console.log(response.data);
+                    app.cog_di = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
-        }
+            , add_allegy_drug: function (med_sup_id) {
+                // รอเบียร์เเก้ api
+                let self = this;
+                med_sup = med_sup_id
+                axios.post('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
+                    med_sup_id: med_sup
+                }).then(function (response) {
+                    self.allegic_med = response.data
+                    console.log(response.data);
+                   
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }, add_congenital_disease: function (id, name) {
+                // รอเบียร์เเก้ api
+                let self = this;
+                congenital_disease_id = id
+                axios.post('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
+                    id: congenital_disease_id,
+                    name: name
+
+                }).then(function (response) {
+                    self.cog_di = response.data
+                    console.log(response.data);
+                  
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }, add_new_congenital_disease: function (id) {
+                // รอเบียร์เเก้ api
+                let self = this;
+                if (this.disease_keywords === '') {
+                    alert('กรุณากรอกชื่อโรคที่ต้องการเพิ่มให้กับผู้ป่วย')
+                    document.getElementById('searchaddbox').focus()
+                } else {
+                    congenital_disease_id = id
+                    axios.patch('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
+                        name: this.disease_keywords
+                    }).then(function (response) {
+                        console.log(response.data);
+                        self.cog_di = response.data
+                        
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+
+            }, delete_congenital_disease: function (id, name) {
+                let self = this;
+                console.log(id, name)
+                axios.delete('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
+                    data: {
+                        id: id,
+                        name: name
+                    }
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.cog_di = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+            , delete_allegy_drug: function (med_sup_id, name) {
+                let self = this
+                console.log(med_sup_id, name)
+                // รอเบียร์เเก้ api
+                axios.delete('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
+                    data: {
+                        med_sup_id: med_sup_id,
+                        name: name
+                    }
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.allegic_med = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+
+        }, created() {
+            this.update()
+            this.my_allegic_drug()
+            this.my_congenital_disease()
+        },
     })
 </script>
 {% endblock %}
@@ -113,16 +223,16 @@
                 {{ form.non_field_errors }}
 
                 {% if messages %}
-                    {% for message in messages %}
+                {% for message in messages %}
                 <div class="alert alert-{% if message.tags == 'error' %}danger {% else %}{{message.tags}} {% endif %}
                 alert-dismissible fade show" role="alert">
-                    <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}</strong> 
+                    <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}</strong>
                     {{ message }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                  </div>
-                  {% endfor %}
+                </div>
+                {% endfor %}
 
                 {% endif %}
             </div>
@@ -134,10 +244,10 @@
                 </div>
                 <hr>
                 {% if update %}
-                <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' p_id %}">
-                    {% else %}
+                    <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' patient_id %}">
+                {% else %}
                     <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
-                        {% endif %}
+                {% endif %}
                         {% csrf_token %}
 
                         <div class="row">
@@ -237,7 +347,7 @@
                                     {{ form.id_code.label_tag }}
 
                                     {{ form.id_code }}
-                                    
+
                                     {% if form.id_code.errors %}
                                     <div class="text-danger"> {{ form.id_code.errors }}</div>
                                     {% endif %}
@@ -339,7 +449,7 @@
 
             </div>
 
-            <div class="col-md-4 mb-4" v-if='patient_id'>
+            <div class="col-md-4 mb-4" v-if=''>
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">เเพ้ยา</span>
                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
@@ -369,7 +479,8 @@
                                     </div>
                                     <ol>
                                         <li v-for='drug in filter_drug'>
-                                            [[ drug.name ]] <button>เพิ่ม</button>
+                                            [[ drug.name ]] <button class="btn btm-sm btn-success"
+                                                v-on:click='add_allegy_drug(drug.med_sup_id)'>เพิ่ม</button>
                                         </li>
                                     </ol>
                                 </div>
@@ -384,9 +495,13 @@
 
                 <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='med in allegic_med'>
                     <div>
-                        <h6 class="my-0">[[ med.name ]] </h6>
+                        [[ med.name ]]
 
                     </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                        v-on:click='delete_allegy_drug(med.med_sup_id, med.name)'>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </li>
 
                 </ul>
@@ -411,17 +526,22 @@
                                     <!-- เมนูค้นหา -->
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="ชื่อโรค"
-                                            aria-label="ชื่อโรค" aria-describedby="button-addon2"
-                                            v-model='disease_keywords'>
+                                            aria-label="ชื่อโรค" id="searchaddbox" v-model='disease_keywords'>
+
                                         <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                            <button class="btn btn-outline-info" type="button" id="button-addon2"
                                                 v-on:click='disease_search'>ค้นหา</button>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success" type="button" id="button-addon3"
+                                                v-on:click='add_new_congenital_disease'>เพิ่ม</button>
                                         </div>
                                     </div>
                                     <ol>
                                         <p>
-                                            <li v-for='drug in filter_disease'>
-                                                [[ drug.name ]] <button>เพิ่ม</button>
+                                            <li v-for='disease in filter_disease'>
+                                                [[ disease.name ]] <button class="btn btm-sm btn-success"
+                                                    v-on:click='add_congenital_disease(disease.id, disease.name)'>เพิ่ม</button>
                                             </li>
                                         </p>
 
@@ -438,16 +558,20 @@
                 <ul class="list-group mb-3">
 
                     <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='disease in cog_di'>
-                        <div>
-                            <h6 class="my-0">[[ disease.name ]] </h6>
-
+                        <div>[[ disease.name ]]
                         </div>
-                    </li>
-                </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                            v-on:click='delete_congenital_disease(disease.id, disease.name)'>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
 
             </div>
+            </li>
+            </ul>
 
         </div>
+
+    </div>
 
     </div>
 

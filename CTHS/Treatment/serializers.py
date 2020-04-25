@@ -18,17 +18,17 @@ class Congenital_diseaseSerializerWithoutPatient(serializers.Serializer):
 class Congenital_diseaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Congenital_disease
-        fields = ['id', 'name', 'patient_id']
+        fields = ['id', 'name']
         read_only_fields = ['id']
 
 class DrugSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drug
-        fields = ['med_sup_id', 'name', 'patient']
-        read_only_fields = ['med_sup_id', 'name', 'patient']
+        fields = ['med_sup_id', 'name']
+        read_only_fields = ['med_sup_id', 'name']
 
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ['__all__']
+        fields = '__all__'
         read_only_fields = ['p_id']
