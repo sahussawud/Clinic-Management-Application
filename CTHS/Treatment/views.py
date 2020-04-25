@@ -47,8 +47,6 @@ def create_patient(request):
                 form.save_m2m()
                 messages.success(request, 'โปรไฟล์ผู้ป่วยถูกสร้างสำเร็จ!')
                 contexts['patient_id'] =  new_patient.p_id
-                print(new_patient)
-                form = form
         else:
             messages.error(request, 'โปรไฟล์ผู้ป่วยถูกสร้างไม่สำเร็จ!')
             form = PatientForm(request.POST)
