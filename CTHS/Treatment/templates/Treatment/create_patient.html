@@ -19,7 +19,8 @@
         delimiters: ['[[', ']]'],
         el: '#progress_bar',
         data: {
-            patient_id: '{% if patient_id %}{{patient_id}}{% endif %}',
+            // patient_id: '{% if patient_id %}{{patient_id}}{% endif %}',
+            patient_id:1 ,
             filter_drug: {},
             filter_disease: [],
             keywords: '',
@@ -48,10 +49,8 @@
         },
         watch: {
             // whenever question changes, this function will run
-            patient_id: function () {
-                this.my_allegic_drug()
-                this.my_congenital_disease()
-            }
+            
+            
         },
         methods: {
             // a computed getter
@@ -73,8 +72,11 @@
             },
             drug_search: function () {
                 let self = this;
-                axios.get('/treatment/patient/update/drug/?keywords=' + this.keywords, {
-
+                axios.get('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
+                    params:{
+                       keywords: self.keywords 
+                    }
+                    
                 }).then(function (response) {
                     console.log(response.data);
                     self.filter_drug = response.data
@@ -86,8 +88,10 @@
             disease_search: function () {
                 // `app` points to the vm instance
                 let self = this;
-                axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/?keywords=' + this.disease_keyword + '?add=True', {
-
+                axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
+                    params: {
+                        keywords: self.disease_keywords
+                    }
                 }).then(function (response) {
                     console.log(response.data);
                     self.filter_disease = response.data
@@ -103,7 +107,7 @@
 
                 }).then(function (response) {
                     console.log(response.data);
-                    self.allegic_med = response.data
+                    app.allegic_med = response.data
 
                 }).catch(function (error) {
                     console.log(error);
@@ -116,7 +120,7 @@
 
                 }).then(function (response) {
                     console.log(response.data);
-                    self.cog_di = response.data
+                    app.cog_di = response.data
 
                 }).catch(function (error) {
                     console.log(error);
@@ -131,6 +135,7 @@
                 }).then(function (response) {
                     self.allegic_med = response.data
                     console.log(response.data);
+                   
 
                 }).catch(function (error) {
                     console.log(error);
@@ -146,6 +151,7 @@
                 }).then(function (response) {
                     self.cog_di = response.data
                     console.log(response.data);
+                  
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -162,6 +168,7 @@
                     }).then(function (response) {
                         console.log(response.data);
                         self.cog_di = response.data
+                        
                     }).catch(function (error) {
                         console.log(error);
                     });
@@ -183,14 +190,14 @@
                 });
             }
             , delete_allegy_drug: function (med_sup_id, name) {
+                let self = this
                 console.log(med_sup_id, name)
                 // รอเบียร์เเก้ api
                 axios.delete('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
                     data: {
                         med_sup_id: med_sup_id,
-                        name: name 
+                        name: name
                     }
-                   
                 }).then(function (response) {
                     console.log(response.data);
                     self.allegic_med = response.data
@@ -201,6 +208,8 @@
 
         }, created() {
             this.update()
+            this.my_allegic_drug()
+            this.my_congenital_disease()
         },
     })
 </script>

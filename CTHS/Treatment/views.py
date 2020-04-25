@@ -92,8 +92,9 @@ class Conginetal_diseaseAPIView(APIView):
     """
     def get(self, request, patient_id):
         patient = Patient.objects.get(p_id=patient_id)
-        if request.GET.get('keywords') or request.GET.get('add'):
-            items = Congenital_disease.objects.exclude(patient_id=patient).order_by('name')
+        print(request.data)
+        if 'keywords' in request.GET:
+            items = Congenital_disease.objects.exclude(patient_id=patient).filter(name__icontains=request.GET['keywords']).order_by('name')
         else:
             items = Congenital_disease.objects.filter(patient_id=patient).order_by('name')
         serializer = Congenital_diseaseSerializer(items, many=True)
@@ -158,7 +159,8 @@ class Conginetal_diseaseWithoutPatientAPIView(APIView):
     """ API โรคประจำตัวทั้งหมด
         25/4/2020 9.38 เเก้ให้ filter เฉพาะ โรคที่ ผป ไม่ """
     def get(self, request):
-        if request.GET.get('keywords'):
+        if 'keywords' in request.GET:
+            print(request.GET['keywords'])
             items = Congenital_disease.objects.filter(name__icontains=request.GET['keywords']).order_by('name')
         else:
             items = Congenital_disease.objects.all().order_by('name')
@@ -177,7 +179,11 @@ class DrugAPIView(APIView):
     """ API ยาของแต่ละ Patient """
     def get(self, request, patient_id):
         patient = Patient.objects.get(p_id=patient_id)
-        items = Drug.objects.filter(patient=patient).order_by('name')
+        if 'keywords' in request.GET:
+            items = Drug.objects.exclude(patient=patient).filter(name__icontains=request.GET['keywords']).order_by('name')
+            print(items)
+        else:
+            items = Drug.objects.filter(patient=patient).order_by('name')
         serializer = DrugSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     """
