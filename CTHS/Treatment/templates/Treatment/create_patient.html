@@ -172,8 +172,8 @@
                 console.log(id, name)
                 axios.delete('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
                     data: {
-                        id: self.id,
-                        name: self.name
+                        id: id,
+                        name: name
                     }
                 }).then(function (response) {
                     console.log(response.data);
@@ -185,11 +185,10 @@
             , delete_allegy_drug: function (med_sup_id, name) {
                 console.log(med_sup_id, name)
                 // รอเบียร์เเก้ api
-                let self = this;
                 axios.delete('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
                     data: {
-                        med_sup_id: self.med_sup_id,
-                    name: self.name 
+                        med_sup_id: med_sup_id,
+                        name: name 
                     }
                    
                 }).then(function (response) {
