@@ -192,6 +192,25 @@ class DrugAPIView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    """
+    ลบประวัติแพ้ยาจากคนไข้
+    DATA REQUIRED:  med_sup_id : <int: ID ของแพ้ยานั้นๆ>
+                    name : <string: ชื่อของยาที่ต้องการลบ>
+    *** ลบแพ้ยาจากผู้ป่วยที่ส่งมาพร้อม Path เท่านั้น ***
+    """
+    def delete(self, request, patient_id):
+        print(request.data)
+        serializer = DrugSerializer(data=request.data)
+        patient_data = Patient.objects.get(p_id=patient_id)
+        if 'med_sup_id' in request.data:
+            drug_data = Drug.objects.get(med_sup_id=request.data['med_sup_id'])
+            drug_data.patient.remove(patient_data)
+        if serializer.is_valid():
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
 '''update api to filter data'''
 class DrugWithoutPatientAPIView(APIView):
     """ API ยาทั้งหมด """
