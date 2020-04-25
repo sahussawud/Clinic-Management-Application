@@ -144,44 +144,90 @@
         </div>
         <hr>
         <div class="col-8">
-          <div class="p-2 border ">
-            <form action="{% url 'add_medicine' %}" method="post">
-              {% csrf_token %}
-              <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสยา</label>
-                <div class="col-sm-10">
-                  <input class="form-control form-control-sm" placeholder="100942000001010110181" name="med_sup_id">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ชื่อยา</label>
-                <div class="col-sm-10">
-                  <input class="form-control form-control-sm" placeholder="3% NaCl (Sodium Chloride) 3 % x 1 ขวด" name="name">
-                </div>
-              </div>
-              <div class="form-group row">
+        <form action="{% url 'add_medicine' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ประเภท</label>
                 <div class="col-sm-10">
-                  <select class="form-control form-control-sm" required="" name="types">
-                    <option value="">Choose...</option>
+                  <select class="form-control form-control-sm" required="" name="types" >
+                    <option value="" >Choose...</option>
                     <option value="Drug">ยา</option>
                     <option value="Med_supply">เวชภัณฑ์</option>
                     
                   </select>
                 </div>
               </div>
+              </form>
+              <!-- from Drug -->
+          <div class="p-2 border ">
+            <form action="{% url 'add_medicine' %}" method="post">
+              {% csrf_token %}
+
+              <!-- from Drug -->
+              <div class="form-group row"  v-if='selected=="A"'>
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสยา</label>
+                <div class="col-sm-10">
+                  {% comment %} <input class="form-control form-control-sm" placeholder="100942000001010110181" name="med_id"> {% endcomment %}
+                {{form.drug_id}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ชื่อยา</label>
+                <div class="col-sm-10">
+                  {% comment %} <input class="form-control form-control-sm" placeholder="3% NaCl (Sodium Chloride) 3 % x 1 ขวด" name="name"> {% endcomment %}
+                {{form.name}}
+                </div>
+              </div>
+              
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
                 <div class="col-sm-2">
-                  <input class="form-control form-control-sm " placeholder="15" name="amount">
+                  {% comment %} <input class="form-control form-control-sm " placeholder="15" name="amount"> {% endcomment %}
+                {{form.amount}}
                 </div>
               </div>
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รายละเอียด</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control form-control-sm" rows="5" cols="3"></textarea>
+                  {% comment %} <textarea class="form-control form-control-sm" rows="5" cols="3" name="description"></textarea> {% endcomment %}
+                {{form.description}}
                 </div>
               </div>
+              <!-- ------------------------------------------- -->
+              <!-- from Suppy  -->
+              <!-- <div class="form-group row "   v-if='selected=="B"'>
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสยา</label>
+                <div class="col-sm-10">
+                  {% comment %} <input class="form-control form-control-sm" placeholder="100942000001010110181" name="med_id"> {% endcomment %}
+                {{form.drug_id}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ชื่อยา</label>
+                <div class="col-sm-10">
+                  {% comment %} <input class="form-control form-control-sm" placeholder="3% NaCl (Sodium Chloride) 3 % x 1 ขวด" name="name"> {% endcomment %}
+                {{form.name}}
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
+                <div class="col-sm-2">
+                  {% comment %} <input class="form-control form-control-sm " placeholder="15" name="amount"> {% endcomment %}
+                {{form.amount}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รายละเอียด</label>
+                <div class="col-sm-10">
+                  {% comment %} <textarea class="form-control form-control-sm" rows="5" cols="3" name="description"></textarea> {% endcomment %}
+                {{form.description}}
+                </div>
+              </div> -->
+              <!-- ------------------------------------------- -->
+
+
+
               <center><input class="btn btn-success" type="submit" value="บันทัก"></center>
             </form>
           </div>
@@ -194,5 +240,18 @@
     </div>
 </main>
 
-
+<!-- <script>
+  var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data: {
+          selected: 'A',
+          options: [
+              { text: 'ยา', value: 'A' },
+              { text: 'ผิวหนัง', value: 'B' },
+              
+          ]
+      }
+  })
+</script> -->
 {% endblock %}

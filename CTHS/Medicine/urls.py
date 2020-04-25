@@ -1,6 +1,8 @@
-from django.urls import path  
+from operator import index
+
+from django.urls import path
 from Medicine import views
-  
+
 urlpatterns = [ 
     # path('', views.my_login, name = 'my_login'),
     path('', views.home_medicine, name = 'home_medicine'),
@@ -8,4 +10,7 @@ urlpatterns = [
     path('updatemedicine/', views.update_medicine, name = 'update_medicine'),
     path('comfirmdispensing/', views.comfirm_dispensing, name = 'comfirm_dispensing'),
     
+    
+    
+   
 ] 
