@@ -1,8 +1,9 @@
 from datetime import datetime
 
 from django.contrib import messages
-
 from django.contrib.messages.api import success
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from rest_framework import status
 from rest_framework.response import Response
@@ -12,17 +13,11 @@ from Medicine.models import Drug
 from User_app.forms import PatientForm
 from User_app.models import Congenital_disease, Patient, Public_Health
 
+from .forms import TreatmentForm
 from .serializers import (Congenital_diseaseSerializer,
                           Congenital_diseaseSerializerWithoutPatient,
-                          DrugSerializer)
+                          DrugSerializer, PatientSerializer)
 
-from Medicine.models import Drug
-
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .serializers import Congenital_diseaseSerializer, Congenital_diseaseSerializerWithoutPatient, DrugSerializer, PatientSerializer
-from django.db.models import Q
 
 # Create your views here.
 def home_patient(request):
@@ -255,8 +250,36 @@ class PatientAPIView(APIView):
         serializer = PatientSerializer(items)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 def create_treatment(request, patient_id):
-    return render(request, 'Treatment/create_treatment.html')
+    contexts = {}
+    if request.method == 'POST':
+        form = TreatmentForm(request.POST)
+        if form.is_valid():
+            treatment_form = form.save(commit=False)
+            try:  
+                creator = Public_Health.objects.get(user_id_id=request.user.id)
+                patient = Patient.objects.get(p_id=patient_id)
+            except Public_Health.ObjectDoesNotExist:
+                messages.error(request, ' Public_Health.ObjectDoesNotExist!')
+            except Patient.ObjectDoesNotExist:
+                messages.error(request, 'ไม่มีโปรไฟล์นี้ในคนไข้นี้ในฐานข้อมูล!')
+
+            treatment_form.user_id = creator
+            treatment_form.patient_p_id = patient
+            treatment_form.save()
+
+            messages.success(request, 'บันทึกประวัติเบื้องต้นสำเร็จ!')
+        else:
+            messages.error(request, 'บันทึกประวัติเบื้องต้นไม่สำเร็จ!')
+            form = TreatmentForm(request.POST)
+                 
+    else:
+        form = TreatmentForm()
+
+    contexts['form'] = form
+    return render(request, 'Treatment/create_treatment.html',context=contexts)
+
 
 def home_treatment(request):
     return render(request, 'Treatment/home_treatment.html')

@@ -18,17 +18,19 @@ class Treatment(models.Model):
     med_cer = models.BooleanField(_("Medical certificate"))
     # follow_up = models.DateField(_("Follow up ?"), auto_now=False, auto_now_add=False)
     PATIENT_CONDITION_CHOICE = [
-        ('SC', 'Selfcome'),
-        ('AB', 'Ambulance'),
-        ('ST', 'Stretcher')
+        ('SC', 'มาด้วยตนเอง'),
+        ('AB', 'รถพยาบาล'),
+        ('ST', 'เปลนอน')
     ] 
-    patient_condition = models.CharField(_("Patient Condition"), max_length=2, choices=PATIENT_CONDITION_CHOICE)
+    patient_condition = models.CharField(_("Patient Condition"), max_length=2, choices=PATIENT_CONDITION_CHOICE, default='SC')
     # current_history = models.CharField(_("Current History"), max_length=255)
-    create_date = models.DateField(_(""), auto_now=True) #change name
-    # important_symptom = models.CharField(_("Important Symptom"), max_length=255)
-    # detail = models.CharField(_("Detail"), max_length=255)
+    create_date = models.DateField(_(""), auto_now=True)
     
-    user_id = models.name = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Creator user"), on_delete=models.CASCADE) #change from o2o to foriegnfield
+
+    def bmi(self):
+        return  self.weight / self.Height**2
+    
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Creator user"), on_delete=models.CASCADE) #change from o2o to foriegnfield
     patient_p_id = models.ForeignKey(Patient, verbose_name=_("PatientID"), on_delete=models.CASCADE)
 
 class Symptom(models.Model):
@@ -48,9 +50,10 @@ class Symptom(models.Model):
 class Icd_10(models.Model):
     code = models.CharField(_("code"), max_length=25)
     detail = models.CharField(_("detail"), max_length=255)
-
+    symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=Symptom.SYMPTOM_TYPE)
 
 class Diagnosis(models.Model):
+    treatment = models.ForeignKey(Treatment, on_delete=models.CASCADE)
     icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
     diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
     advice = models.CharField(_("advice"), max_length=255)
@@ -58,10 +61,6 @@ class Diagnosis(models.Model):
     follow_up = models.DateField(_("Follow up"), null=True)
     follow_up_for = models.CharField(_("for"), max_length=100)
 
-
-# class Treatment_method(models.Model):
-#     detail = models.CharField(_("Treatment method detail"), max_length=255)
-#     symptom_detail_id = models.ManyToManyField(Symptom_detail, verbose_name=_("Symptom Detail ID"))
 
 class Prescription(models.Model):
     detail = models.CharField(_("Prescription detail"), max_length=255)
@@ -87,8 +86,9 @@ class Rash_Symptom(models.Model):
 
 class Wound_Symptom(models.Model):
     symptom = models.OneToOneField(Symptom, verbose_name=_("Symptom ID"), on_delete=models.CASCADE)
+    emergency = models.BooleanField(_('ฉุกเฉิน'))
     insurance = models.BooleanField(_("เบิกประกัน"))
-    is_safety = models.BooleanField(_("Is helmet on ?/Is seatbelt on ?"))
+    is_safety = models.BooleanField(_("ถ้าขับรถ สวมหมวกันน็อค/คาดเข็มขัด"))
     wound_area = models.CharField(_("Wound Area"), max_length=255)
     wound_date = models.DateField(_("Date of accident"))
     wound_locale = models.CharField(_("Locale of accident"), max_length=255)
@@ -119,8 +119,8 @@ class Con_Wound_Symptom(models.Model):
         ('3','ดีขึ้น')
     ]
     insurance = models.BooleanField(_("เบิกประกัน"))
-    detail = models.CharField(_("ลักษณะบาดเเผล"), max_length=1 , choices=LESION )
-    advice = models.CharField(_("คำเเนะนำ"), max_length=100)
+    detail = models.CharField(_("ลักษณะบาดเเผล"), max_length=1 , choices=LESION)
+    advice = models.CharField(_("คำเเนะนำ"), max_length=100,blank=True)
     more = models.CharField(_("เพิ่มเติ่ม"), max_length=100)
 
     

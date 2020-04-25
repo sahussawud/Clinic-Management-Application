@@ -1,13 +1,15 @@
 from django import forms
 from django.forms import ModelForm
-from django.forms.widgets import (DateInput, RadioSelect, Select, Textarea,
-                                  TextInput)
+from django.forms.widgets import (DateInput, NumberInput, RadioSelect, Select,
+                                  Textarea, TextInput,CheckboxInput)
 from django.utils.translation import gettext_lazy as _
+
 from Treatment.models import Treatment
+
 
 class TreatmentForm(ModelForm):
     class Meta:
-        models = Treatment
+        model = Treatment
         exclude = ['cn', 'create_date', 'user_id', 'patient_p_id']
         labels = {
             'weight': _('น้ำหนัก'),
@@ -18,17 +20,19 @@ class TreatmentForm(ModelForm):
             'rr': _('อัตราการหายใจ'),
             'o2_sat': _('ออกซิเจนในเลือด'),
             'med_cer': _('ใบรับรองเเพทย์'),
-            'patient_condition': _('สิทธิการรักษา'),
+            'patient_condition': _('สภาพผู้ป่วย'),
         }
         widgets = {
-            'weight': TextInput(attrs={'class': 'form-control'}),
-            'Height': TextInput(attrs={'class': 'form-control'}),
-            'bp': TextInput(attrs={'class': 'form-control'}),
-            'pr': TextInput(attrs={'class': 'form-control'}),
-            'temp': TextInput(attrs={'class': 'form-control'}),
-            'rr': TextInput(attrs={'class': 'form-control'}),
-            'o2_sat': TextInput(attrs={'class': 'form-control'}),
-            'med_cer':TextInput(attrs={'class': 'form-control'}),
-            'patient_condition': TextInput(attrs={'class': 'form-control'}),
-            
+            'weight': NumberInput(attrs={'class': 'form-control', 'placeholder':'Kilograms'}),
+            'Height': NumberInput(attrs={'class': 'form-control', 'placeholder':'Centimetre'}),
+            'bp': NumberInput(attrs={'class': 'form-control', 'placeholder':'mmHg'}),
+            'pr': NumberInput(attrs={'class': 'form-control', 'placeholder':'BPM'}),
+            'temp': NumberInput(attrs={'class': 'form-control', 'placeholder':'Celcuis'}),
+            'rr': NumberInput(attrs={'class': 'form-control', 'placeholder':'RPM'}),
+            'o2_sat': NumberInput(attrs={'class': 'form-control', 'placeholder':'%'}),
+            'med_cer': CheckboxInput(attrs={'class': ''}),
+            'patient_condition': RadioSelect(attrs={'class': 'form-check-input'}),
         }
+
+
+
