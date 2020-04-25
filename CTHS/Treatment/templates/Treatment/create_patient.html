@@ -57,13 +57,14 @@
             // a computed getter
             update: function () {
                 // `this` points to the vm instance
+                let self = this;
                 console.log('in update')
-                app.percent = 0
+                this.percent = 0
                 this.form.forEach(myFunction)
 
                 function myFunction(item, index, arr) {
                     if (arr[index] != '') {
-                        app.percent = app.percent + 5;
+                        self.percent = self.percent + 5;
                         console.log('this.percent += 5;')
                     }
 
@@ -71,11 +72,12 @@
                 document.querySelector('.progress-bar').style.width = this.percent + '%'
             },
             drug_search: function () {
+                let self = this;
                 axios.get('/treatment/patient/update/drug/?keywords=' + this.keywords, {
 
                 }).then(function (response) {
                     console.log(response.data);
-                    app.filter_drug = response.data
+                    self.filter_drug = response.data
 
                 }).catch(function (error) {
                     console.log(error);
@@ -83,11 +85,12 @@
             },
             disease_search: function () {
                 // `app` points to the vm instance
+                let self = this;
                 axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/?keywords=' + this.disease_keyword + '?add=True', {
 
                 }).then(function (response) {
                     console.log(response.data);
-                    app.filter_disease = response.data
+                    self.filter_disease = response.data
 
                 }).catch(function (error) {
                     console.log(error);
@@ -95,23 +98,25 @@
             },
             my_allegic_drug: function () {
                 // `app` points to the vm instance
+                let self = this;
                 axios.get('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
 
                 }).then(function (response) {
                     console.log(response.data);
-                    app.allegic_med = response.data
+                    self.allegic_med = response.data
 
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
             my_congenital_disease: function () {
-                // `app` points to the vm instance
+                // `self` points to the vm instance
+                let self = this;
                 axios.get('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
 
                 }).then(function (response) {
                     console.log(response.data);
-                    app.cog_di = response.data
+                    self.cog_di = response.data
 
                 }).catch(function (error) {
                     console.log(error);
@@ -119,47 +124,80 @@
             }
             , add_allegy_drug: function (med_sup_id) {
                 // รอเบียร์เเก้ api
+                let self = this;
                 med_sup = med_sup_id
                 axios.post('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
                     med_sup_id: med_sup
                 }).then(function (response) {
-                    app.allegic_med = response.data
+                    self.allegic_med = response.data
                     console.log(response.data);
 
                 }).catch(function (error) {
                     console.log(error);
                 });
-            }, add_congenital_disease: function (id) {
+            }, add_congenital_disease: function (id, name) {
                 // รอเบียร์เเก้ api
+                let self = this;
                 congenital_disease_id = id
                 axios.post('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
                     id: congenital_disease_id,
+                    name: name
 
                 }).then(function (response) {
-                    app.allegic_med = response.data
+                    self.cog_di = response.data
                     console.log(response.data);
                 }).catch(function (error) {
                     console.log(error);
                 });
             }, add_new_congenital_disease: function (id) {
                 // รอเบียร์เเก้ api
+                let self = this;
                 if (this.disease_keywords === '') {
-                    alert('กรุณากรอกชื่อโรคที่ต้องการเพิ่ม')
+                    alert('กรุณากรอกชื่อโรคที่ต้องการเพิ่มให้กับผู้ป่วย')
                     document.getElementById('searchaddbox').focus()
                 } else {
                     congenital_disease_id = id
                     axios.patch('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
-                        id: congenital_disease_id,
                         name: this.disease_keywords
                     }).then(function (response) {
                         console.log(response.data);
+                        self.cog_di = response.data
                     }).catch(function (error) {
                         console.log(error);
                     });
                 }
 
+            }, delete_congenital_disease: function (id, name) {
+                let self = this;
+                console.log(id, name)
+                axios.delete('/treatment/patient/update/' + this.patient_id + '/cd_api/', {
+                    id: id,
+                    name: name
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.cog_di = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
-        }
+            , delete_allegy_drug: function (med_sup_id, name) {
+                console.log(med_sup_id, name)
+                // รอเบียร์เเก้ api
+                let self = this;
+                axios.delete('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
+                    med_sup_id: med_sup_id,
+                    name: name
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.allegic_med = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+
+        }, created() {
+            this.update()
+        },
     })
 </script>
 {% endblock %}
@@ -445,9 +483,12 @@
 
                 <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='med in allegic_med'>
                     <div>
-                        <h6 class="my-0">[[ med.name ]] </h6>
+                        [[ med.name ]]
 
                     </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click='delete_allegy_drug(med.med_sup_id, med.name)'>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </li>
 
                 </ul>
@@ -472,8 +513,7 @@
                                     <!-- เมนูค้นหา -->
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="ชื่อโรค"
-                                            aria-label="ชื่อโรค" id="searchaddbox" 
-                                            v-model='disease_keywords'>
+                                            aria-label="ชื่อโรค" id="searchaddbox" v-model='disease_keywords'>
 
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-info" type="button" id="button-addon2"
@@ -486,8 +526,9 @@
                                     </div>
                                     <ol>
                                         <p>
-                                            <li v-for='drug in filter_disease'>
-                                                [[ drug.name ]] <button>เพิ่ม</button>
+                                            <li v-for='disease in filter_disease'>
+                                                [[ disease.name ]] <button class="btn btm-sm btn-success"
+                                                    v-on:click='add_congenital_disease(disease.id, disease.name)'>เพิ่ม</button>
                                             </li>
                                         </p>
 
@@ -504,16 +545,19 @@
                 <ul class="list-group mb-3">
 
                     <li class="list-group-item d-flex justify-content-between lh-condensed" v-for='disease in cog_di'>
-                        <div>
-                            <h6 class="my-0">[[ disease.name ]] </h6>
-
+                        <div>[[ disease.name ]]
                         </div>
-                    </li>
-                </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" v-on:click='delete_congenital_disease(disease.id, disease.name)'>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
 
             </div>
+            </li>
+            </ul>
 
         </div>
+
+    </div>
 
     </div>
 
