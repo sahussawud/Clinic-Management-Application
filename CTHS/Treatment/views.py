@@ -148,6 +148,8 @@ class Conginetal_diseaseAPIView(APIView):
             cd_data = Congenital_disease.objects.get(id=request.data['id'])
             cd_data.patient_id.remove(patient_data)
         if serializer.is_valid():
+            items = Congenital_disease.objects.filter(patient_id=patient_data)
+            serializer = Congenital_diseaseSerializer(items, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
