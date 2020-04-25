@@ -12,38 +12,46 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 
+    axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#progress_bar',
         data: {
             patient_id: '{% if patient_id %}{{patient_id}}{% endif %}',
-            filter_drug: [],
+            filter_drug: {},
             filter_disease: [],
-            keywords: '',   
+            keywords: '',
             disease_keywords: '',
 
-            allegic_med: [
-            ],
-            cog_di: [
-            ],
+            allegic_med: [],
+            cog_di: [],
 
-            form: ['{% if form.fname.value %}{{form.fname.value}}{% endif %}', 
-                   '{% if form.lname.value %}{{form.lname.value}}{% endif %}', 
-                   '{% if form.idcard_number.value %}{{form.idcard_number.value}}{% endif %}', 
-                   '{% if form.birth_day.value %}{{form.birth_day.value}}{% endif %}', 
-                   '{% if form.nationality.value %}{{form.nationality.value}}{% endif %}', 
-                   '{% if form.race.value %}{{form.race.value}}{% endif %}',
-                   '{% if form.status.value %}{{form.status.value}}{% endif %}',
-                   '{% if form.blood_type.value %}{{form.blood_type.value}}{% endif %}',
-                   '{% if form.phone.value %}{{form.phone.value}}{% endif %}',
-                   '{% if form.address.value %}{{form.address.value}}{% endif %}',
-                   '{% if form.patient_role.value %}{{form.patient_role.value}}{% endif %}',
-                   '{% if form.id_code.value %}{{form.id_code.value}}{% endif %}',
-                   '{% if form.hospital_refer.value %}{{form.hospital_refer.value}}{% endif %}',
-                   '{% if form.gold_card_no.value %}{{form.gold_card_no.value}}{% endif %}',
-                   '{% if form.gold_card_expire.value %}{{form.gold_card_expire.value}}{% endif %}'
-                   ],
+            form: ['{% if form.fname.value %}{{form.fname.value}}{% endif %}',
+                '{% if form.lname.value %}{{form.lname.value}}{% endif %}',
+                '{% if form.idcard_number.value %}{{form.idcard_number.value}}{% endif %}',
+                '{% if form.birth_day.value %}{{form.birth_day.value}}{% endif %}',
+                '{% if form.nationality.value %}{{form.nationality.value}}{% endif %}',
+                '{% if form.race.value %}{{form.race.value}}{% endif %}',
+                '{% if form.status.value %}{{form.status.value}}{% endif %}',
+                '{% if form.blood_type.value %}{{form.blood_type.value}}{% endif %}',
+                '{% if form.phone.value %}{{form.phone.value}}{% endif %}',
+                '{% if form.address.value %}{{form.address.value}}{% endif %}',
+                '{% if form.patient_role.value %}{{form.patient_role.value}}{% endif %}',
+                '{% if form.id_code.value %}{{form.id_code.value}}{% endif %}',
+                '{% if form.hospital_refer.value %}{{form.hospital_refer.value}}{% endif %}',
+                '{% if form.gold_card_no.value %}{{form.gold_card_no.value}}{% endif %}',
+                '{% if form.gold_card_expire.value %}{{form.gold_card_expire.value}}{% endif %}'
+            ],
             percent: 0
+        },
+        watch: {
+            // whenever question changes, this function will run
+            patient_id: function () {
+                this.my_allegic_drug()
+                this.my_congenital_disease()
+            }
         },
         methods: {
             // a computed getter
@@ -84,9 +92,8 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
-
             },
-            allegic_med_p: function () {
+            my_allegic_drug: function () {
                 // `app` points to the vm instance
                 axios.get('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
 
@@ -97,7 +104,43 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            my_congenital_disease: function () {
+                // `app` points to the vm instance
+                axios.get('/treatment/patient/update/'+ this.patient_id+'/cd_api/', {
 
+                }).then(function (response) {
+                    console.log(response.data);
+                    app.cog_di = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+            , add_allegy_drug: function (med_sup_id) {
+                // รอเบียร์เเก้ api
+                med_sup = med_sup_id
+                axios.post('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
+                    med_sup_id: med_sup
+                }).then(function (response) {
+                    app.allegic_med = response.data
+                    console.log(response.data);
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }, add_congenital_disease: function (id) {
+                // รอเบียร์เเก้ api
+                congenital_disease_id = id
+                axios.post('/treatment/patient/update/'+this.patient_id+'/cd_api/', {
+                    id: congenital_disease_id,
+                          
+                }).then(function (response) {
+                    app.allegic_med = response.data
+                    console.log(response.data);
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     })
@@ -113,16 +156,16 @@
                 {{ form.non_field_errors }}
 
                 {% if messages %}
-                    {% for message in messages %}
+                {% for message in messages %}
                 <div class="alert alert-{% if message.tags == 'error' %}danger {% else %}{{message.tags}} {% endif %}
                 alert-dismissible fade show" role="alert">
-                    <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}</strong> 
+                    <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}</strong>
                     {{ message }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                  </div>
-                  {% endfor %}
+                </div>
+                {% endfor %}
 
                 {% endif %}
             </div>
@@ -237,7 +280,7 @@
                                     {{ form.id_code.label_tag }}
 
                                     {{ form.id_code }}
-                                    
+
                                     {% if form.id_code.errors %}
                                     <div class="text-danger"> {{ form.id_code.errors }}</div>
                                     {% endif %}
@@ -339,7 +382,7 @@
 
             </div>
 
-            <div class="col-md-4 mb-4" v-if='patient_id'>
+            <div class="col-md-4 mb-4" v-if=''>
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">เเพ้ยา</span>
                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
@@ -369,7 +412,8 @@
                                     </div>
                                     <ol>
                                         <li v-for='drug in filter_drug'>
-                                            [[ drug.name ]] <button>เพิ่ม</button>
+                                            [[ drug.name ]] <button class="btn btm-sm btn-success"
+                                                v-on:click='add_allegy_drug(drug.med_sup_id)'>เพิ่ม</button>
                                         </li>
                                     </ol>
                                 </div>
