@@ -7,7 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from Medicine.models import Drug, Med_supply
 from Medicine.forms import MedicineSupplyForm
 from Medicine.forms import MedicineDrugForm
-
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import *
 # Create your views here.
 def add_medicine(request):
     
@@ -73,3 +76,14 @@ def home_medicine(request):
 def comfirm_dispensing(request):
     return render(request, 'Medicine/comfirm_dispensing.html')
 
+class PrescriptionAPIView(APIView):
+    """
+    API ดึงข้อมูลใบสั่งยาพร้อมยาที่ต้องจ่าย
+    """
+    def get(self, request, pst_id):
+        # items = Dispense.objects.filter(prescription_id=pst_id)
+        pst_data = Prescription.objects.get(id=pst_id)
+        serializer = PrescriptionSerializer(pst_data)
+        # serializer.dispense = items
+        # print(serializer.dispense)
+        return Response(serializer.data, status=status.HTTP_200_OK)
