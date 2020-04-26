@@ -26,15 +26,30 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5 class="card-title">นายสหัสวรรษ ขันรักษา (นักศึกษา)</h5>
-                                        <p class="card-text">อายุ 18 ปี 6 เดือน กลุ่มเลือด A</p>
+                                        <h5 class="card-title">{{patient.fname}} {{patient.lname}} ({{patient.get_patient_role_display}})</h5>
+                                        <p class="card-text">อายุ {{age.0}} ปี {{age.1}} เดือน {{age.2}} วัน กลุ่มเลือด {{patient.blood_type}}</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p class="card-text">เเพ้ยา : -</p>
-                                        <p class="card-text">โรคประจำตัว : -</p>
+                                    {% if drug.count > 0 %}
+                                        <ul class="card-text">เเพ้ยา : <br>
+                                        {% for d_data in drug %}
+                                            <li>{{d_data.name}}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <ul class="card-text">เเพ้ยา : -</ul>
+                                    {% endif %}
+                                    {% if cd.count > 0 %}
+                                        <ul class="card-text">โรคประจำตัว : <br>
+                                        {% for cd_data in cd %}
+                                            <li>{{cd_data.name}}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <ul class="card-text">โรคประจำตัว : -</ul>
+                                    {% endif %}
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

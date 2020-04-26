@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, User
 from django import forms
@@ -136,7 +136,7 @@ class Patient(models.Model):
 
 
     def age(self):
-        return int((datetime.date.today() - self.birth_day).days / 365.25 )
+        return int((date.today() - self.birth_day).days / 365.25 )
     age = property(age)
 
 class Congenital_disease(models.Model):

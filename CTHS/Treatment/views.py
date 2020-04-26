@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.contrib import messages
 from django.contrib.messages.api import success
@@ -297,6 +297,20 @@ def create_treatment(request, patient_id):
         'diarrhea_form' : diarrhea_form,
         'pain_form' : Pain_SymptomForm,
     }
+        patient = Patient.objects.get(p_id=patient_id)
+        drug = Drug.objects.filter(patient=patient_id)
+        cd = Congenital_disease.objects.filter(patient_id=patient_id)
+
+    contexts['patient'] = patient
+    contexts['drug'] = drug
+    contexts['cd'] = cd
+    age_day = (date.today() - patient.birth_day).days
+    age_year = age_day // 365.25
+    age_day -= age_year*365.25
+    age_month = age_day // 30
+    age_day -= age_month*30
+    age = int(age_year), int(age_month), int(age_day)
+    contexts['age'] = age
     return render(request, 'Treatment/create_treatment.html',context=contexts)
 
 
