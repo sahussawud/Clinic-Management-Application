@@ -68,6 +68,15 @@ class LesionForm(ModelForm):
     class Meta:
         model = Lesion
         exclude = ['wound_symptom']
+        widgets = {
+            'lesion_type' : Select(attrs={'class': 'custom-select'}),
+            'lesion_area' : TextInput(attrs={'class': 'form-control'}),
+            'lesion_x': TextInput(attrs={'class': 'form-control col-md-4'}),
+            'lesion_y': TextInput(attrs={'class': 'form-control col-md-4'}),
+        }
+
+
+    
 
 class Con_Wound_SymptomForm(ModelForm):
     class Meta:
@@ -93,4 +102,5 @@ class Pain_SymptomForm(ModelForm):
     class Meta:
         model = Pain_Symptom
         exclude = ['symptom']
+
 
