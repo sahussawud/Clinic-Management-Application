@@ -312,7 +312,6 @@ def create_treatment(request, patient_id):
     contexts['cd'] = cd
     contexts['age'] = patient.age
    
-    
     """FormSet""" 
     form = LesionForm()
     LesionFormSet = formset_factory(LesionForm,extra=1)
@@ -368,28 +367,45 @@ def switch_symptom(symptom):
             "model" : Non_Form_Symptom,
             "form" : Non_Form_SymptomForm })
 
-def diagnosis_treatment(request, treatment_id):
+def diagnosis_treatment(request, treatment_cn):
     contexts = {}
-    treatment = Treatment.objects.get(cn=treatment_id)
-    symptom = Symptom.objects.get(treatment=treatment)
-
-    symptom_model = switch_symptom(symptom.symptom_type).get("model")
-    instance_symptom = symptom_model.objects.get(symptom=symptom.id)
-        
     
-    patient = Patient.objects.get(p_id=treatment.patient_p_id.p_id)
-    print(patient.age)
-    drug = Drug.objects.filter(patient=patient.p_id)
-    cd = Congenital_disease.objects.filter(patient_id=patient.p_id)
+    contexts['treatment_id'] = treatment_cn
     try:
+        treatment = Treatment.objects.get(cn=treatment_cn)
+        symptom = Symptom.objects.get(treatment=treatment)
+
+        symptom_model = switch_symptom(symptom.symptom_type).get("model")
+        instance_symptom = symptom_model.objects.get(symptom=symptom.id)
+        print(instance_symptom)
+            
         
+        patient = Patient.objects.get(p_id=treatment.patient_p_id.p_id)
+        drug = Drug.objects.filter(patient=patient.p_id)
+        cd = Congenital_disease.objects.filter(patient_id=patient.p_id)
+
+        treatment_form = TreatmentFormDisplay(instance=treatment)
+        symptom_form = switch_symptom(symptom.symptom_type).get("form")
+        symptom_form_display = symptom_form(instance=instance_symptom)
+        print(symptom_form_display)
 
         form = DiagnosisForm()
+        contexts['symptom'] = symptom.symptom_type
         contexts['drug'] = drug
         contexts['cd'] = cd
         contexts['age'] = patient.age
         contexts['patient'] = patient
-        contexts['treatment_id'] = treatment_id
+        contexts['spec_form'] = {
+                                'non_form' : symptom_form_display,
+                                'rash_form' : symptom_form_display,
+                                'wound_form' : symptom_form_display,
+                                'con_wound_form' : symptom_form_display,
+                                'eye_form' : symptom_form_display,
+                                'fever_form' : symptom_form_display,
+                                'diarrhea_form' : symptom_form_display,
+                                'pain_form' : symptom_form_display
+        }
+        contexts['form'] = treatment_form
         contexts['diagnosis_form'] = form
     except ObjectDoesNotExist as e:
         messages.error(request, e)
