@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import date, datetime
 
 from django.contrib import messages
 from django.contrib.messages.api import success
@@ -301,17 +301,11 @@ def create_treatment(request, patient_id):
         'pain_form' : Pain_SymptomForm,
     }
         
-
+    
     contexts['patient'] = patient
     contexts['drug'] = drug
     contexts['cd'] = cd
-    age_day = (date.today() - patient.birth_day).days
-    age_year = age_day // 365.25
-    age_day -= age_year*365.25
-    age_month = age_day // 30
-    age_day -= age_month*30
-    age = int(age_year), int(age_month), int(age_day)
-    contexts['age'] = age
+    contexts['age'] = patient.age()
     return render(request, 'Treatment/create_treatment.html',context=contexts)
 
 
@@ -321,6 +315,74 @@ def home_treatment(request):
 
 def home_diagnosis(request):
     return render(request, 'Treatment/home_diagnosis.html')
+
+def switch_symptom(symptom):
+    switcher = {
+        "non_form": {
+            "model" : Non_Form_Symptom,
+            "form" : Non_Form_SymptomForm
+        },
+        "skin": {
+            "model" : Rash_Symptom,
+            "form" : Rash_SymptomForm
+        },
+        "accident": {
+            "model" : Wound_Symptom,
+            "form" : Wound_SymptomForm
+        },
+        "con_accident": {
+            "model" : Con_Wound_Symptom,
+            "form" : Con_Wound_SymptomForm
+        },
+        "eyes": {
+            "model" : Eye_Symptom,
+            "form" : Eye_SymptomForm
+        },
+        "fever": {
+            "model" : Fever_Symptom,
+            "form" : Fever_SymptomForm
+        },
+        "diarrhea": {
+            "model" : Diarrhea_Symptom,
+            "form" : Diarrhea_SymptomForm
+        },
+        "pain": {
+            "model" : Pain_Symptom,
+            "form" : Pain_SymptomForm
+        },
+    }
+    return switcher.get(symptom, {
+            "model" : Non_Form_Symptom,
+            "form" : Non_Form_SymptomForm })
+
+def diagnosis_treatment(request, treatment_id):
+    contexts = {}
+    treatment = Treatment.objects.get(cn=treatment_id)
+    symptom = Symptom.objects.get(treatment=treatment)
+
+    symptom_model = switch_symptom(symptom.symptom_type).get("model")
+    instance_symptom = symptom_model.objects.get(symptom=symptom.id)
+        
+    
+    patient = Patient.objects.get(p_id=treatment.patient_p_id.p_id)
+    print(patient.age)
+    drug = Drug.objects.filter(patient=patient.p_id)
+    cd = Congenital_disease.objects.filter(patient_id=patient.p_id)
+    try:
+        
+
+        form = DiagnosisForm()
+        contexts['drug'] = drug
+        contexts['cd'] = cd
+        contexts['age'] = patient.age
+        contexts['patient'] = patient
+        contexts['treatment_id'] = treatment_id
+        contexts['diagnosis_form'] = form
+    except ObjectDoesNotExist as e:
+        messages.error(request, e)
+        print(e)
+
+    return render(request, 'Treatment/create_diagnosis.html', context=contexts)
 
 def examination_room(request, room_id):
     return render(request, 'Treatment/examination_room.html')
