@@ -4,6 +4,28 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from User_app.models import Patient, Nurse, Doctor
 # Create your models here.
+SYMPTOM_TYPE = [
+        ('non_form', 'ทั่วไป'),
+        ('skin', 'ผิวหนัง'),
+        ('accident', 'อุบัติเหตุ'),
+        ('con_accident', 'อุบัติเหตุต่อเนื่อง'),
+        ('eyes', 'ดวงตา'),
+        ('fever', 'อาการไข้'),
+        ('diarrhea', 'ท้องเสีย/ปวดท้อง'),
+        ('pain', 'อาการปวดนอกเหนือ')
+]
+class Icd_10(models.Model):
+    code = models.CharField(_("code"), max_length=25)
+    detail = models.CharField(_("detail"), max_length=255)
+    symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE)
+
+class Diagnosis(models.Model):
+    icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
+    diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
+    advice = models.CharField(_("advice"), max_length=255)
+    doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
+    follow_up = models.DateField(_("Follow up"), null=True)
+    follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
 
 class Treatment(models.Model):
     cn = models.AutoField(_("Clinic number"), primary_key=True)
@@ -36,30 +58,7 @@ class Treatment(models.Model):
 
 class Symptom(models.Model):
     treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment"), on_delete=models.CASCADE)
-    SYMPTOM_TYPE = [
-        ('non_form', 'ทั่วไป'),
-        ('skin', 'ผิวหนัง'),
-        ('accident', 'อุบัติเหตุ'),
-        ('con_accident', 'อุบัติเหตุต่อเนื่อง'),
-        ('eyes', 'ดวงตา'),
-        ('fever', 'อาการไข้'),
-        ('diarrhea', 'ท้องเสีย/ปวดท้อง'),
-        ('pain', 'อาการปวดนอกเหนือ')
-    ]
     symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE, default='non_form')
-
-class Icd_10(models.Model):
-    code = models.CharField(_("code"), max_length=25)
-    detail = models.CharField(_("detail"), max_length=255)
-    symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=Symptom.SYMPTOM_TYPE)
-
-class Diagnosis(models.Model):
-    icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
-    diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
-    advice = models.CharField(_("advice"), max_length=255)
-    doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
-    follow_up = models.DateField(_("Follow up"), null=True)
-    follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
 
 class Prescription(models.Model):
     detail = models.CharField(_("Prescription detail"), max_length=255)
