@@ -103,8 +103,7 @@ class Lesion(models.Model):
         ('3', 'From Sharp object'),
         ('4', 'Others'),
     ]
-
-    lesion_type = models.CharField(_("lesion_type"), max_length=1, choices=AREA_TYPE_CHOICE)
+    lesion_type = models.CharField(_("บาดแผล"), max_length=1, choices=AREA_TYPE_CHOICE)
     lesion_area = models.CharField(_("บริเวณ"), max_length=100)
     lesion_x = models.IntegerField(_("กว้าง"))
     lesion_y = models.IntegerField(_("ยาว"))

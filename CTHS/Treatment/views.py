@@ -4,12 +4,16 @@ from django.contrib import messages
 from django.contrib.messages.api import success
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.forms import modelformset_factory
+from django.forms.formsets import formset_factory
 from django.shortcuts import redirect, render
+
+from Treatment.forms import LesionForm
+from Medicine.models import Drug
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from Medicine.models import Drug
+from Treatment.models import Lesion
 from User_app.forms import PatientForm
 from User_app.models import Congenital_disease, Patient, Public_Health
 
@@ -252,6 +256,7 @@ class PatientAPIView(APIView):
 
 
 def create_treatment(request, patient_id):
+    
     contexts = {}
     if request.method == 'POST':
         form = TreatmentForm(request.POST)
@@ -305,7 +310,15 @@ def create_treatment(request, patient_id):
     contexts['patient'] = patient
     contexts['drug'] = drug
     contexts['cd'] = cd
-    contexts['age'] = patient.age()
+    contexts['age'] = patient.age
+   
+    
+    """FormSet""" 
+    form = LesionForm()
+    LesionFormSet = formset_factory(LesionForm,extra=1)
+    formset = LesionFormSet()
+    contexts['formset'] = formset
+
     return render(request, 'Treatment/create_treatment.html',context=contexts)
 
 
@@ -386,3 +399,15 @@ def diagnosis_treatment(request, treatment_id):
 
 def examination_room(request, room_id):
     return render(request, 'Treatment/examination_room.html')
+
+# def lesion(request):
+
+#     form = LesionForm()
+#     LesionFormSet = formset_factory(LesionForm,extra=1)
+#     formset = LesionFormSet()
+#     print(formset)
+
+#     return render(request, 'Treatment/create_treatment.html', context={
+#         'formset' : formset,
+#         'form' : form,
+#         })
