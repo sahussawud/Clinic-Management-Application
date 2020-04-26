@@ -78,7 +78,7 @@
                                     <h5 class="card-title">Vital Sign :</h5>
                                 </div>
                             </div>
-                            <div class="row my-3">
+                            <!-- <div class="row my-3">
                                 <div class="col-md-5">
                                     ประเภทการเข้ารับการรักษา :
                                 </div>
@@ -89,7 +89,7 @@
                                         </option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="table-responsive">
                                     <table class="table">
@@ -493,7 +493,7 @@
         delimiters: ['[[', ']]'],
         el: '#app',
         data: {
-            selected: 'non_form',
+            selected: '{{symptom}}',
             options: [
                 { text: 'ทั่วไป', value: 'non_form' },
                 { text: 'ผิวหนัง', value: 'skin' },

@@ -6,11 +6,37 @@ from django.utils.translation import gettext_lazy as _
 
 from Treatment.models import *
 
+class TreatmentFormDisplay(ModelForm):
+    class Meta:
+        model = Treatment
+        exclude = ['cn', 'create_date', 'user_id', 'patient_p_id']
+        labels = {
+            'weight': _('น้ำหนัก'),
+            'Height': _('ส่วนสูง'),
+            'bp': _('ความดันโลหิต'),
+            'pr': _('อัตราชีพจร'),
+            'temp': _('อุณหภูมิร่างกาย'),
+            'rr': _('อัตราการหายใจ'),
+            'o2_sat': _('ออกซิเจนในเลือด'),
+            'med_cer': _('ใบรับรองเเพทย์'),
+            'patient_condition': _('สภาพผู้ป่วย'),
+        }
+        widgets = {
+            'weight': NumberInput(attrs={'class': 'form-control', 'placeholder':'Kilograms', 'disabled': True}),
+            'Height': NumberInput(attrs={'class': 'form-control', 'placeholder':'Centimetre', 'disabled': True}),
+            'bp': NumberInput(attrs={'class': 'form-control', 'placeholder':'mmHg', 'disabled': True}),
+            'pr': NumberInput(attrs={'class': 'form-control', 'placeholder':'BPM','disabled': True}),
+            'temp': NumberInput(attrs={'class': 'form-control', 'placeholder':'Celcuis','disabled': True}),
+            'rr': NumberInput(attrs={'class': 'form-control', 'placeholder':'RPM','disabled': True}),
+            'o2_sat': NumberInput(attrs={'class': 'form-control', 'placeholder':'%','disabled': True}),
+            'med_cer': CheckboxInput(attrs={'class': '','disabled': True}),
+            'patient_condition': RadioSelect(attrs={'class': 'form-check-input','disabled': True}),
+        }
 
 class TreatmentForm(ModelForm):
     class Meta:
         model = Treatment
-        exclude = ['cn', 'create_date', 'user_id', 'patient_p_id']
+        exclude = ['cn', 'create_date', 'user_id', 'patient_p_id', 'bmi']
         labels = {
             'weight': _('น้ำหนัก'),
             'Height': _('ส่วนสูง'),
@@ -106,7 +132,6 @@ class LesionForm(ModelForm):
             'lesion_x': TextInput(attrs={'class': 'form-control col-md-4'}),
             'lesion_y': TextInput(attrs={'class': 'form-control col-md-4'}),
         }
-
 
     
 
