@@ -48,6 +48,12 @@ class DiagnosisForm(ModelForm):
     class Meta:
         model = Diagnosis
         exclude = ['Treatment', 'doctor_id','icd_10']
+        widgets = {
+            'diagnosis_detail': Textarea(attrs={'class': 'form-control', 'rows':'7', 'cols': '4'}),
+            'advice': Textarea(attrs={'class': 'form-control', 'rows':'7', 'cols': '4'}),
+            'follow_up': DateInput(attrs={'class': 'form-control', 'type':'date'}),
+            'follow_up_for': TextInput(attrs={'class': 'form-control'})
+        }
 
 class Non_Form_SymptomForm(ModelForm):
     class Meta:

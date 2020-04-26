@@ -27,28 +27,30 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5 class="card-title">{{patient.fname}} {{patient.lname}} ({{patient.get_patient_role_display}})</h5>
-                                        <p class="card-text">อายุ {{age.0}} ปี {{age.1}} เดือน {{age.2}} วัน กลุ่มเลือด {{patient.blood_type}}</p>
+                                        <h5 class="card-title">{{patient.fname}} {{patient.lname}}
+                                            ({{patient.get_patient_role_display}})</h5>
+                                        <p class="card-text">อายุ {{age.0}} ปี {{age.1}} เดือน {{age.2}} วัน กลุ่มเลือด
+                                            {{patient.blood_type}}</p>
                                     </div>
                                     <div class="col-md-6">
-                                    {% if drug.count > 0 %}
+                                        {% if drug.count > 0 %}
                                         <ul class="card-text">เเพ้ยา : <br>
-                                        {% for d_data in drug %}
+                                            {% for d_data in drug %}
                                             <li>{{d_data.name}}</li>
-                                        {% endfor %}
+                                            {% endfor %}
                                         </ul>
-                                    {% else %}
+                                        {% else %}
                                         <ul class="card-text">เเพ้ยา : -</ul>
-                                    {% endif %}
-                                    {% if cd.count > 0 %}
+                                        {% endif %}
+                                        {% if cd.count > 0 %}
                                         <ul class="card-text">โรคประจำตัว : <br>
-                                        {% for cd_data in cd %}
+                                            {% for cd_data in cd %}
                                             <li>{{cd_data.name}}</li>
-                                        {% endfor %}
+                                            {% endfor %}
                                         </ul>
-                                    {% else %}
+                                        {% else %}
                                         <ul class="card-text">โรคประจำตัว : -</ul>
-                                    {% endif %}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +73,8 @@
                                         ประเภทการเข้ารับการรักษา :
                                     </div>
                                     <div class="col-md-8">
-                                        <select v-model="selected" class="custom-select my-1 mr-sm-2" name='Symptom_option'>
+                                        <select v-model="selected" class="custom-select my-1 mr-sm-2"
+                                            name='Symptom_option'>
                                             <option v-for="option in options" v-bind:value="option.value">
                                                 [[ option.text ]]
                                             </option>
@@ -163,14 +166,15 @@
 
                                         <div class="form-check form-check-inline">
                                             <span class="radio">{{ form.med_cer }}</span>
-                                            <label class='ml-2 mt-1' for="{{ form.med_cer.id_for_label }}">ต้องการใบรับรองเเพทย์</label>
+                                            <label class='ml-2 mt-1'
+                                                for="{{ form.med_cer.id_for_label }}">ต้องการใบรับรองเเพทย์</label>
                                         </div>
 
 
                                     </div>
 
                                 </div>
-                               
+
 
 
 
@@ -290,125 +294,6 @@
                     <div class="modal-body">
 
 
-                        <div class="row">
-                            <div class="col-11"><input type="text" class="form-control" name="search"
-                                    placeholder="Search..."><br>
-                            </div>
-                            <div class="col-1"><button type="button" class="btn btn-success btn-ml">ค้นหา</button>
-                            </div>
-                        </div>
-                        <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th class="table-dark">No.</th>
-                                    <th class="table-dark">รหัสมาตรฐาน 24 หลัก</th>
-                                    <th class="table-dark">ชื่อยา</th>
-                                    <th class="table-dark">จำนวน</th>
-                                    <th class="table-dark">รายละเอียด</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination row justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-                        <button type="button" class="btn btn-success">จ่ายยา</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </form>
 

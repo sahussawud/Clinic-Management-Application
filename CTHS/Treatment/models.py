@@ -50,11 +50,11 @@ class Treatment(models.Model):
 
 class Diagnosis(models.Model):
     icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
-    diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
-    advice = models.CharField(_("advice"), max_length=255)
+    diagnosis_detail = models.CharField(_("คำวินิฉัย"), max_length=255, blank=True)
+    advice = models.CharField(_("คำเเนะนำ"), max_length=255, blank=True)
     doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
-    follow_up = models.DateField(_("Follow up"), null=True)
-    follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
+    follow_up = models.DateField(_("วันนัด"), null=True)
+    follow_up_for = models.CharField(_("เพื่อ"), max_length=100, blank=True)
     treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment ID"), on_delete=models.CASCADE, null=True)
 
 class Symptom(models.Model):
@@ -99,10 +99,10 @@ class Wound_Symptom(models.Model):
 class Lesion(models.Model):
     wound_symptom = models.ForeignKey(Wound_Symptom, on_delete=models.CASCADE)
     AREA_TYPE_CHOICE = [
-        ('1', 'Scratched'),
-        ('2', 'Tear'),
-        ('3', 'From Sharp object'),
-        ('4', 'Others'),
+        ('1', 'ถลอก'),
+        ('2', 'ฉีกขาด'),
+        ('3', 'จากของมีคม'),
+        ('4', 'อื่นๆ'),
     ]
     lesion_type = models.CharField(_("บาดแผล"), max_length=1, choices=AREA_TYPE_CHOICE)
     lesion_area = models.CharField(_("บริเวณ"), max_length=100)

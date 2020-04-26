@@ -151,69 +151,39 @@
                 </div>
 
                 <div class="row mt-5">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">บาดเเผล</th>
-                                <th scope="col">บริเวณ</th>
-                                <th scope="col">ขนาด(ซ.ม)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>1</th>
-                                <th><select class="custom-select">
-                                        <option value="1">ถลอก</option>
-                                        <option value="2">ฉีกขาด</option>
-                                        <option value="3">จากของมีคม</option>
-                                        <option value="3">อื่นๆ</option>
-                                    </select></th>
-                                <td><input type="text" id="disabledTextInput" class="form-control"
-                                        placeholder="ผื่นบริเวณ"></td>
-                                <td class="form-inline">
-                                    <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                        placeholder="กว้าง">
-                                    <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                        placeholder="ยาว"></td>
-                            </tr>
-                            <tr>
-                                <th>2</th>
-                                <th><select class="custom-select">
-                                        <option value="1">ถลอก</option>
-                                        <option value="2">ฉีกขาด</option>
-                                        <option value="3">จากของมีคม</option>
-                                        <option value="3">อื่นๆ</option>
-                                    </select></th>
-                                <td><input type="text" id="disabledTextInput" class="form-control"
-                                        placeholder="ผื่นบริเวณ"></td>
-                                <td class="form-inline">
-                                    <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                        placeholder="กว้าง">
-                                    <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                        placeholder="ยาว"></td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <th><select class="custom-select">
-                                        <option value="1">ถลอก</option>
-                                        <option value="2">ฉีกขาด</option>
-                                        <option value="3">จากของมีคม</option>
-                                        <option value="3">อื่นๆ</option>
-                                    </select></th>
-                                <td><input type="text" id="disabledTextInput" class="form-control"
-                                        placeholder="ผื่นบริเวณ"></td>
-                                <td class="form-inline">
-                                    <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                        placeholder="กว้าง">
-                                    <input type="text" id="disabledTextInput" class="form-control col-md-4"
-                                        placeholder="ยาว"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">บาดเเผล</th>
+                                    <th scope="col">บริเวณ</th>
+                                    <th scope="col">ขนาด(ซ.ม)</th>
+                                </tr>
+                            </thead>
+
+                            
+                            <tbody>
+                                {{ formset.management_form }}
+                                {% for form in formset %}
+                                <tr>
+                                    <th>{{form.lesion_type}}</th>
+                                    <td>{{form.lesion_area}}
+                                    <td class="form-inline">
+                                        {{form.lesion_x}}
+                                        {{form.lesion_y}}
+                                    </td>
+                                </tr>
+                                {% endfor%}
+                            </tbody>
+
+
+
+                        </table>
+                        <input type="submit">
 
                 </div>
-
+                </form>
                 <div class="row mt-4">
                     <div class="col-md-5">
                         {{ spec_form.wound_form.wound_date.label_tag }} {{ spec_form.wound_form.wound_date }}
@@ -528,10 +498,10 @@
                         {{ spec_form.fever_form.more.label_tag }}
                     </div>
                     <div class="col-md-8">
-                     
-                            {{ spec_form.fever_form.more }}
-                            {{ spec_form.fever_form.more.error }}
-                    
+
+                        {{ spec_form.fever_form.more }}
+                        {{ spec_form.fever_form.more.error }}
+
                     </div>
                 </div>
 
@@ -586,7 +556,7 @@
 
                         {{ spec_form.diarrhea_form.diarrhea_amount }}
                         {{ spec_form.diarrhea_form.diarrhea_amount.error }}
-                       
+
                     </div>
 
 
@@ -600,7 +570,7 @@
 
                         {{ spec_form.diarrhea_form.diarrhea_detail }}
                         {{ spec_form.diarrhea_form.diarrhea_detail.error }}
-                       
+
                     </div>
 
 
@@ -614,7 +584,7 @@
 
                         {{ spec_form.diarrhea_form.stomachache }}
                         {{ spec_form.diarrhea_form.stomachache.error }}
-                       
+
                     </div>
 
 
@@ -627,7 +597,7 @@
 
                         {{ spec_form.diarrhea_form.bowel_sound }}
                         {{ spec_form.diarrhea_form.bowel_sound.error }}
-                       
+
                     </div>
 
 
@@ -641,7 +611,7 @@
 
                         {{ spec_form.diarrhea_form.current_history }}
                         {{ spec_form.diarrhea_form.current_history.error }}
-                       
+
                     </div>
                 </div>
             </div>
