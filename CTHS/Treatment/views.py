@@ -317,12 +317,30 @@ def create_treatment(request, patient_id):
     age_day -= age_month*30
     age = int(age_year), int(age_month), int(age_day)
     contexts['age'] = age
-    
+
     """FormSet""" 
-    form = LesionForm()
+    
+
     LesionFormSet = formset_factory(LesionForm,extra=1)
+                            # queryset=Lesion.objects.none()
     formset = LesionFormSet()
     contexts['formset'] = formset
+
+    """บันทึกข้อมูลลงdatabase""" 
+    if request.method == 'POST':
+        formset = LesionFormSet(request.POST)
+        # instance = formset.save(commit=False)
+        
+        # for instance in instance:
+        #    instance.save()
+        instance = formset.save()
+
+        
+        
+            
+                 
+
+        
 
     return render(request, 'Treatment/create_treatment.html',context=contexts)
 

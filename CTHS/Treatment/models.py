@@ -98,10 +98,10 @@ class Wound_Symptom(models.Model):
 class Lesion(models.Model):
     wound_symptom = models.ForeignKey(Wound_Symptom, on_delete=models.CASCADE)
     AREA_TYPE_CHOICE = [
-        ('1', 'Scratched'),
-        ('2', 'Tear'),
-        ('3', 'From Sharp object'),
-        ('4', 'Others'),
+        ('1', 'ถลอก'),
+        ('2', 'ฉีกขาด'),
+        ('3', 'จากของมีคม'),
+        ('4', 'อื่นๆ'),
     ]
     lesion_type = models.CharField(_("บาดแผล"), max_length=1, choices=AREA_TYPE_CHOICE)
     lesion_area = models.CharField(_("บริเวณ"), max_length=100)
