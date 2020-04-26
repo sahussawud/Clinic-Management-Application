@@ -284,7 +284,10 @@ def create_treatment(request, patient_id):
         fever_form = Fever_SymptomForm()
         diarrhea_form = Diarrhea_SymptomForm()
         pain_form = Pain_SymptomForm()
-
+        
+        patient = Patient.objects.get(p_id=patient_id)
+        drug = Drug.objects.filter(patient=patient_id)
+        cd = Congenital_disease.objects.filter(patient_id=patient_id)
 
     contexts['form'] = form
     contexts['spec_form'] = {
@@ -297,9 +300,7 @@ def create_treatment(request, patient_id):
         'diarrhea_form' : diarrhea_form,
         'pain_form' : Pain_SymptomForm,
     }
-        patient = Patient.objects.get(p_id=patient_id)
-        drug = Drug.objects.filter(patient=patient_id)
-        cd = Congenital_disease.objects.filter(patient_id=patient_id)
+        
 
     contexts['patient'] = patient
     contexts['drug'] = drug
