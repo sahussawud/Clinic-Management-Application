@@ -258,9 +258,31 @@ class PatientAPIView(APIView):
 def create_treatment(request, patient_id):
     
     contexts = {}
+    non_form =  Non_Form_SymptomForm()
+    rash_form = Rash_SymptomForm()
+    wound_form = Wound_SymptomForm()
+    con_wound_form = Con_Wound_SymptomForm()
+    eye_form = Eye_SymptomForm()
+    fever_form = Fever_SymptomForm()
+    diarrhea_form = Diarrhea_SymptomForm()
+    pain_form = Pain_SymptomForm()
     if request.method == 'POST':
         form = TreatmentForm(request.POST)
+        diagnosis_type = request.POST.get("Symptom_option")
+        print(diagnosis_type)
+        switcher = {
+            "non_form": Non_Form_SymptomForm(request.POST),
+            "skin": Rash_SymptomForm(request.POST),
+            "accident": Wound_SymptomForm(request.POST),
+            "con_accident": Con_Wound_SymptomForm(request.POST),
+            "eyes": Eye_SymptomForm(request.POST),
+            "fever": Fever_SymptomForm(request.POST),
+            "diarrhea": Diarrhea_SymptomForm(request.POST),
+            "pain": Pain_SymptomForm(request.POST)
+        }
+        symptom_form = switcher.get(diagnosis_type)
         if form.is_valid():
+            print('tm')
             treatment_form = form.save(commit=False)
             try:  
                 creator = Public_Health.objects.get(user_id_id=request.user.id)
@@ -270,9 +292,28 @@ def create_treatment(request, patient_id):
             except Patient.ObjectDoesNotExist:
                 messages.error(request, 'ไม่มีโปรไฟล์นี้ในคนไข้นี้ในฐานข้อมูล!')
 
-            treatment_form.user_id = creator
+            treatment_form.user_id = request.user
             treatment_form.patient_p_id = patient
             treatment_form.save()
+            if symptom_form.is_valid():
+                new_symtom_form = symptom_form.save(commit=False)
+                symptom = Symptom.objects.create(treatment_id=treatment_form.cn)
+                symptom.symptom_type = diagnosis_type
+                symptom.save()
+                new_symtom_form.symptom = symptom
+                new_symtom_form.save()
+            else:
+                print('check')
+                messages.error(request, 'บันทึกประวัติเบื้องต้นไม่สำเร็จ!')
+                form = TreatmentForm(request.POST)
+                non_form = Non_Form_SymptomForm(request.POST),
+                skin = Rash_SymptomForm(request.POST),
+                accident = Wound_SymptomForm(request.POST),
+                con_accident = Con_Wound_SymptomForm(request.POST),
+                eyes = Eye_SymptomForm(request.POST),
+                fever = Fever_SymptomForm(request.POST),
+                diarrhea = Diarrhea_SymptomForm(request.POST),
+                pain = Pain_SymptomForm(request.POST)
 
             messages.success(request, 'บันทึกประวัติเบื้องต้นสำเร็จ!')
         else:
@@ -281,18 +322,10 @@ def create_treatment(request, patient_id):
                  
     else:
         form = TreatmentForm()
-        non_form =  Non_Form_SymptomForm()
-        rash_form = Rash_SymptomForm()
-        wound_form = Wound_SymptomForm()
-        con_wound_form = Con_Wound_SymptomForm()
-        eye_form = Eye_SymptomForm()
-        fever_form = Fever_SymptomForm()
-        diarrhea_form = Diarrhea_SymptomForm()
-        pain_form = Pain_SymptomForm()
         
-        patient = Patient.objects.get(p_id=patient_id)
-        drug = Drug.objects.filter(patient=patient_id)
-        cd = Congenital_disease.objects.filter(patient_id=patient_id)
+    patient = Patient.objects.get(p_id=patient_id)
+    drug = Drug.objects.filter(patient=patient_id)
+    cd = Congenital_disease.objects.filter(patient_id=patient_id)
 
     contexts['form'] = form
     contexts['spec_form'] = {
@@ -313,13 +346,30 @@ def create_treatment(request, patient_id):
     contexts['age'] = patient.age
    
     """FormSet""" 
-    form = LesionForm()
+    
+
     LesionFormSet = formset_factory(LesionForm,extra=1)
+                            # queryset=Lesion.objects.none()
     formset = LesionFormSet()
     contexts['formset'] = formset
 
-    return render(request, 'Treatment/create_treatment.html',context=contexts)
+    """บันทึกข้อมูลลงdatabase""" 
+    if request.method == 'POST':
+        formset = LesionFormSet(request.POST)
+        # instance = formset.save(commit=False)
+        
+        # for instance in instance:
+        #    instance.save()
+        instance = formset.save()
 
+        
+        
+            
+                 
+
+        
+
+    return render(request, 'Treatment/create_treatment.html',context=contexts)
 
 def home_treatment(request):
     return render(request, 'Treatment/home_treatment.html')
