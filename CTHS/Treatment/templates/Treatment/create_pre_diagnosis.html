@@ -1,25 +1,27 @@
 <!-- ทั่วไป -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="A"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น</h5>
-
+            {{ spec_form.non_form.non_field_errors }}
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
-                        อาการสำคัญ :
+                        {{ spec_form.non_form.important_symptom.errors }}
+                        {{ spec_form.non_form.important_symptom.label_tag }}
                     </div>
                     <div class="col-md-8">
-                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="15" cols="4"></textarea>
+                        {{ spec_form.non_form.important_symptom }}
 
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-3">
-                        ประวัติปัจจุบัน :
+                        {{ spec_form.non_form.important_symptom.errors }}
+                        {{ spec_form.non_form.current_history.label_tag }}
                     </div>
                     <div class="col-md-8">
-                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="13" cols="4"></textarea>
+                        {{ spec_form.non_form.current_history }}
                     </div>
                 </div>
             </div>
@@ -29,11 +31,11 @@
 
 </div>
 <!-- อาการผื่น -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="B"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="skin"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น : อาการผื่น</h5>
-
+            {{ spec_form.rash_form.non_field_errors }}
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
@@ -41,19 +43,21 @@
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label for="disabledTextInput">ผื่นบริเวณ</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="ผื่นบริเวณ">
+                            {{ spec_form.rash_form.rash_area.label_tag }}
+                            {{ spec_form.rash_form.rash_area }}
+                            {{ spec_form.rash_form.rash_area.errors }}
+
                         </div>
                         <div class="form-group">
-                            <label for="disabledTextInput">เป็นมานาน (วัน)</label>
-                            <input type="number" id="disabledTextInput" class="form-control" placeholder="เป็นมานาน">
+                            {{ spec_form.rash_form.rash_date.label_tag }}
+                            {{ spec_form.rash_form.rash_date }}
+                            {{ spec_form.rash_form.rash_date.errors }}
                         </div>
                         <div class="form-group">
-                            <label for="disabledTextInput">สัมผัสโดน</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="สัมผัสโดน">
+                            {{ spec_form.rash_form.rash_detail.label_tag }}
+                            {{ spec_form.rash_form.rash_detail }}
+                            {{ spec_form.rash_form.rash_detail.errors }}
                         </div>
-
-
 
                     </div>
                 </div>
@@ -63,44 +67,36 @@
                     </div>
                     <div class="col-md-8 form-check-inline">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                คัน
+                            {{ spec_form.rash_form.itch }}
+                            {{ spec_form.rash_form.itch.label_tag }}
+                        </div>
+                        <div class="form-check">
+                            {{ spec_form.rash_form.pain }}
+                            {{ spec_form.rash_form.pain.label_tag }}
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                            <label class="form-check-label" for="defaultCheck2">
-                                ปวด
-                            </label>
+                            {{ spec_form.rash_form.sting }}
+                            {{ spec_form.rash_form.sting.label_tag }}
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
-                            <label class="form-check-label" for="defaultCheck3">
-                                เเสบ
-                            </label>
+                            {{ spec_form.rash_form.fever }}
+                            {{ spec_form.rash_form.fever.label_tag }}
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
-                            <label class="form-check-label" for="defaultCheck4">
-                                ไข้
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
-                            <label class="form-check-label" for="defaultCheck5">
-                                บวม
-                            </label>
+                            {{ spec_form.rash_form.swell }}
+                            {{ spec_form.rash_form.swell.label_tag }}
                         </div>
 
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-3">
-                        PE :
+                        {{ spec_form.rash_form.pe.label_tag }}
                     </div>
                     <div class="col-md-8">
-                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                        {{ spec_form.rash_form.pe }}
+                        {{ spec_form.rash_form.pe.error }}
 
                     </div>
                 </div>
@@ -111,22 +107,23 @@
 </div>
 
 <!-- อุบัติเหตุ -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="C0"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="accident"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น : อุบัติเหตุ</h5>
-
+            {{ spec_form.wound_form.non_field_errors }}
             <div class="card-body">
                 <div class="row form-check-inline">
                     <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="insurance" id="insurance1" value="true">
-                            <label class="form-check-label" for="insurance1">เบิกประกันอุบัติเหตุ</label>
+                            {{ spec_form.wound_form.emergency }}
+                            {{ spec_form.wound_form.emergency.label_tag }}
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="insurance" id="insurance2" value="false">
-                            <label class="form-check-label" for="insurance2">ไม่เบิกประกันอุบัติเหตุ</label>
+                            {{ spec_form.wound_form.insurance }}
+                            {{ spec_form.wound_form.insurance.label_tag }}
                         </div>
+
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -135,12 +132,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="safety" id="safety1" value="option1">
-                            <label class="form-check-label" for="safety1">สวมหมวกกันน็อค/คาดเข็มขัดนิรภัย</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="safety" id="safety2" value="option2">
-                            <label class="form-check-label" for="safety2">ไม่สวมหมวกกันน็อค/ไม่คาดเข็มขัดนิรภัย</label>
+                            {{ spec_form.wound_form.is_safety }}
+                            {{ spec_form.wound_form.is_safety.label_tag }}
                         </div>
                     </div>
                 </div>
@@ -149,12 +142,14 @@
 
                 <div class="row mt-5">
                     <div class="col-md-4">
-                        บาดเเผลบริเวณ
+                        {{ spec_form.wound_form.wound_area.label_tag }}
                     </div>
                     <div class="col-md-7">
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="บาดเเผลบริเวณ">
+                        {{ spec_form.wound_form.wound_area }}
+                        {{ spec_form.wound_form.wound_area.error }}
                     </div>
                 </div>
+
                 <div class="row mt-5">
                     <table class="table">
                         <thead>
@@ -221,30 +216,33 @@
 
                 <div class="row mt-4">
                     <div class="col-md-5">
-                        วันที่เกิดเหตุ : <input type="date" name="date" class="form-control">
+                        {{ spec_form.wound_form.wound_date.label_tag }} {{ spec_form.wound_form.wound_date }}
+                        {{ spec_form.wound_form.wound_date.error }}
                     </div>
-                    <div class="col-md-4">
-                        สถานที่เกิดเหตุ : <input type="text" name="location" class="form-control">
+                    <div class="col-md-5">
+                        {{ spec_form.wound_form.wound_locale.label_tag }} {{ spec_form.wound_form.wound_locale }}
+                        {{ spec_form.wound_form.wound_locale.error }}
                     </div>
                 </div>
 
                 <div class="row mt-4">
-                    <div class="col-md-6">
-                        การเจ็บป่วย/บาดเจ็บ ครั้งนี้ :
+                    <div class="col-md-5">
+                        การเจ็บป่วย/บาดเจ็บ ครั้งนี้
                     </div>
                     <div class="col-md-6">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="recured" id="recured1" value="true"
-                                checked>
-                            <label class="form-check-label" for="recured1">ไม่เคยรักษาที่ใดมาก่อน</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="recured" id="recured2" value="true">
-                            <label class="form-check-label" for="recured2">เคยรักษามาก่อน</label>
+                            {{ spec_form.wound_form.is_treat_before }}
+                            {{ spec_form.wound_form.is_treat_before.label_tag }}
                         </div>
                         <div>
-                            ที่ : <input type="text" class="form-control"> เวลา : <input type="time" name="recured_time"
-                                class="form-control">
+                            {{ spec_form.wound_form.treatment_before_detail.label_tag }}
+                            {{ spec_form.wound_form.treatment_before_detail }}
+                            {{ spec_form.wound_form.treatment_before_detail.error }}
+                            <div>
+                                {{ spec_form.wound_form.time.label_tag }}
+                                {{ spec_form.wound_form.time }}
+                                {{ spec_form.wound_form.time.error }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -257,51 +255,33 @@
 
 
 <!-- อุบัติเหตุต่อเนื่อง -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="C1"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="con_accident"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น : อุบัติเหตุต่อเนื่อง</h5>
-
+            {{ spec_form.con_wound_form.non_field_errors }}
             <div class="card-body">
                 <div class="row form-check-inline">
                     <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="insurance" id="insurance1" value="true">
-                            <label class="form-check-label" for="insurance1">เบิกประกันอุบัติเหตุ</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="insurance" id="insurance2" value="false">
-                            <label class="form-check-label" for="insurance2">ไม่เบิกประกันอุบัติเหตุ</label>
+                            {{ spec_form.con_wound_form.insurance }}
+                            {{ spec_form.con_wound_form.insurance.label_tag }}
                         </div>
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        ลักษณะบาดเเผล :
+                        {{ spec_form.con_wound_form.detail.label_tag }}
                     </div>
                     <div class="col-md-8 form-check-inline">
+                        {% for radio in spec_form.con_wound_form.detail %}
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name='wound_good' value="worse"
-                                id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                เเย่ลง
-                            </label>
+                            <span class="radio">{{ radio.tag }}</span>
+                            <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name='wound_good' value="same"
-                                id="defaultCheck2">
-                            <label class="form-check-label" for="defaultCheck2">
-                                เท่าเดิม
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name='wound_good' value="better"
-                                id="defaultCheck3">
-                            <label class="form-check-label" for="defaultCheck3">
-                                ดีขึ้น
-                            </label>
-                        </div>
+
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -309,19 +289,21 @@
 
                 <div class="row mt-5">
                     <div class="col-md-3">
-                        คำเเนะนำ :
+                        {{ spec_form.con_wound_form.advice.label_tag }}
                     </div>
                     <div class="col-md-8">
-                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                        {{ spec_form.con_wound_form.advice }}
+                        {{ spec_form.con_wound_form.advice.error }}
 
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-3">
-                        เพิ่มเติ่ม :
+                        {{ spec_form.con_wound_form.more.label_tag }}
                     </div>
                     <div class="col-md-8">
-                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                        {{ spec_form.con_wound_form.more }}
+                        {{ spec_form.con_wound_form.more.error }}
 
                     </div>
                 </div>
@@ -335,11 +317,11 @@
 </div>
 
 <!-- ดวงตา -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="D"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="eyes"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น : ดวงตา</h5>
-
+            {{ spec_form.eye_form.non_field_errors }}
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
@@ -349,107 +331,68 @@
                         <div class="d-flex flex-row bd-highlight mb-2">
                             <div class=" bd-highlight">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
-                                        id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        ตาซ้าย
-                                    </label>
+                                    {{ spec_form.eye_form.left }}
+                                    {{ spec_form.eye_form.left.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        ปวดตา
-                                    </label>
+                                    {{ spec_form.eye_form.pain }}
+                                    {{ spec_form.eye_form.pain.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        คันตา
-                                    </label>
+                                    {{ spec_form.eye_form.itch }}
+                                    {{ spec_form.eye_form.itch.label_tag }}
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck4">
-                                    <label class="form-check-label" for="defaultCheck4">
-                                        เจ็บหนังตา
-                                    </label>
+                                    {{ spec_form.eye_form.sore }}
+                                    {{ spec_form.eye_form.sore.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        น้ำตาไหล
-                                    </label>
+                                    {{ spec_form.eye_form.tear }}
+                                    {{ spec_form.eye_form.tear.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck4">
-                                    <label class="form-check-label" for="defaultCheck4">
-                                        ตาพร่ามัว
-                                    </label>
+                                    {{ spec_form.eye_form.blurred }}
+                                    {{ spec_form.eye_form.blurred.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        สิ่งเเปลกปลอมเข้าดวงตา
-                                    </label>
+                                    {{ spec_form.eye_form.matter }}
+                                    {{ spec_form.eye_form.matter.label_tag }}
                                 </div>
 
                             </div>
 
                             <div class=" bd-highlight">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="righteye"
-                                        id="defaultCheck2">
-                                    <label class="form-check-label" for="defaultCheck2">
-                                        ตาขวา
-                                    </label>
+                                    {{ spec_form.eye_form.right }}
+                                    {{ spec_form.eye_form.right.label_tag }}
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck4">
-                                    <label class="form-check-label" for="defaultCheck4">
-                                        เคืองตา
-                                    </label>
+                                    {{ spec_form.eye_form.irritation }}
+                                    {{ spec_form.eye_form.irritation.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        ตาเเดง
-                                    </label>
+                                    {{ spec_form.eye_form.conjunctivitis }}
+                                    {{ spec_form.eye_form.conjunctivitis.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        หนังตาบวม
-                                    </label>
+                                    {{ spec_form.eye_form.swoll }}
+                                    {{ spec_form.eye_form.swoll.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        ขี้ตาเยอะ
-                                    </label>
+                                    {{ spec_form.eye_form.gum }}
+                                    {{ spec_form.eye_form.gum.label_tag }}
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck4">
-                                    <label class="form-check-label" for="defaultCheck4">
-                                        ขี้ตาเป็นหนอง
-                                    </label>
+                                    {{ spec_form.eye_form.purulent }}
+                                    {{ spec_form.eye_form.purulent.label_tag }}
                                 </div>
 
 
@@ -463,10 +406,11 @@
 
                 <div class="row mt-5">
                     <div class="col-md-3">
-                        ตรวจร่างกาย :
+                        {{ spec_form.eye_form.check_up.label_tag }}
                     </div>
                     <div class="col-md-8">
-                        <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" cols="4"></textarea>
+                        {{ spec_form.eye_form.check_up }}
+                        {{ spec_form.eye_form.check_up.error }}
 
                     </div>
                 </div>
@@ -477,11 +421,11 @@
 </div>
 
 <!-- อาการไข้ -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="E"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="fever"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น : อาการไข้</h5>
-
+            {{ spec_form.fever_form.non_field_errors }}
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
@@ -491,34 +435,22 @@
                         <div class="d-flex flex-row bd-highlight mb-2">
                             <div class="bd-highlight">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
-                                        id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        ไข้
-                                    </label>
+                                    {{ spec_form.fever_form.left }}
+                                    {{ spec_form.fever_form.left.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        ไอ
-                                    </label>
+                                    {{ spec_form.fever_form.cough }}
+                                    {{ spec_form.fever_form.cough.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        น้ำมูก
-                                    </label>
+                                    {{ spec_form.fever_form.snot }}
+                                    {{ spec_form.fever_form.snot.label_tag }}
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck4">
-                                    <label class="form-check-label" for="defaultCheck4">
-                                        คันตา
-                                    </label>
+                                    {{ spec_form.fever_form.eye_itch }}
+                                    {{ spec_form.fever_form.eye_itch.label_tag }}
                                 </div>
 
 
@@ -526,34 +458,22 @@
 
                             <div class=" bd-highlight ml-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="righteye"
-                                        id="defaultCheck2">
-                                    <label class="form-check-label" for="defaultCheck2">
-                                        เบื่ออาหาร
-                                    </label>
+                                    {{ spec_form.fever_form.food_bored }}
+                                    {{ spec_form.fever_form.food_bored.label_tag }}
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck4">
-                                    <label class="form-check-label" for="defaultCheck4">
-                                        เสมหะ
-                                    </label>
+                                    {{ spec_form.fever_form.phlegm }}
+                                    {{ spec_form.fever_form.phlegm.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        คัดจมูก
-                                    </label>
+                                    {{ spec_form.fever_form.stuffy }}
+                                    {{ spec_form.fever_form.stuffy.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        คันจมูก
-                                    </label>
+                                    {{ spec_form.fever_form.eye_itch }}
+                                    {{ spec_form.fever_form.eye_itch.label_tag }}
                                 </div>
 
 
@@ -562,26 +482,17 @@
                             <div class="bd-highlight ml-4">
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        ปวดเมื่อยตามตัว
-                                    </label>
+                                    {{ spec_form.fever_form.body_aches }}
+                                    {{ spec_form.fever_form.body_aches.label_tag }}
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        เจ็บคอ
-                                    </label>
+                                    {{ spec_form.fever_form.sore_throat }}
+                                    {{ spec_form.fever_form.sore_throat.label_tag }}
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck4">
-                                    <label class="form-check-label" for="defaultCheck4">
-                                        ปวดศีรษะ
-                                    </label>
+                                    {{ spec_form.fever_form.headache }}
+                                    {{ spec_form.fever_form.headache.label_tag }}
                                 </div>
                             </div>
                         </div>
@@ -597,27 +508,30 @@
                     </div>
                     <div class="col-md-8">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                id="defaultCheck5">
-                            <label class="form-check-label" for="defaultCheck5">
-                                Injected pharynx
-                            </label>
+                            {{ spec_form.fever_form.injected_pharynx }}
+                            {{ spec_form.fever_form.injected_pharynx.label_tag }}
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                id="defaultCheck5">
-                            <label class="form-check-label" for="defaultCheck5">
-                                Exudates
-                            </label>
+                            {{ spec_form.fever_form.exudates }}
+                            {{ spec_form.fever_form.exudates.label_tag }}
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                id="defaultCheck4">
-                            <label class="form-check-label" for="defaultCheck4">
-                                Lung : Clear
-                            </label>
+                            {{ spec_form.fever_form.lungs }}
+                            {{ spec_form.fever_form.lungs.label_tag }}
                         </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-md-3">
+                        {{ spec_form.fever_form.more.label_tag }}
+                    </div>
+                    <div class="col-md-8">
+                     
+                            {{ spec_form.fever_form.more }}
+                            {{ spec_form.fever_form.more.error }}
+                    
                     </div>
                 </div>
 
@@ -632,7 +546,7 @@
 </div>
 
 <!-- ท้องเสีย, ช่องท้อง -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="F"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="diarrhea"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น : ท้องเสีย, ช่องท้อง</h5>
@@ -645,80 +559,7 @@
                         อาการสำคัญ
                     </div>
                     <div class="col-md-8 p-0">
-                        <div class="d-flex flex-row bd-highlight mb-2">
-                            <div class="bd-highlight">
-                                <div class="form-check-inline">
-
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        ท้องเสีย
-                                    </label>
-                                    <input type="text" id="detail" class="form-control w-50 ml-2"
-                                        placeholder="จำนวนครั้ง">
-
-
-
-                                </div>
-                                <div class="form-check-inline mt-1 ml-3">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        ลักษณะ
-                                    </label>
-                                    <input type="text" id="detail" class="form-control w-50 ml-2"
-                                        placeholder="ex. เหลว">
-                                </div>
-
-                                <div class="form-check-inline mt-1">
-
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        ลักษณะการปวดท้อง
-                                    </label>
-                                    <input type="text" id="detail" class="form-control w-50 ml-2" placeholder="ex.บิด">
-
-
-
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value="lefteye"
-                                        id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        คลื่นไส้/อาเจียน
-                                    </label>
-                                </div>
-
-                                <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        อุจาระมีมูลเลือด
-                                    </label>
-                                </div>
-
-                                <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        ไข้
-                                    </label>
-                                </div>
-
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name='eye_symntoms' value=""
-                                        id="defaultCheck5">
-                                    <label class="form-check-label" for="defaultCheck5">
-                                        Bowel Sound
-                                    </label>
-                                    <input type="text" id="detail" class="form-control w-50 ml-2" placeholder="">
-
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
+                        { form.}
                     </div>
 
                 </div>
@@ -739,7 +580,7 @@
     </div>
 </div>
 <!-- ปวดในทุกตำเเหน่ง -->
-<div class="col-md-5 ml-3 mt-5" v-if='selected=="G"'>
+<div class="col-md-5 ml-3 mt-5" v-if='selected=="pain"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">ลักษณะอาการเบื้องต้น : ปวดในทุกตำเเหน่ง</h5>

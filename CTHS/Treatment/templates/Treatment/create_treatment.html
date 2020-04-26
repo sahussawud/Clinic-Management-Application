@@ -55,7 +55,7 @@
                                         ประเภทการเข้ารับการรักษา :
                                     </div>
                                     <div class="col-md-8">
-                                        <select v-model="selected" class="custom-select my-1 mr-sm-2">
+                                        <select v-model="selected" class="custom-select my-1 mr-sm-2" name='Symptom_option'>
                                             <option v-for="option in options" v-bind:value="option.value">
                                                 [[ option.text ]]
                                             </option>
@@ -409,16 +409,16 @@
         delimiters: ['[[', ']]'],
         el: '#app',
         data: {
-            selected: 'A',
+            selected: 'non_form',
             options: [
-                { text: 'ทั่วไป', value: 'A' },
-                { text: 'ผิวหนัง', value: 'B' },
-                { text: 'อุบัติเหตุ', value: 'C0' },
-                { text: 'อุบัติเหตุต่อเนื่อง', value: 'C1' },
-                { text: 'ดวงตา', value: 'D' },
-                { text: 'อาการไข้', value: 'E' },
-                { text: 'ท้องเสีย', value: 'F' },
-                { text: 'อาการปวดทุกเเห่ง', value: 'G' }
+                { text: 'ทั่วไป', value: 'non_form' },
+                { text: 'ผิวหนัง', value: 'skin' },
+                { text: 'อุบัติเหตุ', value: 'accident' },
+                { text: 'อุบัติเหตุต่อเนื่อง', value: 'con_accident' },
+                { text: 'ดวงตา', value: 'eyes' },
+                { text: 'อาการไข้', value: 'fever' },
+                { text: 'ท้องเสีย', value: 'diarrhea' },
+                { text: 'อาการปวดทุกเเห่ง', value: 'pain' }
             ]
         }
     })

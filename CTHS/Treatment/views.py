@@ -276,8 +276,27 @@ def create_treatment(request, patient_id):
                  
     else:
         form = TreatmentForm()
+        non_form =  Non_Form_SymptomForm()
+        rash_form = Rash_SymptomForm()
+        wound_form = Wound_SymptomForm()
+        con_wound_form = Con_Wound_SymptomForm()
+        eye_form = Eye_SymptomForm()
+        fever_form = Fever_SymptomForm()
+        diarrhea_form = Diarrhea_SymptomForm()
+        pain_form = Pain_SymptomForm()
+
 
     contexts['form'] = form
+    contexts['spec_form'] = {
+        'non_form' : non_form,
+        'rash_form' : rash_form,
+        'wound_form' : wound_form,
+        'con_wound_form' : con_wound_form,
+        'eye_form' : eye_form,
+        'fever_form' : fever_form,
+        'diarrhea_form' : diarrhea_form,
+        'pain_form' : Pain_SymptomForm,
+    }
     return render(request, 'Treatment/create_treatment.html',context=contexts)
 
 
