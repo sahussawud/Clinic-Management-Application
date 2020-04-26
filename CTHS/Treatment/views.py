@@ -238,9 +238,24 @@ class PatientSearchAPIView(APIView):
     DATA REQUIRED : search : <string: keyword ที่ต้องการค้นหาจาก ชื่อ - นามสกุล, รหัสบัตรประชาชน, เบอร์โทรศัพท์, หรือ รหัสประจำตัว>
     """
     def get(self, request):
-        print(request.data)
-        items = Patient.objects.filter(Q(fname__icontains=request.data['search']) | Q(lname__icontains=request.data['search']) | Q(idcard_number__icontains=request.data['search'])
-        | Q(phone__icontains=request.data['search']) | Q(id_code__icontains=request.data['search'])).order_by('fname')
+        if request.GET.get('selected') == 'all' and request.GET.get('keywords'):
+            items = Patient.objects.filter(Q(fname__icontains=request.GET.get('keywords')) | Q(lname__icontains=request.GET.get('keywords')) | Q(idcard_number__icontains=request.GET.get('keywords'))
+            | Q(phone__icontains=request.GET.get('keywords')) | Q(id_code__icontains=request.GET.get('keywords'))).order_by('fname')
+        
+        elif request.GET.get('selected') == 'name' and request.GET.get('keywords'):
+            items = Patient.objects.filter(Q(fname__icontains=request.GET.get('keywords')) | Q(lname__icontains=request.GET.get('keywords'))).order_by('fname')
+        
+        elif request.GET.get('selected') == 'ssid' and request.GET.get('keywords'):
+            items = Patient.objects.filter(idcard_number__icontains=request.GET.get('keywords'))
+        
+        elif request.GET.get('selected') == 'phone' and request.GET.get('keywords'):
+            items = Patient.objects.filter(phone__icontains=request.GET.get('keywords'))
+        
+        elif request.GET.get('selected') == 'id_code' and request.GET.get('keywords'):
+            items = Patient.objects.filter(id_code__icontains=request.GET.get('keywords'))
+        else:
+            items = Patient.objects.all()
+
         serializer = PatientSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

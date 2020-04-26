@@ -3,6 +3,7 @@
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 {% endblock %}
 
@@ -12,30 +13,28 @@
 
 {% block content %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
-    <div class="container mt-3 mb-5">
+    <div class="container mt-3 mb-5" id='app'>
         <div class="row" id='app'>
             <div class="col-md-10">
                 <h2 class="mb-2">ค้นหาผู้ป่วย</h2>
                 <div class="input-group mb-3">
 
                     <div class="input-group-append">
-                        <select class="custom-select" id="inputGroupSelect02">
-                            <option selected>ทั้งหมด</option>
-                            <option value="1">ชื่อ-นามสกุล</option>
-                            <option value="2">รหัสบัตรประชาชน</option>
-                            <option value="3">เบอร์โทรศัพท์</option>
-                            <option value="3">รหัสประจำตัว</option>
-
+                        <select v-model="selected" class="custom-select" name='Symptom_option'>
+                            <option v-for="option in options" v-bind:value="option.value">
+                                [[ option.text ]]
+                            </option>
                         </select>
+
                     </div>
 
 
                     <div class="input-group-append w-50">
-                        <input type="text" class="form-control" placeholder="คำค้นหา" aria-label="Recipient's username"
+                        <input type="text" class="form-control" placeholder="คำค้นหา" v-model='keywords'
                             aria-describedby="basic-addon2">
                     </div>
                     <div class="input-group-append">
-                        <button class="btn btn-info" type="submit">ค้นหา</button>
+                        <button class="btn btn-info" v-on:click='find_patient()'>ค้นหา</button>
                     </div>
                 </div>
 
@@ -45,29 +44,35 @@
 
         <div class="row my-3">
             <div class="col-md-8">
-                จำนวนผลลัพธ์ที่พบ : 25 ผลลัพธ์
+                จำนวนผลลัพธ์ที่พบ : [[ patients.length ]] ผลลัพธ์
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-11">
 
-                <div class="card w-100 mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h5 class="card-title">นายสหัสวรรษ ขันรักษา (นักศึกษา)</h5>
-                                <p class="card-text">เลขประจำตัวประชาชน : 110-111-151-1254</p>
-                                <p class="card-text">อายุ 18 ปี 6 เดือน กลุ่มเลือด A</p>
-                            </div>
+                <div v-if="patients.length">
+                    <div class="card w-100 mb-3" v-for='patient in patients'>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h5 class="card-title">[[patient.fname]] [[patient.lname]] ([[patient.status]])</h5>
+                                    <p class="card-text">เลขประจำตัวประชาชน : [[patient.idcard_number]]</p>
+                                    <p class="card-text"> วันเกิด [[ patient.birth_day]] กลุ่มเลือด [[
+                                        patient.blood_type]]</p>
+                                </div>
 
-                            <div class="col-md-3">
-                                <button class="btn btn-success btn-sm mb-2" type="submit">สร้างการรักษา</button>
-                                <button class="btn btn-info btn-sm" type="submit">ข้อมูลเพิ่มเติม</button>
+                                <div class="col-md-3">
+                                    <button class="btn btn-success btn-sm mb-2" type="submit">สร้างการรักษา</button>
+                                    <button class="btn btn-info btn-sm" type="submit">ข้อมูลเพิ่มเติม</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <p v-else>
+                    ไม่พบผลลัพธ์
+                </p>
 
 
 
@@ -94,17 +99,36 @@
         delimiters: ['[[', ']]'],
         el: '#app',
         data: {
-            selected: 'A',
+            keywords: "",
+            patients: [],
+            selected: 'all',
             options: [
-                { text: 'ทั่วไป', value: 'A' },
-                { text: 'ผิวหนัง', value: 'B' },
-                { text: 'อุบัติเหตุ', value: 'C0' },
-                { text: 'อุบัติเหตุต่อเนื่อง', value: 'C1' },
-                { text: 'ดวงตา', value: 'D' },
-                { text: 'อาการไข้', value: 'E' },
-                { text: 'ท้องเสีย', value: 'F' },
-                { text: 'อาการปวดทุกเเห่ง', value: 'G' }
+                { text: 'ทั้งหมด', value: 'all' },
+                { text: 'ชื่อ-นามสกุล', value: 'name' },
+                { text: 'รหัสบัตรประชาชน', value: 'ssid' },
+                { text: 'เบอร์โทรศัพท์', value: 'tel' },
+                { text: 'รหัสประจำตัว', value: 'id_code' },
             ]
+
+        }, methods: {
+            find_patient: function () {
+                let self = this;
+                axios.get('/treatment/patient/search/', {
+                    params: {
+                        keywords: self.keywords,
+                        selected: self.selected
+                    }
+
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.patients = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }, created() {
+            this.find_patient()
         }
     })
 </script>
