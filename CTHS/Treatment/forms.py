@@ -158,7 +158,9 @@ class Diarrhea_SymptomForm(ModelForm):
             'vomit': CheckboxInput(attrs={'class': 'form-check-input'}),
             'flux_stool': CheckboxInput(attrs={'class': 'form-check-input'}),
             'fever': CheckboxInput(attrs={'class': 'form-check-input'}),
-            'diarrhea_amount': NumberInput(attrs={'class': 'form-check-input'}),
+            'diarrhea_amount': NumberInput(attrs={'class': 'form-control'}),
+            'diarrhea_detail': TextInput(attrs={'class': 'form-control'}),
+            'stomachache': TextInput(attrs={'class': 'form-control'}),
             'bowel_sound': TextInput(attrs={'class': 'form-control'}),
             'current_history': Textarea(attrs={'class': 'form-control','rows':"15", 'cols':"4"})      
         }
@@ -167,4 +169,14 @@ class Pain_SymptomForm(ModelForm):
     class Meta:
         model = Pain_Symptom
         exclude = ['symptom']
+        widgets = {
+            'bodyache_area': TextInput(attrs={'class': 'form-control', 'placeholder':'บริเวณ'}),
+            'bodyache_date': NumberInput(attrs={'class': 'form-control', 'placeholder':'จำนวนวัน'}),
+            'pain_score': NumberInput(attrs={'class': 'form-control', 'placeholder':'0 - 10'}),
+            'ache_detail': TextInput(attrs={'class': 'form-control', 'placeholder':'ลักษณะการปวด'}),
+            'trigger': TextInput(attrs={'class': 'form-control', 'placeholder':'สิ่งที่กระตุ้น/สิ่งที่บรรเทา'}),
+            'crack': TextInput(attrs={'class': 'form-control', 'placeholder':'ร้าวไป'}),
+            'others': Textarea(attrs={'class': 'form-control', 'cols':'6', 'rows':'10', 'placeholder':'อาการอื่นๆ'}),
+            
+        }
 
