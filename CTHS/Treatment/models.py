@@ -45,7 +45,7 @@ class Symptom(models.Model):
         ('diarrhea', 'ท้องเสีย/ปวดท้อง'),
         ('pain', 'อาการปวดนอกเหนือ')
     ]
-    symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE)
+    symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE, default='non_form')
 
 class Icd_10(models.Model):
     code = models.CharField(_("code"), max_length=25)
@@ -59,7 +59,7 @@ class Diagnosis(models.Model):
     advice = models.CharField(_("advice"), max_length=255)
     doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
     follow_up = models.DateField(_("Follow up"), null=True)
-    follow_up_for = models.CharField(_("for"), max_length=100)
+    follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
 
 
 class Prescription(models.Model):
@@ -92,7 +92,6 @@ class Wound_Symptom(models.Model):
     wound_area = models.CharField(_("Wound Area"), max_length=255)
     wound_date = models.DateField(_("Date of accident"))
     wound_locale = models.CharField(_("Locale of accident"), max_length=255)
-
     is_treat_before = models.BooleanField(_("Had treatment before ?"))
     treatment_before_detail = models.CharField(_("Last treatment detail"), max_length=255)
     time = models.TimeField(_("เวลา"))
@@ -113,6 +112,7 @@ class Lesion(models.Model):
     lesion_y = models.IntegerField(_("ยาว"))
 
 class Con_Wound_Symptom(models.Model):
+    symptom = models.OneToOneField(Symptom, verbose_name=_("Symptom ID"), on_delete=models.CASCADE)
     LESION = [
         ('1','เเย่ลง'),
         ('2','เท่าเดิม'),

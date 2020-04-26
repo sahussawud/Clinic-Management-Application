@@ -1,10 +1,10 @@
 from django import forms
 from django.forms import ModelForm
-from django.forms.widgets import (DateInput, NumberInput, RadioSelect, Select,
-                                  Textarea, TextInput,CheckboxInput)
+from django.forms.widgets import (CheckboxInput, DateInput, NumberInput,
+                                  RadioSelect, Select, Textarea, TextInput)
 from django.utils.translation import gettext_lazy as _
 
-from Treatment.models import Treatment
+from Treatment.models import *
 
 
 class TreatmentForm(ModelForm):
@@ -34,5 +34,62 @@ class TreatmentForm(ModelForm):
             'patient_condition': RadioSelect(attrs={'class': 'form-check-input'}),
         }
 
+class SymptomForm(ModelForm):
+    class Meta:
+        model = Symptom
+        exclude = ['treatment']
 
+class Icd_10Form(ModelForm):
+    class Meta:
+        model = Icd_10
+
+class DiagnosisForm(ModelForm):
+    class Meta:
+        model = Diagnosis
+        exclude = ['Treatment', 'doctor_id','icd_10']
+
+class Non_Form_SymptomForm(ModelForm):
+    class Meta:
+        model = Non_Form_Symptom
+        exclude = ['symptom']
+
+class Rash_SymptomForm(ModelForm):
+    class Meta:
+        model = Rash_Symptom
+        exclude = ['symptom']
+
+class Wound_SymptomForm(ModelForm):
+    class Meta:
+        model = Wound_Symptom
+        exclude = ['symptom']
+
+class LesionForm(ModelForm):
+    class Meta:
+        model = Lesion
+        exclude = ['wound_symptom']
+
+class Con_Wound_SymptomForm(ModelForm):
+    class Meta:
+        model = Con_Wound_Symptom
+        exclude = ['symptom']
+
+class Eye_SymptomForm(ModelForm):
+    class Meta:
+        model = Eye_Symptom
+        exclude = ['symptom']
+
+class Fever_SymptomForm(ModelForm):
+    class Meta:
+        model = Fever_Symptom
+        exclude = ['symptom']
+
+class Diarrhea_SymptomForm(ModelForm):
+    class Meta:
+        model = Diarrhea_Symptom
+        exclude = ['symptom']
+
+class Pain_SymptomForm(ModelForm):
+    class Meta:
+        model = Pain_Symptom
+        exclude = ['symptom']
 
