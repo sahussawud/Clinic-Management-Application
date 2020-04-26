@@ -42,6 +42,7 @@ class SymptomForm(ModelForm):
 class Icd_10Form(ModelForm):
     class Meta:
         model = Icd_10
+        fields = '__all__'
 
 class DiagnosisForm(ModelForm):
     class Meta:

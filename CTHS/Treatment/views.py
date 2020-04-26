@@ -13,7 +13,7 @@ from Medicine.models import Drug
 from User_app.forms import PatientForm
 from User_app.models import Congenital_disease, Patient, Public_Health
 
-from .forms import TreatmentForm
+from .forms import *
 from .serializers import (Congenital_diseaseSerializer,
                           Congenital_diseaseSerializerWithoutPatient,
                           DrugSerializer, PatientSerializer)

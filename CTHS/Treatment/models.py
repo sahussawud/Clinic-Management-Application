@@ -32,6 +32,7 @@ class Treatment(models.Model):
     
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Creator user"), on_delete=models.CASCADE) #change from o2o to foriegnfield
     patient_p_id = models.ForeignKey(Patient, verbose_name=_("PatientID"), on_delete=models.CASCADE)
+    diagnosis = models.ForeignKey(Diagnosis, on_delete=models.CASCADE)
 
 class Symptom(models.Model):
     treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment"), on_delete=models.CASCADE)
@@ -53,14 +54,12 @@ class Icd_10(models.Model):
     symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=Symptom.SYMPTOM_TYPE)
 
 class Diagnosis(models.Model):
-    treatment = models.ForeignKey(Treatment, on_delete=models.CASCADE)
     icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
     diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
     advice = models.CharField(_("advice"), max_length=255)
     doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
     follow_up = models.DateField(_("Follow up"), null=True)
     follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
-
 
 class Prescription(models.Model):
     detail = models.CharField(_("Prescription detail"), max_length=255)
@@ -169,7 +168,6 @@ class Diarrhea_Symptom(models.Model):
     fever = models.BooleanField(_("Fever"), default=False)
     
     bowel_sound = models.CharField(_("bowel_sound"), max_length=255, blank=True, default='')
-
     current_history = models.CharField(_("bowel_sound"), max_length=255, blank=True, default='')
 
 class Pain_Symptom(models.Model):
