@@ -10,6 +10,7 @@ urlpatterns = [
     path('updatemedicine/', views.update_medicine, name = 'update_medicine'),
     path('comfirmdispensing/', views.comfirm_dispensing, name = 'comfirm_dispensing'),
     
+    path('prescription/<int:pst_id>/pst_api/', views.PrescriptionAPIView.as_view(), name='pst_api'),
     
     
    

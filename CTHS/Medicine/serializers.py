@@ -7,16 +7,16 @@ from Treatment.models import Prescription
 class Med_supplySerializer(serializers.ModelSerializer):
     class Meta:
         model = Med_supply
-
-class DrugSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Drug
+        fields = '__all__'
 
 class DispenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dispense
+        fields = '__all__'
 
 class PrescriptionSerializer(serializers.ModelSerializer):
+    dispense = DispenseSerializer(source="dispense_set", many=True)
     class Meta:
         model = Prescription
-        field = ['detail', 'treatment_cn']
+        fields = ['id', 'detail', 'treatment_cn', 'dispense']
+        read_only_fields = ['id']

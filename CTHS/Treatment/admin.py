@@ -8,4 +8,5 @@ admin.site.register(Diagnosis)
 admin.site.register(Icd_10)
 admin.site.register(Symptom)
 admin.site.register(Lesion)
+admin.site.register(Prescription)
 
