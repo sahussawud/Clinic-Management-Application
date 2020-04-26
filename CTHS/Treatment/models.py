@@ -54,7 +54,7 @@ class Treatment(models.Model):
     
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Creator user"), on_delete=models.CASCADE) #change from o2o to foriegnfield
     patient_p_id = models.ForeignKey(Patient, verbose_name=_("PatientID"), on_delete=models.CASCADE)
-    diagnosis = models.ForeignKey(Diagnosis, on_delete=models.CASCADE)
+    diagnosis = models.ForeignKey(Diagnosis, on_delete=models.CASCADE, null=True)
 
 class Symptom(models.Model):
     treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment"), on_delete=models.CASCADE)
@@ -110,7 +110,7 @@ class Lesion(models.Model):
     lesion_y = models.IntegerField(_("ยาว"))
 
 class Con_Wound_Symptom(models.Model):
-    symptom = models.OneToOneField(Symptom, verbose_name=_("Symptom ID"), on_delete=models.CASCADE)
+    symptom = models.OneToOneField(Symptom, verbose_name=_("Symptom ID"), on_delete=models.CASCADE, null=True)
     LESION = [
         ('1','เเย่ลง'),
         ('2','เท่าเดิม'),
