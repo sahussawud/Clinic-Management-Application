@@ -136,7 +136,12 @@ class Patient(models.Model):
 
 
     def age(self):
-        return int((date.today() - self.birth_day).days / 365.25 )
+        age_day = (date.today() - self.birth_day).days
+        age_year = age_day // 365.25
+        age_day -= age_year*365.25
+        age_month = age_day // 30
+        age_day -= age_month*30
+        return int(age_year), int(age_month), int(age_day)
     age = property(age)
 
 class Congenital_disease(models.Model):

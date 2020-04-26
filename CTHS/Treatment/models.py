@@ -21,11 +21,11 @@ class Icd_10(models.Model):
 
 class Diagnosis(models.Model):
     icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
-    diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
-    advice = models.CharField(_("advice"), max_length=255)
+    diagnosis_detail = models.CharField(_("คำวินิฉัย"), max_length=255, blank=True)
+    advice = models.CharField(_("คำเเนะนำ"), max_length=255, blank=True)
     doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
-    follow_up = models.DateField(_("Follow up"), null=True)
-    follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
+    follow_up = models.DateField(_("วันนัด"), null=True)
+    follow_up_for = models.CharField(_("เพื่อ"), max_length=100, blank=True)
 
 class Treatment(models.Model):
     cn = models.AutoField(_("Clinic number"), primary_key=True)

@@ -1,5 +1,540 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+{% endblock %}
+
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+    <div class="container mt-3 mb-5">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger {% else %}{{message.tags}} {% endif %}
+        alert-dismissible fade show" role="alert">
+            <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}</strong>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="row" id='app'>
+            <div class="col-md-6">
+                <h2 class="mb-2">สร้างการวินิจฉัย CN : CN0001</h2>
+                <!-- ROWS OF PATIENT INFORMATION -->
+                <div class="row">
+                    <div class="card w-100">
+                        <h5 class="card-header">ข้อมูลผู้ป่วย <a href="#" class="btn btn-info btn-sm"
+                                style="">ข้อมูลเพิ่มเติม</a></h5>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="card-title">{{patient.fname}} {{patient.lname}}
+                                        ({{patient.get_patient_role_display}})</h5>
+                                    <p class="card-text">อายุ {{age.0}} ปี {{age.1}} เดือน {{age.2}} วัน กลุ่มเลือด
+                                        {{patient.blood_type}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    {% if drug.count > 0 %}
+                                    <ul class="card-text">เเพ้ยา : <br>
+                                        {% for d_data in drug %}
+                                        <li>{{d_data.name}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% else %}
+                                    <ul class="card-text">เเพ้ยา : -</ul>
+                                    {% endif %}
+                                    {% if cd.count > 0 %}
+                                    <ul class="card-text">โรคประจำตัว : <br>
+                                        {% for cd_data in cd %}
+                                        <li>{{cd_data.name}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% else %}
+                                    <ul class="card-text">โรคประจำตัว : -</ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="card w-100">
+                        <h5 class="card-header">ข้อมูลเบื้องต้น <a href="#" class="btn btn-info btn-sm"
+                                style="">ข้อมูลเพิ่มเติม</a></h5>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="card-title">Vital Sign :</h5>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-md-5">
+                                    ประเภทการเข้ารับการรักษา :
+                                </div>
+                                <div class="col-md-8">
+                                    <select v-model="selected" class="custom-select my-1 mr-sm-2" name='Symptom_option'>
+                                        <option v-for="option in options" v-bind:value="option.value">
+                                            [[ option.text ]]
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">{{ form.weight.label_tag }}</th>
+                                                <td> {{ form.weight }}
+                                                    {% if form.weight.errors %}
+                                                    <div class="text-danger"> {{ form.weight.errors }}</div>
+                                                    {% endif %}
+                                                </td>
+                                                <th scope="row">{{ form.Height.label_tag }}</th>
+                                                <td> {{ form.Height }}
+                                                    {% if form.Height.errors %}
+                                                    <div class="text-danger"> {{ form.Height.errors }}</div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">{{ form.bp.label_tag }}</th>
+                                                <td> {{ form.bp }}
+                                                    {% if form.bp.errors %}
+                                                    <div class="text-danger"> {{ form.bp.errors }}</div>
+                                                    {% endif %}
+                                                </td>
+                                                <th scope="row">{{ form.pr.label_tag }}</th>
+                                                <td> {{ form.pr }}
+                                                    {% if form.pr.errors %}
+                                                    <div class="text-danger"> {{ form.pr.errors }}</div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">{{ form.temp.label_tag }}</th>
+                                                <td> {{ form.temp }}
+                                                    {% if form.temp.errors %}
+                                                    <div class="text-danger"> {{ form.temp.errors }}</div>
+                                                    {% endif %}
+                                                </td>
+                                                <th scope="row">{{ form.rr.label_tag }}</th>
+                                                <td> {{ form.rr }}
+                                                    {% if form.rr.errors %}
+                                                    <div class="text-danger"> {{ form.rr.errors }}</div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">ดัชนีมวลกาย</th>
+                                                <td><input type="number" class="form-control"
+                                                        id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย" disabled>
+                                                </td>
+                                                <th scope="row">{{ form.o2_sat.label_tag }}</th>
+                                                <td> {{ form.o2_sat }}
+                                                    {% if form.o2_sat.errors %}
+                                                    <div class="text-danger"> {{ form.o2_sat.errors }}</div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {{ form.patient_condition.label_tag }}
+                                </div>
+                                <div class="col-md-8">
+                                    {% for radio in form.patient_condition %}
+                                    <div class="form-check form-check-inline">
+                                        <span class="radio">{{ radio.tag }}</span>
+                                        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                    </div>
+
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    {{ form.med_cer.label_tag }}
+                                </div>
+                                <div class="col-md-8">
+
+                                    <div class="form-check form-check-inline">
+                                        <span class="radio">{{ form.med_cer }}</span>
+                                        <label class='ml-2 mt-1'
+                                            for="{{ form.med_cer.id_for_label }}">ต้องการใบรับรองเเพทย์</label>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include "Treatment/create_pre_diagnosis.html" %}
+
+            <!-- ฟอร์มวินิจฉัย -->
+            
+                <div class="col-md-11 mt-3 ml-2">
+                    <form action="{% url 'create_diagnosis' treatment_id %}" method="post">
+                    <div class="row">
+                        <div class="card w-100">
+                            <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx <a href="#"
+                                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+
+                            <div class="card-body">
+                                {{ diagnosis_form.non_field_error }}
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ diagnosis_form.diagnosis_detail.label_tag }}
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{ diagnosis_form.diagnosis_detail }}
+                                        {{ diagnosis_form.diagnosis_detail.error }}
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-3">
+                                        {{ diagnosis_form.advice.label_tag }}
+                                    </div>
+                                    <div class="col-md-8">
+                                        {{ diagnosis_form.advice }}
+                                        {{ diagnosis_form.advice.error }}
+                                        <!-- <textarea class="form-control " id="exampleFormControlTextarea1" rows="8"
+                                        cols="4"></textarea> -->
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-3">
+                                        {{ diagnosis_form.follow_up.label_tag }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ diagnosis_form.follow_up }}
+                                        {{ diagnosis_form.follow_up.error }}
+                                    </div>
+                                    <div class="col-md-1">
+                                        {{ diagnosis_form.follow_up_for.label_tag }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ diagnosis_form.follow_up_for }}
+                                        {{ diagnosis_form.follow_up_for.error }}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <button class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2" type="submit">บันทึกคำวินิฉัย</button>
+                </div>
+            </form>
+
+
+
+            <div class="col-md-11 mt-3 ml-2">
+                <div class="row">
+                    <div class="card w-100">
+                        <h5 class="card-header">ใบสั่งยา</h5>
+
+                        <div class="card-body" style='color:red'>
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="table-dark">ลำดับ</th>
+                                        <th class="table-dark">ชื่อยา/เวชภัทฑ์</th>
+                                        <th class="table-dark">จำนวน</th>
+                                        <th class="table-dark"></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="table-info">1</td>
+                                        <td class="table-info">Acetazolamide (อะเซตาโซลาไมด์) 3 % x 1 ขวด</td>
+                                        <td class="table-info">
+                                            <center><input type="number" value="" min="0" max="1000" step="1" />
+                                            </center>
+                                        </td>
+                                        <td class="table-info">
+                                            <center><button type="button" class="btn btn-danger btn-sm">ลบ</button>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Albumin (อัลบูมิน) x 1 ขวด (500 ml.)</td>
+                                        <td>
+                                            <center><input type="number" value="" min="0" max="1000" step="1" />
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center><button type="button" class="btn btn-danger btn-sm">ลบ</button>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Aminoglycosides (อะมิโนไกลโคไซด์)</td>
+                                        <td>
+                                            <center><input type="number" value="" min="0" max="1000" step="1" />
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center><button type="button" class="btn btn-danger btn-sm ">ลบ</button>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>หน้ากากอนามัย</td>
+                                        <td>
+                                            <center><input type="number" value="" min="0" max="1000" step="1" />
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center><button type="button" class="btn btn-danger btn-sm ">ลบ</button>
+                                            </center>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><br /></td>
+                                        <td><br /></td>
+                                        <td><br /></td>
+                                        <td>
+                                            <center><button type="button" class="btn btn-success btn-sm"
+                                                    data-toggle="modal"
+                                                    data-target=".bd-example-modal-xl">เพิ่ม</button></center>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+
+        </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">รายการยา</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="row">
+                            <div class="col-11"><input type="text" class="form-control" name="search"
+                                    placeholder="Search..."><br>
+                            </div>
+                            <div class="col-1"><button type="button" class="btn btn-success btn-ml">ค้นหา</button>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="table-dark">No.</th>
+                                    <th class="table-dark">รหัสมาตรฐาน 24 หลัก</th>
+                                    <th class="table-dark">ชื่อยา</th>
+                                    <th class="table-dark">จำนวน</th>
+                                    <th class="table-dark">รายละเอียด</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>100942000001010110181</td>
+                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
+                                    <td>10</td>
+                                    <td>@</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination row justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                        <button type="button" class="btn btn-success">จ่ายยา</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    </div>
+
+</main>
+{% endblock %}
+{% block footer %}
+<script>
+    var app = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        data: {
+            selected: 'non_form',
+            options: [
+                { text: 'ทั่วไป', value: 'non_form' },
+                { text: 'ผิวหนัง', value: 'skin' },
+                { text: 'อุบัติเหตุ', value: 'accident' },
+                { text: 'อุบัติเหตุต่อเนื่อง', value: 'con_accident' },
+                { text: 'ดวงตา', value: 'eyes' },
+                { text: 'อาการไข้', value: 'fever' },
+                { text: 'ท้องเสีย', value: 'diarrhea' },
+                { text: 'อาการปวดทุกเเห่ง', value: 'pain' }
+            ]
+        }
+    })
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
 <!-- อาการทั่วไป -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="A"'>
+<div class="col-md-11 mt-3 ml-2">
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx <a href="#" class="btn btn-info btn-sm"
@@ -45,8 +580,10 @@
 
 </div>
 
+
+
 <!-- อาการผื่น/ตุ่มเเผล -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="B"'>
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">คำวินิจฉัย(อาการผื่น/ตุ่มเเผล) โดย นพ.xxxx xxxxx <a href="#"
@@ -150,7 +687,7 @@
 </div>
 
 <!-- ทำเเผล/เกิดอุบัติเหตุครั้งเเรก -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="C0"'>
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">คำวินิจฉัย(ทำเเผล/เกิดอุบัติเหตุครั้งเเรก) โดย นพ.xxxx xxxxx <a href="#"
@@ -197,7 +734,7 @@
 </div>
 
 <!-- ทำเเผลต่อเนื่อง -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="C1"'>
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">คำวินิจฉัย(ทำเเผล/เกิดอุบัติเหตุครั้งเเรก) โดย นพ.xxxx xxxxx <a href="#"
@@ -235,11 +772,11 @@
 </div>
 
 <!-- เจ็บที่ดวงตา -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="D"'>
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
-            <h5 class="card-header">คำวินิจฉัย(ดวงตา) โดย นพ.xxxx xxxxx <a href="#"
-                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+            <h5 class="card-header">คำวินิจฉัย(ดวงตา) โดย นพ.xxxx xxxxx <a href="#" class="btn btn-info btn-sm"
+                    style="">สร้างใบสั่งยา</a></h5>
 
             <div class="card-body">
                 <div class="row mt-4">
@@ -273,11 +810,11 @@
 </div>
 
 <!-- อาการไข้ -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="E"'>
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
-            <h5 class="card-header">คำวินิจฉัย(อาการไข้) โดย นพ.xxxx xxxxx <a href="#"
-                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+            <h5 class="card-header">คำวินิจฉัย(อาการไข้) โดย นพ.xxxx xxxxx <a href="#" class="btn btn-info btn-sm"
+                    style="">สร้างใบสั่งยา</a></h5>
 
             <div class="card-body">
                 <div class="row">
@@ -349,7 +886,7 @@
 </div>
 
 <!-- ท้องเสีย/โรคทางช่องท้อง -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="F"'>
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">คำวินิจฉัย(ท้องเสีย/โรคทางช่องท้อง) โดย นพ.xxxx xxxxx <a href="#"
@@ -434,7 +971,7 @@
 </div>
 
 <!-- อาการปวดทุกตำเเหน่ง -->
-<div class="col-md-11 mt-3 ml-2" v-if='selected=="G"'>
+<div class="col-md-11 mt-3 ml-2" v-if='selected=="non_form"'>
     <div class="row">
         <div class="card w-100">
             <h5 class="card-header">คำวินิจฉัย(ท้องเสีย/โรคทางช่องท้อง) โดย นพ.xxxx xxxxx <a href="#"
@@ -525,6 +1062,4 @@
 
 </div>
 
-
-
-
+{% endcomment %}
