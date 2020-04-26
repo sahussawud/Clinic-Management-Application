@@ -10,7 +10,7 @@ from Treatment.models import *
 class TreatmentForm(ModelForm):
     class Meta:
         model = Treatment
-        exclude = ['cn', 'create_date', 'user_id', 'patient_p_id']
+        exclude = ['cn', 'create_date', 'user_id', 'patient_p_id', 'bmi']
         labels = {
             'weight': _('น้ำหนัก'),
             'Height': _('ส่วนสูง'),

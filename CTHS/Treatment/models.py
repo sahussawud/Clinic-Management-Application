@@ -19,14 +19,6 @@ class Icd_10(models.Model):
     detail = models.CharField(_("detail"), max_length=255)
     symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE)
 
-class Diagnosis(models.Model):
-    icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
-    diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
-    advice = models.CharField(_("advice"), max_length=255)
-    doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
-    follow_up = models.DateField(_("Follow up"), null=True)
-    follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
-
 class Treatment(models.Model):
     cn = models.AutoField(_("Clinic number"), primary_key=True)
     weight = models.FloatField(_("Weight"))
@@ -51,14 +43,23 @@ class Treatment(models.Model):
 
     def bmi(self):
         return  self.weight / self.Height**2
+    bmi = property(bmi)
     
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Creator user"), on_delete=models.CASCADE) #change from o2o to foriegnfield
     patient_p_id = models.ForeignKey(Patient, verbose_name=_("PatientID"), on_delete=models.CASCADE)
-    diagnosis = models.ForeignKey(Diagnosis, on_delete=models.CASCADE, null=True)
+
+class Diagnosis(models.Model):
+    icd_10 = models.ManyToManyField(Icd_10, verbose_name=_("icd_10s"))
+    diagnosis_detail = models.CharField(_("Diagnosis detail"), max_length=255)
+    advice = models.CharField(_("advice"), max_length=255)
+    doctor_id = models.ForeignKey(Doctor, verbose_name=_("Diagnos Doctor"), on_delete=models.CASCADE)
+    follow_up = models.DateField(_("Follow up"), null=True)
+    follow_up_for = models.CharField(_("for"), max_length=100, blank=True)
+    treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment ID"), on_delete=models.CASCADE, null=True)
 
 class Symptom(models.Model):
     treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment"), on_delete=models.CASCADE)
-    symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE, default='non_form')
+    symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE, null=True)
 
 class Prescription(models.Model):
     detail = models.CharField(_("Prescription detail"), max_length=255)
