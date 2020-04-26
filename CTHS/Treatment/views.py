@@ -281,10 +281,32 @@ def create_treatment(request, patient_id):
                  
     else:
         form = TreatmentForm()
+        non_form =  Non_Form_SymptomForm()
+        rash_form = Rash_SymptomForm()
+        wound_form = Wound_SymptomForm()
+        con_wound_form = Con_Wound_SymptomForm()
+        eye_form = Eye_SymptomForm()
+        fever_form = Fever_SymptomForm()
+        diarrhea_form = Diarrhea_SymptomForm()
+        pain_form = Pain_SymptomForm()
+        
         patient = Patient.objects.get(p_id=patient_id)
         drug = Drug.objects.filter(patient=patient_id)
         cd = Congenital_disease.objects.filter(patient_id=patient_id)
+
     contexts['form'] = form
+    contexts['spec_form'] = {
+        'non_form' : non_form,
+        'rash_form' : rash_form,
+        'wound_form' : wound_form,
+        'con_wound_form' : con_wound_form,
+        'eye_form' : eye_form,
+        'fever_form' : fever_form,
+        'diarrhea_form' : diarrhea_form,
+        'pain_form' : Pain_SymptomForm,
+    }
+        
+
     contexts['patient'] = patient
     contexts['drug'] = drug
     contexts['cd'] = cd
