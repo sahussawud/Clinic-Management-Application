@@ -57,3 +57,9 @@ class PrescriptionSerializer(serializers.ModelSerializer):
         model = Prescription
         fields = ['id', 'detail', 'status', 'treatment_cn', 'dispense', 'doctor_id']
         read_only_fields = ['id']
+
+class CreatePrescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Prescription
+        fields = ['id', 'detail', 'status', 'treatment_cn', 'doctor_id']
+        read_only_fields = ['id']

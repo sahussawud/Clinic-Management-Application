@@ -340,7 +340,10 @@ def create_treatment(request, patient_id):
                 new_symtom_form.symptom = symptom
                 
                 new_symtom_form.save()
-               
+                #add this treatment to queue
+                new_queue = Room_Queue.objects.create(treatment=treatment_form)
+                new_queue.status = "WD"
+                new_queue.save()
                 #if accident form
                 if diagnosis_type == 'accident':
                     formset = LesionFormSet(request.POST)
@@ -498,6 +501,9 @@ def diagnosis_treatment(request, treatment_cn):
                     diagnosis_form.treatment = treatment
                     diagnosis_form.save()
                     # form.save_m2m()
+                    update_queue = Room_Queue.objects.get(treatment=treatment)
+                    update_queue.status = "WP"
+                    update_queue.save()
                     messages.success(request, 'สร้างการวินิจฉัยสำเร็จ!')
                     contexts['complete_diagnosis'] = doctor
                 else:

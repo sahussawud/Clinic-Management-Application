@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from User_app.models import Congenital_disease, Patient
-from .models import Treatment, Diagnosis
+from .models import Treatment, Diagnosis, Symptom
 from Medicine.models import Drug, Med_supply
 
 class Congenital_diseaseSerializerWithoutPatient(serializers.Serializer):
@@ -56,3 +56,14 @@ class TreatmentSerializer(serializers.ModelSerializer):
 class DrugMedSupplySerializer(serializers.Serializer):
     drug = DrugSerializer(many=True)
     med_sup = Med_supplySerializer(many=True)
+
+class SymptomSerializer(serializers.ModelSerializer):
+    treatment = TreatmentSerializer()
+    class Meta:
+        model = Symptom
+        fields = '__all__'
+        read_only_fields = ['id']
+
+class SymptomTypeSerializer(serializers.Serializer):
+    symptom_type = serializers.CharField()
+    p_count = serializers.IntegerField()
