@@ -18,25 +18,26 @@
                     <!-- ROWS OF PATIENT INFORMATION -->
                     <div class="row">
                         <div class="card w-100">
-                            <h5 class="card-header">รายการใบสั่งยา</h5>
+                            <h5 class="card-header">รายการรอการจ่ายยา</h5>
                             <div class="card-body">
                                 <table class="table table-bordered table table-sm table table-striped">
                                     <thead>
                                         <tr>
                                             <th class="table-dark" scope="col">รหัสใบสั่งยา</th>
                                             <th class="table-dark" scope="col">รหัสการรักษา</th>
-                                            <th class="table-dark" scope="col">รหัสใบสั่งยา</th>
                                             <th class="table-dark" scope="col">ชื่อผู้รับยา</th>
-                                            <th class="table-dark" scope="col">สถานะ</th>
+                                            <th class="table-dark" scope="col">รายละเอียด</th>
+                                            <th class="table-dark" scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for='prescription in precriptions_wait_list'>
-                                            <th class="text-center">[[ prescription.id ]]</th>
-                                            <td class="text-center">[[ prescription.treatment_cn ]]</td>
-                                            <td class="text-center">PT0001</td>
-                                            <td class="text-center">สหัสวรรษ</td>
-                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
+                                        <tr v-for='p_wait in precriptions_wait_list'>
+                                            <th class="text-center">[[ p_wait.id ]]</th>
+                                            <td class="text-center">[[ p_wait.treatment_cn.cn ]]</td>
+                                            <td class="text-center">[[ p_wait.treatment_cn.patient_p_id.fname ]] [[ p_wait.treatment_cn.patient_p_id.lname ]]</td>
+                                            <!-- <td class="text-center">[[ p_wait.doctor_id.user_id.fname ]] [[ p_wait.doctor_id.user_id.lname ]]</td> -->
+                                            <td class="text-center">[[ p_wait.detail ]]</td>
+                                            <td class="text-center"><button class="btn-sm btn-info" v-on:click.prevent='select_prescription(p_wait.id)' >รายละเอียด</button></td>
                                         </tr>
                                         
                                     </tbody>
@@ -48,7 +49,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-5 ml-3 mt-5">
+            <div class="col-md-5 ml-3 mt-5" v-if='prescription.id'>
                 <div class="row">
                     <div class="card w-100">
                         <h5 class="card-header">รายละเอียดใบสั่งยา</h5>
@@ -57,11 +58,11 @@
                             <div class="row">
                                 <div class="card-body">
                                     <p><b>ใบสั่งยาเลขที่ :</b> [[ prescription.id]] </p>
-                                <p><b>เลขที่ประวัติการรักษา :</b> [[ prescription.treatment_cn]] </p>
-                                <p><b>ให้เเก่ :</b> นาย เด่นภูมิ ศรีเมือง</p>
-                                <p><b>ลักษณะอาการเบื้องต้น :</b> ไข้มีเสมหะ ปวดหัว ตัวร้อน เป้นไข้ นอนไม่หลับ กระส่ายกระสับ</p>
-                                <p><b>คำวินิจฉัยจากเเพทย์ :</b> Negative coronavirus detect, but positive HIV</p>
-                                </div>
+                                    <p><b>รายละเอียด :</b> [[ prescription.detail ]] </p>
+                                    <p><b>ให้เเก่ :</b>  [[ prescription.treatment_cn.patient_p_id.fname ]] [[ prescription.treatment_cn.patient_p_id.lname ]] </p>
+                            
+                                    <p><b>โดย :</b> นพ./พญ. [[ prescription.doctor_id.user_id.first_name ]] [[ prescription.doctor_id.user_id.last_name ]]</p>
+                                    </div>
                                 
 
                             </div>
@@ -113,14 +114,13 @@
         delimiters: ['[[', ']]'],
         el: '#app',
         data: {
-            select_id : 5,
             precriptions_wait_list: [],
             prescription: []
 
         }, methods: {
-            select_prescription: function () {
+            select_prescription: function (prescription_id) {
                 let self = this;
-                axios.get('/medicine/prescription/'+this.select_id+'/pst_api/', {
+                axios.get('/medicine/prescription/'+prescription_id+'/pst_api/', {
                 
                 }).then(function (response) {
                     console.log(response.data);
