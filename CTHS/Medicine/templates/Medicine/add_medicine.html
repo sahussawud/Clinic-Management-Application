@@ -12,27 +12,36 @@
 {% endblock %}
 
 {% block styles %}
+<style>
+ .my-custom-scrollbar {
+    position: relative;
+    height: 500px;
+    overflow: auto;
+  }
+
+  .table-wrapper-scroll-y {
+    display: block;
+  }
+</style>
 {% endblock %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
-
   <div class="container">
-
     <!-- topic and filter option -->
     <div class="row mb-3 mt-3">
       <div class="col-lg-3">
         <h1>เพิ่มยาใหม่</h1>
       </div>
-    </div>
+    </div>  
     <hr>
     <!-- from -->
-    <div class="row">
-
+    {% include "messages.html" %}
+    <div class="row" id='app'>
       <hr>
-      <div class="table-responsive">
+      <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th class="table-dark">ลำดับ</th>
+              <th class="table-dark">Drug ID</th>
               <th class="table-dark">รหัสมาตรฐาน 24 หลัก</th>
               <th class="table-dark">ชื่อยา</th>
               <th class="table-dark">จำนวน</th>
@@ -40,31 +49,21 @@
             </tr>
           </thead>
           <tbody id='data1'>
-            <!-- show data API -->
+            <tr v-for='data in med'>
+              <td>[[data.med_sup_id]]</td>
+              <td>[[data.drug_id]]</td>
+              <td>[[data.name]]</td>
+              <td>[[data.amount]]</td>
+              <td>@</td>
+
+
+
+
+            </tr>
 
           </tbody>
         </table>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination row justify-content-center">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        
       </div>
     </div>
     <br>
@@ -107,6 +106,7 @@
     </div>
 </main>
 <script>
+
   window.onload = function () {
     initialize();
   };
@@ -122,40 +122,79 @@
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
   //API
-  function show_drug() {
-    let self = this;
-    axios.get('/treatment/patient/update/drug/', {
-      // เมื่อทำงานสำเร็จ
-    }).then(function (response) {
-      console.log(response.data);
-      show_table(response.data)
+  // function show_drug() {
+  //   let self = this;
+  //   axios.get('/treatment/patient/update/drug/', {
+  //     // เมื่อทำงานสำเร็จ
+  //   }).then(function (response) {
+  //     console.log(response.data);
+  //     show_table(response.data)
 
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
+  //   }).catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
 
-  function show_table(data) {
-    table = document.getElementById('data1')
-    for (let i = 0; i < data.length; i++) {
-      //สร้างแถว 
-      let tr = document.createElement('tr');
-      //เก็บข้อมูล ตาม index
-      let select_data = data[i]
-      let text = ''
-      text += `
-        <td>${i + 1}</td>
-        <td>${select_data['drug_id']}</td>
-        <td>${select_data['name']}</td>
-        <td>${select_data['amount']}</td>
-        <td>@</td>`
-      //$ใส่ค่ามองเป็น str  
-      tr.innerHTML = text;
-      table.append(tr);
+  // function show_table(data) {
+  //   table = document.getElementById('data1')
+  //   for (let i = 0; i < data.length; i++) {
+  //     //สร้างแถว 
+  //     let tr = document.createElement('tr');
+  //     //เก็บข้อมูล ตาม index
+  //     let select_data = data[i]
+  //     let text = ''
+  //     text += `
+  //       <td>${i + 1}</td>
+  //       <td>${select_data['drug_id']}</td>
+  //       <td>${select_data['name']}</td>
+  //       <td>${select_data['amount']}</td>
+  //       <td>@</td>`
+  //     //$ใส่ค่ามองเป็น str  
+  //     tr.innerHTML = text;
+  //     table.append(tr);
 
-    }
+  //   }
 
-  }
+  // }
+
+  var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data:{
+        med: [],
+      }, methods:{
+        show_drug: function (med){
+          let self = this;
+          axios.get('/treatment/patient/update/drug/', {
+
+          }).then(function(response){
+              console.log(response.data);
+              self.med = response.data
+          }).catch(function(error){
+              console.log(crror);
+          });
+        }
+      },created(){
+        this.show_drug()
+      }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   function change(event) {
     var check = event.target.value
 

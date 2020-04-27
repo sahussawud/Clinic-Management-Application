@@ -16,27 +16,47 @@ from .serializers import *
 from Treatment.models import Room_Queue
 # Create your views here.
 def add_medicine(request):
-    
     if request.method == 'POST':
-        form =  MedicineDrugForm(request.POST)
-        
-        if form.is_valid():
-            drug_id = form.cleaned_data['drug_id']
-            name = form.cleaned_data['name']
-            amount = form.cleaned_data['amount']
-            description = form.cleaned_data['description']
-            post = Drug(
-                drug_id=drug_id,
-                name=name,
-                amount=amount,
-                description=description,
+        if request.POST.get('types') == '1':
+            form =  MedicineDrugForm(request.POST)
+            
+            if form.is_valid():
+                drug_id = form.cleaned_data['drug_id']
+                name = form.cleaned_data['name']
+                amount = form.cleaned_data['amount']
+                description = form.cleaned_data['description']
+                post = Drug(
+                    drug_id=drug_id,
+                    name=name,
+                    amount=amount,
+                    description=description,
 
-            )
-            post.save()
+                )
+                post.save()
+                messages.success(request, 'บันทึกข้อมูลเรียบร้อย!')
+        else:
+            form =  MedicineSupplyForm(request.POST)
+            if form.is_valid():
+                sup_id = form.cleaned_data['sup_id']
+                name = form.cleaned_data['name']
+                amount = form.cleaned_data['amount']
+                description = form.cleaned_data['description']
+                post = Med_supply(
+                    sup_id=sup_id,
+                    name=name,
+                    amount=amount,
+                    description=description,
+
+                )
+                post.save()
+                messages.success(request, 'บันทึกข้อมูลเรียบร้อย!')
+
     medicine = MedicineDrugForm()
+    supply = MedicineSupplyForm()
 
     return render(request, 'Medicine/add_medicine.html',context={
-        'form': medicine,
+        'form1': medicine,
+        'form2': supply,
    
 })
 
@@ -70,27 +90,52 @@ def add_medicine(request):
    
     # })
 # --------------------------------
-def update_medicine(request):
+def update_medicine(request): 
     return render(request, 'Medicine/update_medicine.html')
 
     """
     เมื่อกด เลือกยาที่จะ update จะเข้า view
     นี้ละเมื่อทำการบันทึกสำเร็จ จะrender กลับไปหน้า จัดการคลังยา
      """
-def update(request):
+def update(request, med_sup_id):
+    update_data = Drug.objects.get(med_sup_id=med_sup_id)
     if request.method == 'POST':
-        form1 =  UpdateMedForm(request.POST)
-        if form1.is_valid():
-            amount = form1.cleaned_data['amount']
-            post = Drug(
-                
-                amount=amount,
-            )
-            post.save()
-    medicine = UpdateMedForm()
+        # update_data.name = request.POST.get('name')
+        update_data.amount = request.POST.get('amount')
+        update_data.save()
+        messages.success(request, 'อัพเดทข้อมูลเรียบร้อย!')
+        return render(request, 'Medicine/update_medicine.html')
+    return render(request, 'Medicine/update.html',context={
+        'form1': update_data,})
 
-    return render(request,'Medicine/update.html',context={
-        'form1': medicine,})
+#  context = {}
+#     med_sup_id_data = Drug.objects.get(med_sup_id=med_sup_id)
+#     if request.method == 'POST':
+#         form1 =  UpdateMedForm(request.POST,instance=med_sup_id_data)
+#         context['form1'] = form1
+#         if form1.is_valid():
+#             # amount = form1.cleaned_data['amount']
+#             # post = Drug(
+#             #     amount=amount,
+#             # )
+#             update_data = form.save(commit=False)
+#             update_data.save()
+#             context['form1'] = UpdateMedForm(instance=update_data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def home_medicine(request):
     return render(request, 'Medicine/home_medicine.html')

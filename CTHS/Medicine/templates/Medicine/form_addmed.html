@@ -1,17 +1,18 @@
 <div id="Med" style="display: none;">
     <form action="{% url 'add_medicine' %}" method="post">
+    {% csrf_token %}
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสยา</label>
         <div class="col-sm-10">
     <!-- <input class="form-control form-control-sm" placeholder="100942000001010110181" name="med_id"> -->
-            {{form.drug_id}}
+            {{form1.drug_id}}
         </div>
     </div>
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ชื่อยา</label>
         <div class="col-sm-10">
     <!-- <input class="form-control form-control-sm" placeholder="3% NaCl (Sodium Chloride) 3 % x 1 ขวด"name="name">  -->
-            {{form.name}}
+            {{form1.name}}
         </div>
     </div>
 
@@ -19,14 +20,14 @@
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
         <div class="col-sm-2">
     <!-- <input class="form-control form-control-sm " placeholder="15" name="amount"> -->
-    {{form.amount}}
+    {{form1.amount}}
         </div>
     </div>
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รายละเอียด</label>
         <div class="col-sm-10">
         <!-- <textarea class="form-control form-control-sm" rows="5" cols="3" name="description"></textarea> -->
-            {{form.description}}
+            {{form1.description}}
         </div>
         
     </div>
@@ -38,18 +39,19 @@
 
 <div id="Supply" style="display: none;">
     <form action="{% url 'add_medicine' %}" method="post">
+    {% csrf_token %}
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสเวชภัณฑ์</label>
         <div class="col-sm-10">
     <!-- <input class="form-control form-control-sm" placeholder="100942000001010110181" name="med_id"> -->
-            {{form.sup_id}}
+            {{form2.sup_id}}
         </div>
     </div>
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ชื่อยา</label>
         <div class="col-sm-10">
     <!-- <input class="form-control form-control-sm" placeholder="3% NaCl (Sodium Chloride) 3 % x 1 ขวด"name="name">  -->
-            {{form.name}}
+            {{form2.name}}
         </div>
     </div>
 
@@ -57,14 +59,14 @@
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
         <div class="col-sm-2">
     <!-- <input class="form-control form-control-sm " placeholder="15" name="amount"> -->
-            {{form.amount}}
+            {{form2.amount}}
         </div>
     </div>
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รายละเอียด</label>
         <div class="col-sm-10">
         <!-- <textarea class="form-control form-control-sm" rows="5" cols="3" name="description"></textarea> -->
-            {{form.description}}
+            {{form2.description}}
         </div>
         
     </div>

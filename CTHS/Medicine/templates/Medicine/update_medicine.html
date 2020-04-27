@@ -16,8 +16,18 @@
     background-color: rgb(240, 250, 153) !important;
   }
 
-  asdasdas tr {
+  tr {
     cursor: pointer;
+  }
+
+  .my-custom-scrollbar {
+    position: relative;
+    height: 500px;
+    overflow: auto;
+  }
+
+  .table-wrapper-scroll-y {
+    display: block;
   }
 </style>
 {% endblock %}
@@ -59,16 +69,17 @@
     <!-- status -->
 
     <!-- table -->
-    <div class="row">
+    {% include "messages.html" %}
+    <div class="row" id='app'>
 
       <hr>
       <p class="text-right text-danger">กดเลือกรายการที่ต้องการจัดการยา</p>
 
-      <div class="table-responsive">
+      <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table table-bordered table-striped table-sm">
           <thead>
             <tr>
-              <th class="table-dark">ลำดับ</th>
+              <th class="table-dark">Drug ID</th>
               <th class="table-dark">รหัสมาตรฐาน 24 หลัก</th>
               <th class="table-dark">ชื่อยา</th>
               <th class="table-dark">จำนวน</th>
@@ -76,69 +87,29 @@
             </tr>
           </thead>
           <tbody id="data_list">
-            <form action="">
-            <!-- show api -->
-          </form>
+            <tr v-for='data in med'>
+
+              <td>[[data.med_sup_id]]</td>
+              <td>[[data.drug_id]]</td>
+              <td>[[data.name]]</td>
+              <td>[[data.amount]]</td>
+              <td><a class="btn btn-success btn-sm btn-block" :href='"/medicine/updatemedicine/"+data.med_sup_id+"/"' >อัพเดท</a></td>
+
+            </tr>
           </tbody>
         </table>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination row justify-content-center">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        
       </div>
     </div>
     <hr>
-    <!-- <div class="col-lg-3 ">
-      <h3>การทำรายการล่าสุด</h3>
-    </div>
-    <div class="row" style="display: none;" id="showDeatil"> -->
 
-      <!-- <div class="col-6 ">
-        <div class="p-4 border ">
-          <h3>อัพเดจจำนวนยา : </h3>
-          <p>#</p>
 
-          <form>
 
-            <div class="form-group row">
-              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ประเภท</label>
-              <div class="col-sm-5">
-                <select class="form-control form-control-sm" required="">
-                  <option value="">ประเภทรายการ</option>
-                  <option>1</option>
-                  <option>2</option>
 
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">จำนวน</label>
-              <div class="col-sm-2">
-                <input class="form-control form-control-sm" placeholder="15">
-              </div>
-            </div>
-            <hr class="mb-4">
-            <button class="btn btn-success btn-lg btn-block" type="submit">อัพเดจ</button>
-          </form>
-        </div> 
-      </div>-->
+
+    
+
+
     </div>
   </div>
 </main>
@@ -155,45 +126,72 @@
   //   document.getElementById('showDeatil').style.display = 'flex'
   // }
   //----------------------
-  
+
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
   //API
-  function show_drug() {
-    let self = this;
-    axios.get('/treatment/patient/update/drug/', {
-     // เมื่อทำงานสำเร็จ
-    }).then(function (response) {
-      console.log(response.data);
-      show_table(response.data)
-      
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
+  // function show_drug() {
+  //   let self = this;
+  //   axios.get('/treatment/patient/update/drug/', {
+  //    // เมื่อทำงานสำเร็จ
+  //   }).then(function (response) {
+  //     console.log(response.data);
+  //     show_table(response.data)
 
-  function show_table(data){
-    table = document.getElementById('data_list')
-    for(let i = 0;i < data.length; i++){
-      //สร้างแถว 
-      let tr = document.createElement('tr');
-      //เก็บข้อมูล ตาม index
-      let select_data = data[i]
-      let text = ''
-      text += `
-        <td>${i+1}</td>
-        <td>${select_data['drug_id']}</td>
-        <td >${select_data['name']}</td>
-        <td>${select_data['amount']}</td>
-        <td><button class="btn btn-success btn-sm" type="submit">อัพเดจ</button></td>
-      `
-      //onclick="showDetail(event)"
-      //$ใส่ค่ามองเป็น str  
-      tr.innerHTML = text;
-      table.append(tr);
+  //   }).catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
 
-    }    
-  }
+  // function show_table(data){
+  //   table = document.getElementById('data_list')
+  //   for(let i = 0;i < data.length; i++){
+  //     //สร้างแถว 
+  //     let tr = document.createElement('tr');
+  //     //เก็บข้อมูล ตาม index
+  //     let select_data = data[i]
+  //     let text = ''
+  //     text += `
+  //       <td>${i+1}</td>
+  //       <td>${select_data['drug_id']}</td>
+  //       <td >${select_data['name']}</td>
+  //       <td>${select_data['amount']}</td>
+  //       <td><button class="btn btn-success btn-sm" type="submit">อัพเดจ</button></td>
+  //     `
+  //     //onclick="showDetail(event)"
+  //     //$ใส่ค่ามองเป็น str  
+  //     tr.innerHTML = text;
+  //     table.append(tr);
+
+  //   }    
+  // }
+
+  var app = new Vue({
+    delimiters: ['[[', ']]'],
+    el: '#app',
+    data: {
+      med: [],
+    }, methods: {
+      show_drug: function (med) {
+        let self = this;
+        axios.get('/treatment/patient/update/drug/', {
+
+        }).then(function (response) {
+          console.log(response.data);
+          self.med = response.data
+        }).catch(function (error) {
+          console.log(crror);
+        });
+      }
+    }, created() {
+      this.show_drug()
+    }
+  })
+
+
+
+
+
 </script>
 
 {% endblock %}
