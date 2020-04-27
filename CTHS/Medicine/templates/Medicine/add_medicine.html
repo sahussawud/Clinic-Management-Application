@@ -7,6 +7,7 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 {% endblock %}
 
@@ -38,77 +39,8 @@
               <th class="table-dark">รายละเอียด</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
+          <tbody id='data1'>
+            <!-- show data API -->
 
           </tbody>
         </table>
@@ -152,10 +84,11 @@
               <div class="form-group row">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ประเภท</label>
                 <div class="col-sm-10">
-                  <select class="form-control form-control-sm" required="" name="types" onchange="change(event)">
-                    <option >----</option>
+                  <select class="form-control form-control-sm" required="" name="types" id="types"
+                    onchange="change(event)">
+                    <option>----</option>
                     <option value="1">ยา</option>
-                    <option value="2">เวชภัทร</option>
+                    <option value="2">เวชภัณฑ์</option>
                   </select>
                 </div>
               </div>
@@ -163,9 +96,6 @@
               <!-- from Drug -->
               {% include "Medicine/form_addmed.html" %}
               <!----------->
-              
-
-              <center><input class="btn btn-success" type="submit" value="บันทัก"></center>
             </form>
           </div>
         </div>
@@ -176,23 +106,75 @@
       <hr>
     </div>
 </main>
-
 <script>
-function change(event){
-  var check = event.target.value
-  
-  if (check == 1) {
-    document.getElementById('Med').style.display = 'block';
-    document.getElementById('Supply').style.display = 'none';
+  window.onload = function () {
+    initialize();
+  };
+
+  function initialize() {
+    show_drug()
+    
   }
-  else if (check == 2) {
-    document.getElementById('Supply').style.display = 'block';
-    document.getElementById('Med').style.display = 'none';
+
+
+
+
+  axios.defaults.xsrfCookieName = 'csrftoken'
+  axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+  //API
+  function show_drug() {
+    let self = this;
+    axios.get('/treatment/patient/update/drug/', {
+      // เมื่อทำงานสำเร็จ
+    }).then(function (response) {
+      console.log(response.data);
+      show_table(response.data)
+
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
-  else {
-    document.getElementById('Supply').style.display = 'none';
-    document.getElementById('Med').style.display = 'none';
+
+  function show_table(data) {
+    table = document.getElementById('data1')
+    for (let i = 0; i < data.length; i++) {
+      //สร้างแถว 
+      let tr = document.createElement('tr');
+      //เก็บข้อมูล ตาม index
+      let select_data = data[i]
+      let text = ''
+      text += `
+        <td>${i + 1}</td>
+        <td></td>
+        <td>${select_data['name']}</td>
+        <td>${select_data['amount']}</td>
+        <td>@</td>`
+      //$ใส่ค่ามองเป็น str  
+      tr.innerHTML = text;
+      table.append(tr);
+
+    }
+
   }
-}
-</script> 
+  function change(event) {
+    var check = event.target.value
+
+    if (check == 1) {
+      document.getElementById('Med').style.display = 'block';
+      document.getElementById('Supply').style.display = 'none';
+    }
+    else if (check == 2) {
+      document.getElementById('Supply').style.display = 'block';
+      document.getElementById('Med').style.display = 'none';
+    }
+    else {
+      document.getElementById('Supply').style.display = 'none';
+      document.getElementById('Med').style.display = 'none';
+    }
+  }
+
+
+  //API
+
+</script>
 {% endblock %}

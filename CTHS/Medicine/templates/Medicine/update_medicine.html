@@ -6,15 +6,17 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 {% endblock %}
 
 {% block styles %}
 <style>
-  tr:hover{
+  tr:hover {
     background-color: rgb(240, 250, 153) !important;
-  }asdasdas
-  tr{
+  }
+
+  asdasdas tr {
     cursor: pointer;
   }
 </style>
@@ -73,78 +75,18 @@
               <th class="table-dark">รายละเอียด</th>
             </tr>
           </thead>
-          <tbody>
-            <tr onclick="showDetail(event);">
+          <tbody id="data_list">
+            <!-- <tr onclick="showDetail(event)" >
               <td>1</td>
               <td>100942000001010110181</td>
               <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
               <td>10</td>
               <td><button class="text-center">view</button></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>100942000001010110181</td>
-              <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-              <td>10</td>
-              <td>@</td>
-            </tr>
+            </tr> -->
 
+
+
+            <!-- show api -->
           </tbody>
         </table>
         <nav aria-label="Page navigation example">
@@ -171,15 +113,15 @@
       </div>
     </div>
     <hr>
-    <div class="col-lg-3 "  >
+    <div class="col-lg-3 ">
       <h3>การทำรายการล่าสุด</h3>
     </div>
     <div class="row" style="display: none;" id="showDeatil">
-      
+
       <div class="col-6 ">
         <div class="p-4 border ">
           <h3>อัพเดจจำนวนยา : </h3>
-          <p>3% NaCl (Sodium Chloride) 3 % x 1 ขวด(ขนาด 500 ml.)</p>
+          <p>#</p>
 
           <form>
 
@@ -190,8 +132,7 @@
                   <option value="">ประเภทรายการ</option>
                   <option>1</option>
                   <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
+
                 </select>
               </div>
             </div>
@@ -202,7 +143,7 @@
               </div>
             </div>
             <hr class="mb-4">
-            <button class="btn btn-success btn-lg btn-block" type="submit">ยืนยัน</button>
+            <button class="btn btn-success btn-lg btn-block" type="submit">อัพเดจ</button>
           </form>
         </div>
       </div>
@@ -210,9 +151,57 @@
   </div>
 </main>
 <script>
+  window.onload = function () {
+    initialize();
+  };
+  function initialize() {
+    show_drug()
+  }
+  //table แสดง เมื่อกด
   function showDetail(event) {
     console.log(event.target);
     document.getElementById('showDeatil').style.display = 'flex'
+  }
+  //----------------------
+  
+  axios.defaults.xsrfCookieName = 'csrftoken'
+  axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+
+
+  //API
+  function show_drug() {
+    let self = this;
+    axios.get('/treatment/patient/update/drug/', {
+     // เมื่อทำงานสำเร็จ
+    }).then(function (response) {
+      console.log(response.data);
+      show_table(response.data)
+      
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  function show_table(data){
+    table = document.getElementById('data_list')
+    for(let i = 0;i < data.length; i++){
+      //สร้างแถว 
+      let tr = document.createElement('tr');
+      //เก็บข้อมูล ตาม index
+      let select_data = data[i]
+      let text = ''
+      text += `
+        <td>${i+1}</td>
+        <td></td>
+        <td onclick="showDetail(event)">${select_data['name']}</td>
+        <td>${select_data['amount']}</td>
+        <td>@</td>
+      `
+      //$ใส่ค่ามองเป็น str  
+      tr.innerHTML = text;
+      table.append(tr);
+
+    }    
   }
 </script>
 

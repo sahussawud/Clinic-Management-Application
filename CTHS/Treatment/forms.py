@@ -81,6 +81,13 @@ class DiagnosisForm(ModelForm):
             'follow_up_for': TextInput(attrs={'class': 'form-control'})
         }
 
+    def clean_follow_up(self):
+        current_date = datetime.now().date()
+        if self.cleaned_data['follow_up'] <= current_date:
+            raise forms.ValidationError("วันนัดไม่ถูกต้อง !")
+        return self.cleaned_data['follow_up']
+
+
 class Non_Form_SymptomForm(ModelForm):
     class Meta:
         model = Non_Form_Symptom
