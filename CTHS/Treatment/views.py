@@ -322,6 +322,7 @@ def create_treatment(request, patient_id):
                 symptom.symptom_type = diagnosis_type
                 symptom.save()
                 new_symtom_form.symptom = symptom
+                
                 new_symtom_form.save()
                
                 #if accident form
@@ -350,6 +351,7 @@ def create_treatment(request, patient_id):
                 pain = Pain_SymptomForm(request.POST)
 
             else:
+                treatment_form.delete()
                 messages.error(request, 'บันทึกประวัติเบื้องต้นไม่สำเร็จ!')
                 form = TreatmentForm(request.POST)
                 non_form = Non_Form_SymptomForm(request.POST)
