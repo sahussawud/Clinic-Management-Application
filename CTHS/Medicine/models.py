@@ -24,10 +24,10 @@ class Drug(models.Model):
 class Dispense(models.Model):
     amount =  models.IntegerField(_("Amount"))
     DISPENSE_TYPE_CHOICE = [
-        ('D', 'dis_drug'),
-        ('M', 'dis_med')
+        ('D', 'ยา'),
+        ('M', 'เวชภัณฑ์')
     ]
     type = models.CharField(_("Dispense type"), max_length=1, choices=DISPENSE_TYPE_CHOICE)
     prescription_id = models.ForeignKey(Prescription, verbose_name=_("Prescription ID"), on_delete=models.CASCADE)
-    dis_med_id = models.ManyToManyField(Med_supply, verbose_name=_("Dispense ID"), null=True)
-    dis_drug_id = models.ManyToManyField(Drug, verbose_name=_("Dispense ID"), null=True)
+    dis_med_id = models.ForeignKey(Med_supply, verbose_name=_("Dispense ID"), on_delete=models.CASCADE, null=True, blank=True)
+    dis_drug_id = models.ForeignKey(Drug, verbose_name=_("Dispense ID"), on_delete=models.CASCADE, null=True, blank=True)

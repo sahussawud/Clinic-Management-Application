@@ -63,8 +63,14 @@ class Symptom(models.Model):
 
 class Prescription(models.Model):
     detail = models.CharField(_("Prescription detail"), max_length=255)
-    nurse_id = models.ForeignKey(Nurse, verbose_name=_("Creator ID"), on_delete=models.CASCADE)
+    doctor_id = models.ForeignKey(Doctor, verbose_name=_("Creator ID"), on_delete=models.CASCADE, null=True)
     treatment_cn = models.OneToOneField(Treatment, verbose_name=_("Treatment Clinic number"), on_delete=models.CASCADE)
+    PRESCRIPTION_STATUS_CHOICE = [
+        ('C', 'จ่ายยาแล้ว'),
+        ('W', 'รอการจ่ายยา')
+    ]
+    status = models.CharField(_("Prescription Status"), max_length=1, choices=PRESCRIPTION_STATUS_CHOICE, default="W")
+    nurse_id = models.ForeignKey(Nurse, verbose_name=_("พยาบาลผู้จ่ายยา"), on_delete=models.CASCADE, null=True)
 
 class Non_Form_Symptom(models.Model):
     symptom = models.OneToOneField(Symptom, verbose_name=_("Symptom ID"), on_delete=models.CASCADE)
