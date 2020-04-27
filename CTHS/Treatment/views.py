@@ -18,9 +18,7 @@ from User_app.forms import PatientForm
 from User_app.models import Congenital_disease, Patient, Public_Health
 
 from .forms import *
-from .serializers import (Congenital_diseaseSerializer,
-                          Congenital_diseaseSerializerWithoutPatient,
-                          DrugSerializer, PatientSerializer)
+from .serializers import *
 
 
 # Create your views here.
@@ -220,8 +218,6 @@ class DrugAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
-'''update api to filter data'''
 class DrugWithoutPatientAPIView(APIView):
     """ API ยาทั้งหมด """
     def get(self, request):
@@ -230,6 +226,16 @@ class DrugWithoutPatientAPIView(APIView):
         else:
             items = Drug.objects.all().order_by('name')
         serializer = DrugSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class Med_supplyWithoutPatientAPIView(APIView):
+    """ API เวชภัณฑ์ทั้งหมด """
+    def get(self, request):
+        if 'keywords' in request.data:
+            items = Med_supply.objects.filter(name__icontains=request.data['keywords']).order_by('name')
+        else:
+            items = Med_supply.objects.all().order_by('name')
+        serializer = Med_supplySerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PatientSearchAPIView(APIView):
