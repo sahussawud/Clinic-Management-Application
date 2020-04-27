@@ -185,3 +185,11 @@ class Pain_Symptom(models.Model):
     trigger =  models.CharField(_("สิ่งที่กระตุ้น/สิ่งที่บรรเทา"), max_length=255)
     crack = models.CharField(_("ร้าวไป"), max_length=255)
     others = models.CharField(_("อาการอื่น"), max_length=255)
+
+class Room_Queue(models.Model):
+    treatment = models.ForeignKey(Treatment, verbose_name=_("Treatment ID"), on_delete=models.CASCADE)
+    ROOM_QUEUE_STATUS = [
+        ('WD', 'รอเข้าห้องตรวจ'),
+        ('WP', 'รอการจ่ายยา')
+    ]
+    status = models.CharField(_("Queue status"), max_length=2, choices=ROOM_QUEUE_STATUS, default="WD")

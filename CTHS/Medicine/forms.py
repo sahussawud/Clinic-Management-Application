@@ -6,11 +6,18 @@ from Medicine.models import Drug,Med_supply
 
 
 
-
-
-
-
-
+class  UpdateMedForm(forms.ModelForm):
+    class Meta: 
+        model =  Drug
+        fields = ('name','amount')
+        widgets = {
+            'name' : TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'amount': TextInput(attrs={'class': 'form-control form-control-sm'}),  
+        }
+        lebels={
+            'name': 'ชื่อยา',
+            'amount': 'จำนวน',    
+        }
 class  MedicineSupplyForm(forms.ModelForm):
     
     class Meta: 

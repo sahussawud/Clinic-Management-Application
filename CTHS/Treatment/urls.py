@@ -18,6 +18,9 @@ urlpatterns = [
     path('create/<int:patient_id>/', views.create_treatment, name = 'create_treatment'),
     path('create/<int:treatment_cn>/diagnosis/', views.diagnosis_treatment, name = 'create_diagnosis'),
 
+    path('queue/api/', views.RoomQueueAPIView.as_view(), name='queue_api'),
+    path('queue/md_api/', views.RoomQueueMedicineAPIView.as_view(), name='queue_api'),
+
     path('find/', views.find_treatment, name = 'find_treatment'),
     path('', views.home_treatment, name = 'home_treatment'),
     path('diagnosis/', views.home_diagnosis, name = 'home_diagnosis'),

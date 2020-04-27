@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 from Medicine.models import Dispense, Drug, Med_supply
-from Treatment.models import Diagnosis, Prescription
+from Treatment.models import Diagnosis, Prescription, Room_Queue
 from Treatment.serializers import TreatmentSerializer
 from User_app.models import Doctor, Nurse, User
 
@@ -56,4 +56,10 @@ class PrescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prescription
         fields = ['id', 'detail', 'status', 'treatment_cn', 'dispense', 'doctor_id']
+        read_only_fields = ['id']
+
+class CreatePrescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Prescription
+        fields = ['id', 'detail', 'status', 'treatment_cn', 'doctor_id']
         read_only_fields = ['id']
