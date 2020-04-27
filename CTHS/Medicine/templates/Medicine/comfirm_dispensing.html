@@ -133,7 +133,7 @@
             },
             not_provide_prescription: function() {
                 let self = this;
-                axios.get('/medicine/prescription/pst_api/', {
+                axios.get('prescription/<int:pst_id>/pst_api/', {
                 
                 }).then(function (response) {
                     console.log(response.data);
