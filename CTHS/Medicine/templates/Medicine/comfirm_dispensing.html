@@ -10,7 +10,7 @@
 {% block content %}
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
-    <div class="container mt-3 mb-5">
+    <div class="container mt-3 mb-5" id='app'>
         <div class="row" id='app'>
             <div class="col-md-6">
                 <h2 class="mb-2">ยืนยันการจ่ายยา</h2>
@@ -18,8 +18,7 @@
                     <!-- ROWS OF PATIENT INFORMATION -->
                     <div class="row">
                         <div class="card w-100">
-                            <h5 class="card-header">รายการใบสั่งยา <a href="#" class="btn btn-info btn-sm"
-                                    style="">ข้อมูลเพิ่มเติม</a></h5>
+                            <h5 class="card-header">รายการใบสั่งยา</h5>
                             <div class="card-body">
                                 <table class="table table-bordered table table-sm table table-striped">
                                     <thead>
@@ -40,105 +39,6 @@
                                             <td class="text-center">สหัสวรรษ</td>
                                             <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
                                         </tr>
-                                        <tr>
-                                            <th class="text-center">102</th>
-                                            <td class="text-center">CN0102</td>
-                                            <td class="text-center">ภูมิพงศ์ วีรพันธ์</td>
-                                            <td class="text-center">-15</td>
-                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center">104</th>
-                                            <td class="text-center">CN0104</td>
-                                            <td class="text-center">PT0003</td>
-                                            <td class="text-center">เด่นภูมิ</td>
-                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center">104</th>
-                                            <td class="text-center">CN0106</td>
-                                            <td class="text-center">pt0003</td>
-                                            <td class="text-center">อู๋</td>
-                                            <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-center"></br></th>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                            <td class="text-center"></br></td>
-                                        </tr>
-                                        
                                         
                                     </tbody>
                                 </table>
@@ -156,10 +56,14 @@
 
                         <div class="card-body">
                             <div class="row">
-                                <p><b>ใบสั่งยาเลขที่ :</b> PT0003 โดย นพ.XXXX XXXXX </p>
+                                <div class="card-body">
+                                    <p><b>ใบสั่งยาเลขที่ :</b> [[ prescription.id]] </p>
+                                <p><b>เลขที่ประวัติการรักษา :</b> [[ prescription.treatment_cn]] </p>
                                 <p><b>ให้เเก่ :</b> นาย เด่นภูมิ ศรีเมือง</p>
                                 <p><b>ลักษณะอาการเบื้องต้น :</b> ไข้มีเสมหะ ปวดหัว ตัวร้อน เป้นไข้ นอนไม่หลับ กระส่ายกระสับ</p>
                                 <p><b>คำวินิจฉัยจากเเพทย์ :</b> Negative coronavirus detect, but positive HIV</p>
+                                </div>
+                                
 
                             </div>
                             <div class="row mt-4">
@@ -167,52 +71,20 @@
                                     <table class="table table-bordered table-striped table-sm">
                                         <thead>
                                             <tr>
-                                                <th class="table-dark">ลำดับ</th>
+                                                <th class="table-dark">ลำดับยา</th>
+                                                <th class="table-dark">ประเภท</th>
                                                 <th class="table-dark">ชื่อยา/เวชภัทฑ์</th>
                                                 <th class="table-dark">จำนวน</th>
-
-
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="text-center">1</td>
-                                                <td class="table-info">Acetazolamide (อะเซตาโซลาไมด์) 3 % x 1 ขวด</td>
-                                                <td class="text-center">1
-
-                                                </td>
+                                            <tr v-for='dispense in prescription.dispense '>
+                                                <td class="text-center">[[ dispense.id ]]</td>
+                                                <td class="table-info">[[ dispense.name ]]</td>
+                                                <td class="text-center">[[ dispense.amount ]]</td>
 
 
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">2</td>
-                                                <td>Albumin (อัลบูมิน) x 1 ขวด (500 ml.)</td>
-                                                <td class="text-center">
-                                                    1
-                                                </td>
-
-
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">3</td>
-                                                <td>Aminoglycosides (อะมิโนไกลโคไซด์)</td>
-                                                <td class="text-center">
-                                                    1
-                                                </td>
-
-
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">4</td>
-                                                <td>หน้ากากอนามัย</td>
-                                                <td class="text-center">1</td>
-
-
-                                            </tr>
-                                            <tr>
-                                                <td><br /></td>
-                                                <td><br /></td>
-                                                <td><br /></td>
                                             </tr>
 
                                         </tbody>
@@ -237,5 +109,44 @@
 {% endblock content %}
 
 {% block footer %}
+<script>
+    var app = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        data: {
+            select_id : 5,
+            precriptions_list: [],
+            prescription: []
+
+        }, methods: {
+            select_prescription: function () {
+                let self = this;
+                axios.get('/medicine/prescription/'+this.select_id+'/pst_api/', {
+                
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.prescription = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            not_provide_prescription: function() {
+                let self = this;
+                axios.get('/medicine/prescription/pst_api/', {
+                
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.precriptions_list = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }, created() {
+            this.select_prescription()
+        }
+    })
+</script>
 
 {% endblock footer %}

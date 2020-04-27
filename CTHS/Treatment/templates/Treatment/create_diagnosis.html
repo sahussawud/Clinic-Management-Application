@@ -16,7 +16,7 @@
         {% include "messages.html" %}
         <div class="row" id='app'>
             <div class="col-md-6">
-                <h2 class="mb-2">สร้างการวินิจฉัย CN : CN0001</h2>
+                <h2 class="mb-2">สร้างการวินิจฉัย CN : {{ treatment_cn }}</h2>
                 <!-- ROWS OF PATIENT INFORMATION -->
                 <div class="row">
                     <div class="card w-100">
@@ -128,7 +128,7 @@
                                             <tr>
                                                 <th scope="row">ดัชนีมวลกาย</th>
                                                 <td><input type="number" class="form-control"
-                                                        id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย" disabled>
+                                                        id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย" :value='bmi' disabled>
                                                 </td>
                                                 <th scope="row">{{ form.o2_sat.label_tag }}</th>
                                                 <td> {{ form.o2_sat }}
@@ -184,10 +184,15 @@
             <!-- ฟอร์มวินิจฉัย -->
             
                 <div class="col-md-11 mt-3 ml-2">
-                    <form action="{% url 'create_diagnosis' treatment_cn %}" method="post">
+                <form action="{% url 'create_diagnosis' treatment_cn %}" method="post">
                     <div class="row">
                         <div class="card w-100">
-                            <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx <a href="#"
+                            <h5 class="card-header">คำวินิจฉัย(ทั่วไป) 
+                                {% if complete_diagnosis %}
+                                    <input type="hidden" name="_method" value="patch">
+                                    โดย นพ./พญ. {{ complete_diagnosis.user_id.first_name }} {{ complete_diagnosis.user_id.last_name }}
+                                {% endif %}
+                                <a href="#"
                                     class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
 
                             <div class="card-body">
@@ -235,7 +240,13 @@
                         </div>
 
                     </div>
+                    {% if complete_diagnosis %}
+                    <button class="btn btn-warning btn-lg btn-block col-md-11 ml-2 mt-2" type="submit">เเก้ไข้คำวินิฉัย</button>
+                    {% else %}
                     <button class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2" type="submit">บันทึกคำวินิฉัย</button>
+                    {% endif %}
+                    
+                    
                 </div>
             </form>
 

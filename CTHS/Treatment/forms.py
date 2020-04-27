@@ -22,8 +22,8 @@ class TreatmentFormDisplay(ModelForm):
             'patient_condition': _('สภาพผู้ป่วย'),
         }
         widgets = {
-            'weight': NumberInput(attrs={'class': 'form-control', 'placeholder':'Kilograms', 'disabled': True}),
-            'Height': NumberInput(attrs={'class': 'form-control', 'placeholder':'Centimetre', 'disabled': True}),
+            'weight': NumberInput(attrs={'class': 'form-control', 'placeholder':'Kilograms', 'disabled': True, 'id':'weight'}),
+            'Height': NumberInput(attrs={'class': 'form-control', 'placeholder':'Centimetre', 'disabled': True, 'id':'height'}),
             'bp': NumberInput(attrs={'class': 'form-control', 'placeholder':'mmHg', 'disabled': True}),
             'pr': NumberInput(attrs={'class': 'form-control', 'placeholder':'BPM','disabled': True}),
             'temp': NumberInput(attrs={'class': 'form-control', 'placeholder':'Celcuis','disabled': True}),
@@ -73,7 +73,7 @@ class Icd_10Form(ModelForm):
 class DiagnosisForm(ModelForm):
     class Meta:
         model = Diagnosis
-        exclude = ['Treatment', 'doctor_id','icd_10']
+        exclude = ['treatment', 'doctor_id','icd_10']
         widgets = {
             'diagnosis_detail': Textarea(attrs={'class': 'form-control', 'rows':'7', 'cols': '4'}),
             'advice': Textarea(attrs={'class': 'form-control', 'rows':'7', 'cols': '4'}),
