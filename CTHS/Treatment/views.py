@@ -228,14 +228,24 @@ class DrugWithoutPatientAPIView(APIView):
         serializer = DrugSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-class Med_supplyWithoutPatientAPIView(APIView):
-    """ API เวชภัณฑ์ทั้งหมด """
+class DrugAndMedSupplyWithoutPatientAPIView(APIView):
+    """ API ยาและเวชภัณฑ์ทั้งหมด """
     def get(self, request):
         if request.GET.get('keywords'):
-            items = Med_supply.objects.filter(name__icontains=request.GET.get('keywords')).order_by('name')
+            med_sup = Med_supply.objects.filter(name__icontains=request.GET.get('keywords')).order_by('name')
+            drug = Drug.objects.filter(name__icontains=request.GET.get('keywords')).order_by('name')
+            data = {
+                "drug" : drug,
+                "med_sup" : med_sup
+            }
         else:
-            items = Med_supply.objects.all().order_by('name')
-        serializer = Med_supplySerializer(items, many=True)
+            med_sup = Med_supply.objects.all().order_by('name')
+            drug = Drug.objects.all().order_by('name')
+            data = {
+                "drug" : drug,
+                "med_sup" : med_sup
+            }
+        serializer = DrugMedSupplySerializer(data)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PatientSearchAPIView(APIView):
