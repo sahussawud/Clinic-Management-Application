@@ -59,7 +59,7 @@
                 <div class="row mt-3">
                     <div class="card w-100">
                         <h5 class="card-header">ข้อมูลเบื้องต้น <a href="#" class="btn btn-info btn-sm"
-                                style="">ข้อมูลเพิ่มเติม</a></h5>
+                                style="" >ข้อมูลเพิ่มเติม</a></h5>
 
                         <div class="card-body">
                             <div class="row">
@@ -128,7 +128,8 @@
                                             <tr>
                                                 <th scope="row">ดัชนีมวลกาย</th>
                                                 <td><input type="number" class="form-control"
-                                                        id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย" :value='bmi' disabled>
+                                                        id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย"
+                                                        :value='bmi' disabled>
                                                 </td>
                                                 <th scope="row">{{ form.o2_sat.label_tag }}</th>
                                                 <td> {{ form.o2_sat }}
@@ -182,18 +183,19 @@
             {% include "Treatment/create_pre_diagnosis.html" %}
 
             <!-- ฟอร์มวินิจฉัย -->
-            
-                <div class="col-md-11 mt-3 ml-2">
+
+            <div class="col-md-11 mt-3 ml-2">
                 <form action="{% url 'create_diagnosis' treatment_cn %}" method="post">
                     <div class="row">
                         <div class="card w-100">
-                            <h5 class="card-header">คำวินิจฉัย(ทั่วไป) 
+                            <h5 class="card-header">คำวินิจฉัย(ทั่วไป)
                                 {% if complete_diagnosis %}
-                                    <input type="hidden" name="_method" value="patch">
-                                    โดย นพ./พญ. {{ complete_diagnosis.user_id.first_name }} {{ complete_diagnosis.user_id.last_name }}
+                                <input type="hidden" name="_method" value="patch">
+                                โดย นพ./พญ. {{ complete_diagnosis.user_id.first_name }}
+                                {{ complete_diagnosis.user_id.last_name }}
+                                <a href="#" class="btn btn-info btn-sm" v-on:click.prevent='create_prescription({{ treatment_cn }})'>สร้างใบสั่งยา</a>
                                 {% endif %}
-                                <a href="#"
-                                    class="btn btn-info btn-sm" style="">สร้างใบสั่งยา</a></h5>
+                                </h5>
 
                             <div class="card-body">
                                 {{ diagnosis_form.non_field_error }}
@@ -241,18 +243,20 @@
 
                     </div>
                     {% if complete_diagnosis %}
-                    <button class="btn btn-warning btn-lg btn-block col-md-11 ml-2 mt-2" type="submit">เเก้ไข้คำวินิฉัย</button>
+                    <button class="btn btn-warning btn-lg btn-block col-md-11 ml-2 mt-2"
+                        type="submit">เเก้ไข้คำวินิฉัย</button>
                     {% else %}
-                    <button class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2" type="submit">บันทึกคำวินิฉัย</button>
+                    <button class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2"
+                        type="submit">บันทึกคำวินิฉัย</button>
                     {% endif %}
-                    
-                    
-                </div>
+
+
+            </div>
             </form>
 
 
 
-            <div class="col-md-11 mt-3 ml-2">
+            <div class="col-md-11 mt-3 ml-2" v-if='is_prescription'>
                 <div class="row">
                     <div class="card w-100">
                         <h5 class="card-header">ใบสั่งยา</h5>
@@ -328,7 +332,7 @@
                                         <td>
                                             <center><button type="button" class="btn btn-success btn-sm"
                                                     data-toggle="modal"
-                                                    data-target=".bd-example-modal-xl">เพิ่ม</button></center>
+                                                    data-target=".bd-example-modal-xl" v-on:click="get_medicine_list()">เพิ่ม</button></center>
                                         </td>
                                     </tr>
 
@@ -338,147 +342,65 @@
 
                     </div>
                 </div>
-            </div>
-            <hr class="mb-4">
-
-        </div>
-
-
-
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">รายการยา</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-
-                        <div class="row">
-                            <div class="col-11"><input type="text" class="form-control" name="search"
-                                    placeholder="Search..."><br>
+                <!-- Modal -->
+                <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+                    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">รายการยา</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div class="col-1"><button type="button" class="btn btn-success btn-ml">ค้นหา</button>
+                            <div class="modal-body">
+
+
+                                <div class="row">
+                                    <div class="col-11"><input type="text" class="form-control" name="keywords"
+                                            placeholder="ค้นหายาที่นี่" v-model='keywords_search'><br>
+                                    </div>
+                                    <div class="col-1"><button type="button" class="btn btn-success btn-ml"
+                                            v-on:click='get_medicine_list()'>ค้นหา</button>
+                                    </div>
+                                </div>
+                                <table class="table table-bordered table-hover table-sm" data-spy="scroll" >
+                                    <thead>
+                                        <tr>
+                                            <th class="table-dark">No.</th>
+                                            <th class="table-dark">รหัสมาตรฐาน 24 หลัก</th>
+                                            <th class="table-dark">ชื่อยา/เวชภัณฑ์</th>
+                                            <th class="table-dark">จำนวนคงเหลือ</th>
+                                            <th class="table-dark"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for='(med, index) in medicine_list'>
+                                            <td>[[ index ]]</td>
+                                            <td>[[ med.drug_id]]</td>
+                                            <td>[[ med.name ]]</td>
+                                            <td>[[ med.amount ]]</td>
+                                            <td> <button class="btn-sm btn-success" v-on:click='add_dispense(med.med_sup_id)' >เลือก</button></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                             </div>
                         </div>
-                        <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th class="table-dark">No.</th>
-                                    <th class="table-dark">รหัสมาตรฐาน 24 หลัก</th>
-                                    <th class="table-dark">ชื่อยา</th>
-                                    <th class="table-dark">จำนวน</th>
-                                    <th class="table-dark">รายละเอียด</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>100942000001010110181</td>
-                                    <td>3% NaCl (Sodium Chloride) 3 % x 1 ขวด</td>
-                                    <td>10</td>
-                                    <td>@</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination row justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-                        <button type="button" class="btn btn-success">จ่ายยา</button>
                     </div>
                 </div>
+
             </div>
+
+
+
         </div>
+
+
+
 
 
     </div>
@@ -495,36 +417,56 @@
         data: {
             selected: '{{symptom}}',
             bmi: 0,
-           
-        },methods:{
-            bmi_cal: function(){
+            keywords_search: '',
+            medicine_list: [],
+            is_prescription: false,
+            prescription :[],
+            doctor_id:'{{complete_diagnosis.id}}'
+
+        }, methods: {
+            bmi_cal: function () {
                 var weight = document.querySelector('#weight').value
                 var height = document.querySelector('#height').value
-                this.bmi = (weight / ((height/100)**2)).toFixed(2)
+                this.bmi = (weight / ((height / 100) ** 2)).toFixed(2)
+            }, 
+            get_medicine_list: function () {
+                let self = this;
+                axios.get('/treatment/patient/update/drug/', {
+                    params: {
+                        keywords: this.keywords_search
+                    }
+                    // เมื่อทำงานสำเร็จ
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.medicine_list = response.data
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }, add_dispense: function(med_sup_id){
+                console.log(med_sup_id)
+            },create_prescription: function(treatment_cn){
+                this.is_prescription = true
+                console.log(this.doctor_id, treatment_cn)
+                // axios.post('/medicine/prescription/0/pst_api/', {
+                //     doctor_id:,
+                //     treatment_cn:,
+                //     detail:
+                //     // เมื่อทำงานสำเร็จ
+                // }).then(function (response) {
+                //     console.log(response.data);
+                //     self.medicine_list = response.data
+
+                // }).catch(function (error) {
+                //     console.log(error);
+                // });
             }
-        }, created(){
+
+        }, created() {
             this.bmi_cal()
         }
     })
 
-    var prescription = new Vue({
-        delimiters: ['[[', ']]'],
-        el: '#prescription',
-        data: {
-            keywords : '',
-            medcine_list : [],
-            
-           
-        },methods:{
-            bmi_cal: function(){
-                var weight = document.querySelector('#weight').value
-                var height = document.querySelector('#height').value
-                this.bmi = (weight / ((height/100)**2)).toFixed(2)
-            }
-        }, created(){
-            this.bmi_cal()
-        }
-    })
 </script>
 
 {% endblock %}
