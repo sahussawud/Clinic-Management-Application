@@ -1,10 +1,15 @@
+from datetime import datetime
+
 from django import forms
 from django.forms import ModelForm
 from django.forms.widgets import (CheckboxInput, DateInput, NumberInput,
-                                  RadioSelect, Select, Textarea, TextInput, TimeInput)
+                                  RadioSelect, Select, Textarea, TextInput,
+                                  TimeInput)
 from django.utils.translation import gettext_lazy as _
 
 from Treatment.models import *
+
+
 
 class TreatmentFormDisplay(ModelForm):
     class Meta:
@@ -226,5 +231,3 @@ class Pain_SymptomForm(ModelForm):
             'others': Textarea(attrs={'class': 'form-control', 'cols':'6', 'rows':'10', 'placeholder':'อาการอื่นๆ'}),
             
         }
-
-

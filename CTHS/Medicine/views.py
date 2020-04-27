@@ -13,6 +13,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import *
+from Treatment.models import Room_Queue
 # Create your views here.
 def add_medicine(request):
     
@@ -106,26 +107,6 @@ class PrescriptionAPIView(APIView):
         serializer = PrescriptionSerializer(pst_data)
         return Response(serializer.data, status=status.HTTP_200_OK)
     """
-    API สร้างใบสั่งยา
-    DATA REQUIRED:  detail : <string:ข้อมูลรายละเอียดการจ่ายยา>
-                    treatment_cn : <int: ID ของประวัติการรักษาที่ต้องการเชื่อมกับใบสั่งยา>
-                    doctor_id : <int: ID ของแพทย์ผู้สร้างใบสั่งยา>
-    """
-    def post(self, request, pst_id):
-        serializer = PrescriptionSerializer(data=request.data)
-        if serializer.is_valid():
-            try:  
-                creator = Doctor.objects.get(user_id_id=request.data['doctor_id'])
-                serializer.doctor_id = creator
-                serializer.save()
-            except Doctor.DoesNotExist:
-                messages.error(request, ' Doctor.DoesNotExist!')
-
-            
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    """
     API ยืนยันการจ่ายยาพร้อมอัพเดตจำนวนยาหรือเวชภัณฑ์ในคลัง
     DATA REQUIRED: nurse_id : <int: ID ของพยาบาลผู้ยืนยันการจ่ายยา>
     """
@@ -151,6 +132,8 @@ class PrescriptionAPIView(APIView):
                 pst_data.nurse_id = Nurse.objects.get(id=request.data['nurse_id'])
                 pst_data.status = "C"
                 pst_data.save()
+                update_queue = Room_Queue.objects.get(treatment=pst_data.treatment_cn)
+                update_queue.delete()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -163,6 +146,28 @@ class PrescriptionAllWaitAPIView(APIView):
         pst_data = Prescription.objects.filter(status="W")
         serializer = PrescriptionSerializer(pst_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    """
+    API สร้างใบสั่งยา
+    DATA REQUIRED:  detail : <string:ข้อมูลรายละเอียดการจ่ายยา>
+                    treatment_cn : <int: ID ของประวัติการรักษาที่ต้องการเชื่อมกับใบสั่งยา>
+                    doctor_id : <int: ID ของแพทย์ผู้สร้างใบสั่งยา>
+    """
+    def post(self, request):
+        serializer = CreatePrescriptionSerializer(data=request.data)
+        serializer.treatment_cn = request.data['treatment_cn']
+        if serializer.is_valid():
+            try:  
+                creator = Doctor.objects.get(user_id_id=request.data['doctor_id'])
+                serializer.doctor_id = creator
+                
+                serializer.save()
+            except Doctor.DoesNotExist:
+                messages.error(request, ' Doctor.DoesNotExist!')
+
+            
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DispenseAPIView(APIView):
     """

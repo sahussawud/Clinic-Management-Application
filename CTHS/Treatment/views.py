@@ -13,7 +13,7 @@ from Medicine.models import Drug
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from Treatment.models import Lesion
+from Treatment.models import Lesion, Room_Queue
 from User_app.forms import PatientForm
 from User_app.models import Congenital_disease, Patient, Public_Health
 
@@ -340,7 +340,10 @@ def create_treatment(request, patient_id):
                 new_symtom_form.symptom = symptom
                 
                 new_symtom_form.save()
-               
+                #add this treatment to queue
+                new_queue = Room_Queue.objects.create(treatment=treatment_form)
+                new_queue.status = "WD"
+                new_queue.save()
                 #if accident form
                 if diagnosis_type == 'accident':
                     formset = LesionFormSet(request.POST)
@@ -498,6 +501,9 @@ def diagnosis_treatment(request, treatment_cn):
                     diagnosis_form.treatment = treatment
                     diagnosis_form.save()
                     # form.save_m2m()
+                    update_queue = Room_Queue.objects.get(treatment=treatment)
+                    update_queue.status = "WP"
+                    update_queue.save()
                     messages.success(request, 'สร้างการวินิจฉัยสำเร็จ!')
                     contexts['complete_diagnosis'] = doctor
                 else:
@@ -559,3 +565,21 @@ def examination_room(request, room_id):
 #         'formset' : formset,
 #         'form' : form,
 #         })
+
+class RoomQueueAPIView(APIView):
+    """
+    API ดึงข้อมูลคิวที่รอตรวจ
+    """
+    def get(self, request):
+        items = Room_Queue.objects.filter(status="WD")
+        serializer = RoomQueueSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
+
+class RoomQueueMedicineAPIView(APIView):
+    """
+    API ดึงข้อมูลคิวที่รอจ่ายยา
+    """
+    def get(self, request):
+        items = Room_Queue.objects.filter(status="WP")
+        serializer = RoomQueueSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
