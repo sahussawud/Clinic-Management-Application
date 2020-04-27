@@ -20,22 +20,15 @@
 
                 {{ form.non_field_errors }}
 
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{% if message.tags == 'error' %}danger {% else %}{{message.tags}} {% endif %}
-                alert-dismissible fade show" role="alert">
-                    <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}</strong>
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-
-                {% endif %}
+                {% include "messages.html" %}
             </div>
             <div class="col-md-8">
+                {% if update %}
+                <h2 class="mb-3">ข้อมูลผู้ป่วย</h2>
+                {% else %}
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
+                {% endif %}
+                
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
                         aria-valuemax="100">[[percent]] %</div>
@@ -240,7 +233,7 @@
 
 
                         </div>
-                        <button class="btn btn-info btn-lg btn-block" type="submit">{% if update %}อัพเดตข้อมูล{% else %}ขั้นตอนถัดไป{% endif %}</button>
+                        <button class="btn btn-warning btn-lg btn-block" type="submit">{% if update %}อัพเดตข้อมูล{% else %}ขั้นตอนถัดไป{% endif %}</button>
                     </form>
 
 
@@ -361,9 +354,11 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
 
-            </div>
+            
             </li>
             </ul>
+            <a class="btn btn-info btn-lg btn-block" :href='"/treatment/create/"+patient_id+"/" || ""'>สร้างประวัติการรักษา</a>
+        </div>
 
         </div>
 
