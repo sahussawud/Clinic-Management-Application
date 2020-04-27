@@ -378,11 +378,6 @@ def create_treatment(request, patient_id):
         instance = formset.save()
 
         
-        
-            
-                 
-
-        
 
     return render(request, 'Treatment/create_treatment.html',context=contexts)
 
@@ -435,7 +430,7 @@ def switch_symptom(symptom):
 def diagnosis_treatment(request, treatment_cn):
     contexts = {}
     
-    contexts['treatment_id'] = treatment_cn
+    contexts['treatment_cn'] = treatment_cn
     try:
         treatment = Treatment.objects.get(cn=treatment_cn)
         symptom = Symptom.objects.get(treatment=treatment)

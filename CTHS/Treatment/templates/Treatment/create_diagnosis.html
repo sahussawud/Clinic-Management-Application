@@ -195,7 +195,7 @@
             <!-- ฟอร์มวินิจฉัย -->
             
                 <div class="col-md-11 mt-3 ml-2">
-                    <form action="{% url 'create_diagnosis' treatment_id %}" method="post">
+                    <form action="{% url 'create_diagnosis' treatment_cn %}" method="post">
                     <div class="row">
                         <div class="card w-100">
                             <h5 class="card-header">คำวินิจฉัย(ทั่วไป) โดย นพ.xxxx xxxxx <a href="#"
@@ -494,6 +494,7 @@
         el: '#app',
         data: {
             selected: '{{symptom}}',
+            bmi: 0,
             options: [
                 { text: 'ทั่วไป', value: 'non_form' },
                 { text: 'ผิวหนัง', value: 'skin' },
@@ -504,6 +505,14 @@
                 { text: 'ท้องเสีย', value: 'diarrhea' },
                 { text: 'อาการปวดทุกเเห่ง', value: 'pain' }
             ]
+        },methods:{
+            bmi_cal: function(){
+                var weight = document.querySelector('#weight').value
+                var height = document.querySelector('#height').value
+                this.bmi = (weight / ((height/100)**2)).toFixed(2)
+            }
+        }, created(){
+            this.bmi_cal()
         }
     })
 </script>

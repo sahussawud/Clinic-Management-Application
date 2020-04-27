@@ -15,7 +15,7 @@ urlpatterns = [
     path('patient/update/<int:patient_id>/drug_api/', views.DrugAPIView.as_view(), name='drug_api'),
 
     path('create/<int:patient_id>/', views.create_treatment, name = 'create_treatment'),
-    path('create/<int:treatment_id>/diagnosis/', views.diagnosis_treatment, name = 'create_diagnosis'),
+    path('create/<int:treatment_cn>/diagnosis/', views.diagnosis_treatment, name = 'create_diagnosis'),
 
     path('find/', views.find_treatment, name = 'find_treatment'),
     path('', views.home_treatment, name = 'home_treatment'),

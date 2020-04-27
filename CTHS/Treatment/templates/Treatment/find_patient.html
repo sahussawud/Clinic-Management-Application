@@ -62,9 +62,13 @@
                                         patient.blood_type]]</p>
                                 </div>
 
-                                <div class="col-md-3">
-                                    <button class="btn btn-success btn-sm mb-2" type="submit">สร้างการรักษา</button>
-                                    <button class="btn btn-info btn-sm" type="submit">ข้อมูลเพิ่มเติม</button>
+                                <div class="col-md-3 mt-2">
+                                    <div class="row">
+                                        <a class="btn btn-success btn-sm"  :href='"/treatment/create/"+patient.p_id+"/" || ""'>สร้างการรักษา</a>
+                                    </div>
+                                    <div class="row mt-3"><a class="btn btn-info btn-sm" :href='"/treatment/patient/update/"+patient.p_id+"/" || ""' >ข้อมูลเพิ่มเติม</a></div>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>

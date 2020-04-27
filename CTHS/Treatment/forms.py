@@ -49,8 +49,8 @@ class TreatmentForm(ModelForm):
             'patient_condition': _('สภาพผู้ป่วย'),
         }
         widgets = {
-            'weight': NumberInput(attrs={'class': 'form-control', 'placeholder':'Kilograms'}),
-            'Height': NumberInput(attrs={'class': 'form-control', 'placeholder':'Centimetre'}),
+            'weight': NumberInput(attrs={'class': 'form-control', 'placeholder':'Kilograms', 'id':'weight', 'v-on:blur':'bmi_cal'}),
+            'Height': NumberInput(attrs={'class': 'form-control', 'placeholder':'Centimetre', 'id':'height', 'v-on:blur':'bmi_cal'}),
             'bp': NumberInput(attrs={'class': 'form-control', 'placeholder':'mmHg'}),
             'pr': NumberInput(attrs={'class': 'form-control', 'placeholder':'BPM'}),
             'temp': NumberInput(attrs={'class': 'form-control', 'placeholder':'Celcuis'}),

@@ -17,7 +17,7 @@
     <div class="container mt-3 mb-5">
         <div class="row" id='app'>
             <div class="col-md-6">
-                <h2 class="mb-2">สร้างการวินิจฉัย CN : CN0001</h2>
+                <h2 class="mb-2">สร้างประวัติการรักษา</h2>
                     <!-- ROWS OF PATIENT INFORMATION -->
                     <div class="row">
                         <div class="card w-100">
@@ -130,8 +130,9 @@
                                                 <tr>
                                                     <th scope="row">ดัชนีมวลกาย</th>
                                                     <td><input type="number" class="form-control"
-                                                            id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย"
-                                                            disabled></td>
+                                                            id="formGroupExampleInput2" placeholder="ดัชนีมวลกาย" :value='bmi'
+                                                            disabled>
+                                                    </td>
                                                     <th scope="row">{{ form.o2_sat.label_tag }}</th>
                                                     <td> {{ form.o2_sat }}
                                                         {% if form.o2_sat.errors %}
@@ -185,116 +186,13 @@
 
             {% include "Treatment/create_pre_diagnosis.html" %}
 
-            {% include "Treatment/create_diagnosis.html" %}
             
-
-            <div class="col-md-11 mt-3 ml-2">
-                <div class="row">
-                    <div class="card w-100">
-                        <h5 class="card-header">ใบสั่งยา</h5>
-
-                        <div class="card-body" style='color:red'>
-                            <table class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th class="table-dark">ลำดับ</th>
-                                        <th class="table-dark">ชื่อยา/เวชภัทฑ์</th>
-                                        <th class="table-dark">จำนวน</th>
-                                        <th class="table-dark"></th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="table-info">1</td>
-                                        <td class="table-info">Acetazolamide (อะเซตาโซลาไมด์) 3 % x 1 ขวด</td>
-                                        <td class="table-info">
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td class="table-info">
-                                            <center><button type="button" class="btn btn-danger btn-sm">ลบ</button>
-                                            </center>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Albumin (อัลบูมิน) x 1 ขวด (500 ml.)</td>
-                                        <td>
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-danger btn-sm">ลบ</button>
-                                            </center>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Aminoglycosides (อะมิโนไกลโคไซด์)</td>
-                                        <td>
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-danger btn-sm ">ลบ</button>
-                                            </center>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>หน้ากากอนามัย</td>
-                                        <td>
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-danger btn-sm ">ลบ</button>
-                                            </center>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><br /></td>
-                                        <td><br /></td>
-                                        <td><br /></td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-success btn-sm"
-                                                    data-toggle="modal"
-                                                    data-target=".bd-example-modal-xl">เพิ่ม</button></center>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
             <hr class="mb-4">
             <button type="submit" class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2">ยืนยัน</button>
         </div>
 
 
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">รายการยา</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-
-        </div>
+       
     </form>
 
     </div>
@@ -309,6 +207,7 @@
         delimiters: ['[[', ']]'],
         el: '#app',
         data: {
+            bmi: 0,
             selected: 'non_form',
             options: [
                 { text: 'ทั่วไป', value: 'non_form' },
@@ -320,6 +219,12 @@
                 { text: 'ท้องเสีย', value: 'diarrhea' },
                 { text: 'อาการปวดทุกเเห่ง', value: 'pain' }
             ]
+        },methods:{
+            bmi_cal: function(){
+                var weight = document.querySelector('#weight').value
+                var height = document.querySelector('#height').value
+                this.bmi = (weight / ((height/100)**2)).toFixed(2)
+            }
         }
     })
 </script>
