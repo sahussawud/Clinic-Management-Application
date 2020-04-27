@@ -453,12 +453,51 @@ def switch_symptom(symptom):
 
 def diagnosis_treatment(request, treatment_cn):
     contexts = {}
-    
     contexts['treatment_cn'] = treatment_cn
+    print(request.method)
     try:
         treatment = Treatment.objects.get(cn=treatment_cn)
         symptom = Symptom.objects.get(treatment=treatment)
+        doctor = Doctor.objects.get(user_id=request.user.id)
+        try:
+            if request.method == 'GET':
+                diagnosis = Diagnosis.objects.get(treatment=treatment)
+                form =  DiagnosisForm(instance=diagnosis)
+                contexts['complete_diagnosis'] = doctor
+                messages.info(request, 'การวินิจฉัยถูกสร้างเเล้ว!') 
+        except ObjectDoesNotExist:
+            if request.method == 'GET':
+                form = DiagnosisForm()
 
+        if request.method == 'POST':
+            if request.POST.get('_method') == 'patch':
+                diagnosis = Diagnosis.objects.get(treatment=treatment)
+                form =  DiagnosisForm(request.POST, instance=diagnosis)
+                if form.is_valid():
+                    form.save()
+                    contexts['complete_diagnosis'] = doctor
+                    messages.warning(request, 'เเก้ไขการวินิจฉัยสำเร็จสำเร็จ!')
+                else:
+                    messages.error(request, 'เเก้ไขการวินิจฉัยสำเร็จไม่สำเร็จ!')
+                    form =  DiagnosisForm(request.POST)
+            else:
+                form =  DiagnosisForm(request.POST)
+                if form.is_valid():
+                    diagnosis_form = form.save(commit=False)
+                    diagnosis_form.doctor_id = doctor
+                    diagnosis_form.treatment = treatment
+                    diagnosis_form.save()
+                    # form.save_m2m()
+                    messages.success(request, 'สร้างการวินิจฉัยสำเร็จ!')
+                    contexts['complete_diagnosis'] = doctor
+                else:
+                    messages.error(request, 'สร้างการวินิจฉัยไม่สำเร็จ!')
+                    form =  DiagnosisForm(request.POST)
+        
+
+            
+
+        
         symptom_model = switch_symptom(symptom.symptom_type).get("model")
         instance_symptom = symptom_model.objects.get(symptom=symptom.id)
         print(instance_symptom)
@@ -473,7 +512,6 @@ def diagnosis_treatment(request, treatment_cn):
         symptom_form_display = symptom_form(instance=instance_symptom)
         print(symptom_form_display)
 
-        form = DiagnosisForm()
         contexts['symptom'] = symptom.symptom_type
         contexts['drug'] = drug
         contexts['cd'] = cd
