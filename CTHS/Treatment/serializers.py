@@ -46,9 +46,13 @@ class DiagnosisSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TreatmentSerializer(serializers.ModelSerializer):
-    patient_condition = serializers.CharField(source="get_patient_condition_display")
     diagnosis = DiagnosisSerializer()
+    patient_p_id = PatientSerializer()
     class Meta:
         model = Treatment
-        fields = ['cn', 'patient_condition', 'diagnosis', 'patient_p_id']
+        fields = ['cn', 'diagnosis', 'patient_p_id']
         read_only_fields = ['cn']
+
+class DrugMedSupplySerializer(serializers.Serializer):
+    drug = DrugSerializer(many=True)
+    med_sup = Med_supplySerializer(many=True)
