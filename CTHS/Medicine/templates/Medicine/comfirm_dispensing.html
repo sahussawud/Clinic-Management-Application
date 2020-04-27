@@ -23,7 +23,7 @@
                                 <table class="table table-bordered table table-sm table table-striped">
                                     <thead>
                                         <tr>
-                                            <th class="table-dark" scope="col">ลำดับที่</th>
+                                            <th class="table-dark" scope="col">รหัสใบสั่งยา</th>
                                             <th class="table-dark" scope="col">รหัสการรักษา</th>
                                             <th class="table-dark" scope="col">รหัสใบสั่งยา</th>
                                             <th class="table-dark" scope="col">ชื่อผู้รับยา</th>
@@ -31,10 +31,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-
-                                            <th class="text-center">101</th>
-                                            <td class="text-center">CN0101</td>
+                                        <tr v-for='prescription in precriptions_wait_list'>
+                                            <th class="text-center">[[ prescription.id ]]</th>
+                                            <td class="text-center">[[ prescription.treatment_cn ]]</td>
                                             <td class="text-center">PT0001</td>
                                             <td class="text-center">สหัสวรรษ</td>
                                             <td class="text-center"><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
@@ -115,7 +114,7 @@
         el: '#app',
         data: {
             select_id : 5,
-            precriptions_list: [],
+            precriptions_wait_list: [],
             prescription: []
 
         }, methods: {
@@ -133,18 +132,19 @@
             },
             not_provide_prescription: function() {
                 let self = this;
-                axios.get('prescription/<int:pst_id>/pst_api/', {
+                axios.get('/medicine/prescription/pst_api/', {
                 
                 }).then(function (response) {
                     console.log(response.data);
-                    self.precriptions_list = response.data
+                    self.precriptions_wait_list = response.data
 
                 }).catch(function (error) {
                     console.log(error);
                 });
             }
         }, created() {
-            this.select_prescription()
+            // this.select_prescription()
+            this.not_provide_prescription()
         }
     })
 </script>
