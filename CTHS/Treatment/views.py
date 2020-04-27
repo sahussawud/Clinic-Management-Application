@@ -349,6 +349,7 @@ def create_treatment(request, patient_id):
                 fever = Fever_SymptomForm(request.POST)
                 diarrhea = Diarrhea_SymptomForm(request.POST)
                 pain = Pain_SymptomForm(request.POST)
+                return redirect('home_patient')
 
             else:
                 treatment_form.delete()
