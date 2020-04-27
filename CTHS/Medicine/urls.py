@@ -11,6 +11,7 @@ urlpatterns = [
     path('comfirmdispensing/', views.comfirm_dispensing, name = 'comfirm_dispensing'),
     
     path('prescription/<int:pst_id>/pst_api/', views.PrescriptionAPIView.as_view(), name='pst_api'),
+    path('prescription/pst_api/', views.PrescriptionAllWaitAPIView.as_view(), name='pst_api'),
     path('dispense/<int:pst_id>/dispense_api/', views.DispenseAPIView.as_view(), name="dispense_api"),
     
    

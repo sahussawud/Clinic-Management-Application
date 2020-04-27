@@ -134,6 +134,15 @@ class PrescriptionAPIView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PrescriptionAllWaitAPIView(APIView):
+    """
+    API ใบสั่งยาทั้งหมดที่ยังไม่ได้จ่ายยา
+    """
+    def get(self, request):
+        pst_data = Prescription.objects.filter(status="W")
+        serializer = PrescriptionSerializer(pst_data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class DispenseAPIView(APIView):
     """
     API ดึงข้อมูลรายการการจ่ายยาทั้งหมดของแต่ละใบสั่งยา
