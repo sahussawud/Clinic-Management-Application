@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from User_app.models import Congenital_disease, Patient
-from .models import Treatment, Diagnosis, Symptom
+from .models import Treatment, Diagnosis, Symptom, Room_Queue
 from Medicine.models import Drug, Med_supply
 
 class Congenital_diseaseSerializerWithoutPatient(serializers.Serializer):
@@ -67,3 +67,11 @@ class SymptomSerializer(serializers.ModelSerializer):
 class SymptomTypeSerializer(serializers.Serializer):
     symptom_type = serializers.CharField()
     p_count = serializers.IntegerField()
+
+class RoomQueueSerializer(serializers.ModelSerializer):
+    treatment = TreatmentSerializer()
+    status = serializers.CharField(source="get_status_display")
+    class Meta:
+        model = Room_Queue
+        fields = '__all__'
+        read_only_fields = ['id']

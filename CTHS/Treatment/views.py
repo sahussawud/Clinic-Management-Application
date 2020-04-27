@@ -13,7 +13,7 @@ from Medicine.models import Drug
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from Treatment.models import Lesion
+from Treatment.models import Lesion, Room_Queue
 from User_app.forms import PatientForm
 from User_app.models import Congenital_disease, Patient, Public_Health
 
@@ -565,3 +565,21 @@ def examination_room(request, room_id):
 #         'formset' : formset,
 #         'form' : form,
 #         })
+
+class RoomQueueAPIView(APIView):
+    """
+    API ดึงข้อมูลคิวที่รอตรวจ
+    """
+    def get(self, request):
+        items = Room_Queue.objects.filter(status="WD")
+        serializer = RoomQueueSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
+
+class RoomQueueMedicineAPIView(APIView):
+    """
+    API ดึงข้อมูลคิวที่รอจ่ายยา
+    """
+    def get(self, request):
+        items = Room_Queue.objects.filter(status="WP")
+        serializer = RoomQueueSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
