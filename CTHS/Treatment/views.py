@@ -339,18 +339,27 @@ def create_treatment(request, patient_id):
                         messages.error(request, 'กรอกรายระเอียดบาดเเผลให้ถูกต้อง!')
 
                 messages.success(request, 'บันทึกประวัติเบื้องต้นสำเร็จ!')
+                form = TreatmentForm(request.POST)
+                non_form = Non_Form_SymptomForm(request.POST)
+                skin = Rash_SymptomForm(request.POST)
+                accident = Wound_SymptomForm(request.POST)
+                con_accident = Con_Wound_SymptomForm(request.POST)
+                eyes = Eye_SymptomForm(request.POST)
+                fever = Fever_SymptomForm(request.POST)
+                diarrhea = Diarrhea_SymptomForm(request.POST)
+                pain = Pain_SymptomForm(request.POST)
 
             else:
                 messages.error(request, 'บันทึกประวัติเบื้องต้นไม่สำเร็จ!')
-            form = TreatmentForm(request.POST)
-            non_form = Non_Form_SymptomForm(request.POST),
-            skin = Rash_SymptomForm(request.POST),
-            accident = Wound_SymptomForm(request.POST),
-            con_accident = Con_Wound_SymptomForm(request.POST),
-            eyes = Eye_SymptomForm(request.POST),
-            fever = Fever_SymptomForm(request.POST),
-            diarrhea = Diarrhea_SymptomForm(request.POST),
-            pain = Pain_SymptomForm(request.POST)
+                form = TreatmentForm(request.POST)
+                non_form = Non_Form_SymptomForm(request.POST)
+                skin = Rash_SymptomForm(request.POST)
+                accident = Wound_SymptomForm(request.POST)
+                con_accident = Con_Wound_SymptomForm(request.POST)
+                eyes = Eye_SymptomForm(request.POST)
+                fever = Fever_SymptomForm(request.POST)
+                diarrhea = Diarrhea_SymptomForm(request.POST)
+                pain = Pain_SymptomForm(request.POST)
 
         else:
             messages.error(request, 'บันทึกประวัติเบื้องต้นไม่สำเร็จ!')
