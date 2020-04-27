@@ -221,8 +221,8 @@ class DrugAPIView(APIView):
 class DrugWithoutPatientAPIView(APIView):
     """ API ยาทั้งหมด """
     def get(self, request):
-        if 'keywords' in request.data:
-            items = Drug.objects.filter(name__icontains=request.data['keywords']).order_by('name')
+        if request.GET.get('keywords'):
+            items = Drug.objects.filter(name__icontains=request.GET.get('keywords')).order_by('name')
         else:
             items = Drug.objects.all().order_by('name')
         serializer = DrugSerializer(items, many=True)
@@ -231,8 +231,8 @@ class DrugWithoutPatientAPIView(APIView):
 class Med_supplyWithoutPatientAPIView(APIView):
     """ API เวชภัณฑ์ทั้งหมด """
     def get(self, request):
-        if 'keywords' in request.data:
-            items = Med_supply.objects.filter(name__icontains=request.data['keywords']).order_by('name')
+        if request.GET.get('keywords'):
+            items = Med_supply.objects.filter(name__icontains=request.GET.get('keywords')).order_by('name')
         else:
             items = Med_supply.objects.all().order_by('name')
         serializer = Med_supplySerializer(items, many=True)
