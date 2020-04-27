@@ -495,16 +495,26 @@
         data: {
             selected: '{{symptom}}',
             bmi: 0,
-            options: [
-                { text: 'ทั่วไป', value: 'non_form' },
-                { text: 'ผิวหนัง', value: 'skin' },
-                { text: 'อุบัติเหตุ', value: 'accident' },
-                { text: 'อุบัติเหตุต่อเนื่อง', value: 'con_accident' },
-                { text: 'ดวงตา', value: 'eyes' },
-                { text: 'อาการไข้', value: 'fever' },
-                { text: 'ท้องเสีย', value: 'diarrhea' },
-                { text: 'อาการปวดทุกเเห่ง', value: 'pain' }
-            ]
+           
+        },methods:{
+            bmi_cal: function(){
+                var weight = document.querySelector('#weight').value
+                var height = document.querySelector('#height').value
+                this.bmi = (weight / ((height/100)**2)).toFixed(2)
+            }
+        }, created(){
+            this.bmi_cal()
+        }
+    })
+
+    var prescription = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#prescription',
+        data: {
+            keywords : '',
+            medcine_list : [],
+            
+           
         },methods:{
             bmi_cal: function(){
                 var weight = document.querySelector('#weight').value
