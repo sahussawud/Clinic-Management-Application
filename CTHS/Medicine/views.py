@@ -6,7 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from User_app.models import Doctor
 from Medicine.models import Drug, Med_supply
 from Medicine.forms import MedicineSupplyForm
-from Medicine.forms import MedicineDrugForm
+from Medicine.forms import MedicineDrugForm,UpdateMedForm
+
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -69,6 +71,25 @@ def add_medicine(request):
 # --------------------------------
 def update_medicine(request):
     return render(request, 'Medicine/update_medicine.html')
+
+    """
+    เมื่อกด เลือกยาที่จะ update จะเข้า view
+    นี้ละเมื่อทำการบันทึกสำเร็จ จะrender กลับไปหน้า จัดการคลังยา
+     """
+def update(request):
+    if request.method == 'POST':
+        form1 =  UpdateMedForm(request.POST)
+        if form1.is_valid():
+            amount = form1.cleaned_data['amount']
+            post = Drug(
+                
+                amount=amount,
+            )
+            post.save()
+    medicine = UpdateMedForm()
+
+    return render(request,'Medicine/update.html',context={
+        'form1': medicine,})
 
 def home_medicine(request):
     return render(request, 'Medicine/home_medicine.html')
