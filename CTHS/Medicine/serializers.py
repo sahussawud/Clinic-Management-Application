@@ -1,10 +1,11 @@
+
+
 from rest_framework import serializers
-
-from Medicine.models import Drug, Dispense, Med_supply
-
-from Treatment.models import Prescription, Diagnosis
+from Medicine.models import Dispense, Drug, Med_supply
+from Treatment.models import Diagnosis, Prescription
 from Treatment.serializers import TreatmentSerializer
-from User_app.models import Doctor, User, Nurse
+from User_app.models import Doctor, Nurse, User
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,17 +38,14 @@ class DrugSerializer(serializers.ModelSerializer):
         read_only_fields = ['med_sup_id', 'drug_id', 'name', 'drug_id']
 
 class DispenseSerializer(serializers.ModelSerializer):
-    prescription_id = serializers.IntegerField(required=False)
     drug = DrugSerializer(source="dis_drug_id", required=False)
     med_sup = Med_supplySerializer(source="dis_med_id", required=False)
-    dispense_type = serializers.CharField(source="get_type_display", required=False)
+    type = serializers.CharField(source="get_type_display")
     class Meta:
         model = Dispense
-        fields = ['id', 'amount', 'dispense_type' ,'type', 'prescription_id', 'drug', 'med_sup' ]
+        fields = ['id', 'amount' ,'type', 'drug', 'med_sup' ]
         read_only_fields = ['id']
-
-    def create(self, validate_data):
-        return Dispense.objects.create(**validate_data)
+    
 
 class PrescriptionSerializer(serializers.ModelSerializer):
     detail = serializers.CharField(required=False)

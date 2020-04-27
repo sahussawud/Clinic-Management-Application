@@ -146,25 +146,25 @@ class DispenseAPIView(APIView):
     """
     API สร้างรายการการจ่ายยา
     DATA REQUIRED:  type : <string: "D" ยา or "M" เวชภัณฑ์
-                    *dis_drug_id : <int: ID ของยาที่ต้องการจ่าย>
-                    *dis_med_id : <int: ID ของเวชภัณฑ์ที่ต้องการจ่าย>
+                    *drug : <int: ID ของยาที่ต้องการจ่าย>
+                    *med_sup : <int: ID ของเวชภัณฑ์ที่ต้องการจ่าย>
                     amount : <int:จำนวนการจ่ายยาหรือเวชภัณฑ์ของรายการนั้นๆ>
-    * = ใส่ตาม type ที่กำหนด D = dis_drug_id, M = dis_med_id
+    * = ใส่ตาม type ที่กำหนด D = drug, M = med_sup
     """
     def post(self, request, pst_id):
         pst_data = Prescription.objects.get(id=pst_id)
         serializer = DispenseSerializer(data=request.data)
         if serializer.is_valid():
-            new_dispense = Dispense.objects.create(prescription_id=pst_id)
-            new_dispense.type = serializer.validated_data['type']
-            if serializer.validated_data['type'] == "D":
-                new_dispense.dis_drug_id = serializer.validated_data['dis_drug_id']
-            elif serializer.validated_data['type'] == "M":
-                new_dispense.dis_med_id = serializer.validated_data['dis_med_id']
-            new_dispense.amount = serializer.validated_data['amount']
-            new_dispense.save()
-
+            new_dispense = Dispense.objects.create(prescription_id=pst_data, amount=serializer.validated_data['amount'])
+            new_dispense.type = request.data['type']
+            if request.data['type'] == "D":
+                new_dispense.dis_drug_id = Drug.objects.get(med_sup_id=request.data['drug'])
+            elif request.data['type'] == "M":
+                new_dispense.dis_med_id = Med_supply.objects.get(med_sup_id=request.data['med_sup'])
             
+            new_dispense.save()
+            items = Dispense.objects.filter(prescription_id=pst_data)
+            serializer = DispenseSerializer(items, many=True)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
