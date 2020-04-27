@@ -1,4 +1,5 @@
 <div id="Med" style="display: none;">
+    <form action="{% url 'add_medicine' %}" method="post">
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสยา</label>
         <div class="col-sm-10">
@@ -27,12 +28,16 @@
         <!-- <textarea class="form-control form-control-sm" rows="5" cols="3" name="description"></textarea> -->
             {{form.description}}
         </div>
+        
     </div>
+    <center><input class="btn btn-success" type="submit" value="บันทัก"></center>
+</form>
 </div>
 
 <!-- ----------------------------------------- -->
 
 <div id="Supply" style="display: none;">
+    <form action="{% url 'add_medicine' %}" method="post">
     <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">รหัสเวชภัณฑ์</label>
         <div class="col-sm-10">
@@ -61,7 +66,10 @@
         <!-- <textarea class="form-control form-control-sm" rows="5" cols="3" name="description"></textarea> -->
             {{form.description}}
         </div>
+        
     </div>
+    <center><input class="btn btn-success" type="submit" value="บันทัก"></center>
+</form>
 </div>
 <script>
 
