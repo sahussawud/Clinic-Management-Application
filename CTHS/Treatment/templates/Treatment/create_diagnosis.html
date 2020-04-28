@@ -438,7 +438,7 @@
                 this.prescription.forEach(element => {
                     axios.post('/medicine/dispense/' + self.prescription_id + '/dispense_api/', {
                         type: element.type,
-                        drug: element.drug,
+                        med_id: element.drug,
                         amount: element.amount
                         // เมื่อทำงานสำเร็จ
                     }).then(function (response) {
@@ -451,21 +451,26 @@
                     });
 
                 });
-                // axios.post('/medicine/dispense/'+this.prescription_id+'/dispense_api/', {
-                //     jsonData: JSON.stringify(this.prescription)
-                //     // เมื่อทำงานสำเร็จ
-                // }).then(function (response) {
-                //     console.log(response.data);
-                //     self.medicine_list = response.data
+                
+            }, get_prescription: function(){
+                let self = this;
+                axios.get('/medicine/prescription/'+this.prescription_id+'/pst_api/', {
+                
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.prescription = response.data
 
-                // }).catch(function (error) {
-                //     console.log(error);
-
-                // }); 
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
 
         }, created() {
             this.bmi_cal()
+            // this.get_prescription()
+            // if(this.prescription_id!==''){
+            //     this.is_prescription=true
+            // }
         }
     })
 

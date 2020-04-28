@@ -28,7 +28,10 @@ def home_medicine(request):
     return render(request, 'Medicine/home_medicine.html')
 
 def comfirm_dispensing(request):
-    return render(request, 'Medicine/comfirm_dispensing.html')
+    nurse = Nurse.objects.get(user_id=request.user.id)
+    return render(request, 'Medicine/comfirm_dispensing.html',{
+        'nurse': nurse 
+    })
 
 def add_medicine(request):
     if request.method == 'POST':

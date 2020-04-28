@@ -17,84 +17,36 @@
             <div class="col-md-10">
                 <h2 class="mb-2">ห้องตรวจ 1</h2>
                 <form class="needs-validation" novalidate=""></form>
-                    <!-- ROWS OF PATIENT INFORMATION -->
-                    <div class="row">
-                        <div class="card w-100">
-                            <h5 class="card-header">คิวที่ #1</h5>
+                <!-- ROWS OF PATIENT INFORMATION -->
+                <div class="row">
 
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">นายสหัสวรรษ ขันรักษา (นักศึกษา)</h5>
-                                        <p class="card-text">อายุ 18 ปี 6 เดือน กลุ่มเลือด A</p>
-                                        <p class="card-text">เเพ้ยา : -       โรคประจำตัว : -</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5 class="card-title">อาการปวด</h5>
-                                        <p class="card-text">ระยะเวลา :2วันเเล้ว</p>
-                                        <p class="card-text">ลักษณะอาการ : มาก</p>
+                    <div class="card w-100" v-for='(item, index) in queue'>
+                        <h5 class="card-header">คิวที่ #[[index+1]] CN:[[ item.treatment.cn ]]</h5>
 
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a class="btn btn-success btn-lg btn-sm col-md-10 ml-2 mt-2" href="{% url 'create_treatment' 1 %}">เข้าตรวจ</a>
-                                        <a class="btn btn-warning btn-lg btn-sm col-md-10 ml-2 mt-2" href="">ข้าม</a>
-                                    </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="card-title">[[ item.treatment.patient_p_id.fname ]] [[ item.treatment.patient_p_id.lname ]] </h5>
+                                    <p class="card-text">เกิด [[ item.treatment.patient_p_id.birth_day ]] กลุ่มเลือด [[ item.treatment.patient_p_id.blood_type ]]</p>
                                 </div>
+                                <div class="col-md-4">
+                                    <h5 class="card-title">สถานะ</h5>
+                                    <p class="card-text">[[ item.status ]]</p>
 
-                            </div>
-                        </div>
-
-                        <div class="card w-100  mt-3">
-                            <h5 class="card-header">คิวที่ #2</h5>
-
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">นายสหัสวรรษ ขันรักษา (นักศึกษา)</h5>
-                                        <p class="card-text">อายุ 18 ปี 6 เดือน กลุ่มเลือด A</p>
-                                        <p class="card-text">เเพ้ยา : -       โรคประจำตัว : -</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5 class="card-title">อาการปวด</h5>
-                                        <p class="card-text">ระยะเวลา :2วันเเล้ว</p>
-                                        <p class="card-text">ลักษณะอาการ : มาก</p>
-
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a class="btn btn-success btn-lg btn-sm col-md-10 ml-2 mt-2" href="{% url 'create_treatment' 1 %}">เข้าตรวจ</a>
-                                        <a class="btn btn-warning btn-lg btn-sm col-md-10 ml-2 mt-2" href="">ข้าม</a>
-                                    </div>
                                 </div>
-
-                            </div>
-                        </div>
-
-                        <div class="card w-100 mt-3">
-                            <h5 class="card-header">คิวที่ #3</h5>
-
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">นายสหัสวรรษ ขันรักษา (นักศึกษา)</h5>
-                                        <p class="card-text">อายุ 18 ปี 6 เดือน กลุ่มเลือด A</p>
-                                        <p class="card-text">เเพ้ยา : -       โรคประจำตัว : -</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5 class="card-title">อาการปวด</h5>
-                                        <p class="card-text">ระยะเวลา :2วันเเล้ว</p>
-                                        <p class="card-text">ลักษณะอาการ : มาก</p>
-
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a class="btn btn-success btn-lg btn-sm col-md-10 ml-2 mt-2" href="{% url 'create_treatment' 1 %}">เข้าตรวจ</a>
-                                        <a class="btn btn-warning btn-lg btn-sm col-md-10 ml-2 mt-2" href="">ข้าม</a>
-                                    </div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-success btn-lg btn-sm col-md-10 ml-2 mt-2"
+                                    :href='"/treatment/create/"+item.treatment.cn+"/diagnosis/" || ""'>เข้าตรวจ</a>
+                                   
                                 </div>
-
                             </div>
-                        </div>
 
+                        </div>
                     </div>
+
+                    
+
+                </div>
             </div>
 
             <hr class="mb-4">
@@ -116,6 +68,7 @@
         delimiters: ['[[', ']]'],
         el: '#app',
         data: {
+            queue: [],
             selected: 'A',
             options: [
                 { text: 'ทั่วไป', value: 'A' },
@@ -127,6 +80,21 @@
                 { text: 'ท้องเสีย', value: 'F' },
                 { text: 'อาการปวดทุกเเห่ง', value: 'G' }
             ]
+        }, methods: {
+            get_queue: function () {
+                let self = this;
+                axios.get('/treatment/queue/api/', {
+
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.queue = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            }
+        }, created(){
+            this.get_queue()
         }
     })
 </script>
