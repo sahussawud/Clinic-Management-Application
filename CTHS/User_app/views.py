@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 # Create your views here.
@@ -101,3 +101,34 @@ def ChangePassword(request):
 def homepage(request):
     contexts = {}
     return render(request, 'User_app/index.html', context=contexts)
+
+@login_required
+@permission_required('admin.add_logentry')
+def home_admin(request):
+    contexts = {}
+    return render(request, 'User_app/home_admin.html', context=contexts)
+
+@login_required
+@permission_required('admin.add_user')
+def add_user(request):
+    return render(request, 'User_app/index.html', context=contexts)
+
+@login_required
+@permission_required('admin.view_user')
+def view_user(request):
+    return redirect('home_admin')
+
+@login_required
+@permission_required('admin.add_doctor')
+def add_doctor(request):
+    return redirect('home_admin')
+
+@login_required
+@permission_required('admin.add_nurse')
+def add_nurse(request):
+    return redirect('home_admin')
+
+@login_required
+@permission_required('admin.add_public_health')
+def add_public_health(request):
+    return redirect('home_admin')

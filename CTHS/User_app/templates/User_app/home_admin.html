@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block styles %}
+    {% endblock %}
+  
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+    <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">หน้าจัดการสำหรับผู้ดูเเลระบบ</h1>
+          <p>หน้าสำหรับจัดการเกี่ยวกับผู้ใช้งานระบบ.</p>
+          
+        </div>
+      </div>
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>สร้างผู้ใช้งานใหม่</h2>
+            <p>สร้างผู้ใช้งานใหม่ที่นี่</p>
+            <p><a class="btn btn-success" href="{% url 'add_user'  %}" role="button">สร้างที่นี่ »</a></p>
+          </div>
+         
+          <div class="col-md-4">
+            <h2>ข้อมูลผู้ใช้</h2>
+            <p>ข้อมูลผู้ใช้ที่ใช้ทั้งหมด</p>
+            <p><a class="btn btn-success" href="{% url 'view_user' %}" role="button">ผู้ใช้ทั้งหมด »</a></p>
+          </div>
+
+          <div class="col-md-4">
+            <h2>เพิ่มหน้าที่ให้ผู้ใช้</h2>
+            <p>เพิ่มหน้าที่ให้ผู้ใช้ใหม่</p>
+           <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                เพิ่ม
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="{% url 'add_doctor' %}">เพิ่มเเพทย์กับผุ้ใช้</a>
+                <a class="dropdown-item" href="{% url 'add_nurse' %}">เพิ่มพยาบาล</a>
+                <a class="dropdown-item" href="{% url 'add_public_health' %}">เพิ่มนักวิชาการสาธารณสุข</a>
+              </div>
+          </div>
+        </div>
+
+        <hr>
+
+      </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

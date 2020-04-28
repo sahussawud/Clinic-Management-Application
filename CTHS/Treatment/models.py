@@ -40,6 +40,9 @@ class Treatment(models.Model):
     # current_history = models.CharField(_("Current History"), max_length=255)
     create_date = models.DateField(_(""), auto_now=True)
     
+    def __str__(self):
+        return "cn : "+str(self.cn) + ' ของ '+self.patient_p_id.fname
+    
 
     def bmi(self):
         return  self.weight / self.Height**2
