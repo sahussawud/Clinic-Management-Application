@@ -59,7 +59,7 @@
                 <div class="row mt-3">
                     <div class="card w-100">
                         <h5 class="card-header">ข้อมูลเบื้องต้น <a href="#" class="btn btn-info btn-sm"
-                                style="" >ข้อมูลเพิ่มเติม</a></h5>
+                                style="">ข้อมูลเพิ่มเติม</a></h5>
 
                         <div class="card-body">
                             <div class="row">
@@ -193,9 +193,10 @@
                                 <input type="hidden" name="_method" value="patch">
                                 โดย นพ./พญ. {{ complete_diagnosis.user_id.first_name }}
                                 {{ complete_diagnosis.user_id.last_name }}
-                                <a href="#" class="btn btn-info btn-sm" v-on:click.prevent='create_prescription({{ treatment_cn }})'>สร้างใบสั่งยา</a>
+                                <a href="#" class="btn btn-info btn-sm"
+                                    v-on:click.prevent='create_prescription({{ treatment_cn }})'>สร้างใบสั่งยา</a>
                                 {% endif %}
-                                </h5>
+                            </h5>
 
                             <div class="card-body">
                                 {{ diagnosis_form.non_field_error }}
@@ -259,7 +260,9 @@
             <div class="col-md-11 mt-3 ml-2" v-if='is_prescription'>
                 <div class="row">
                     <div class="card w-100">
-                        <h5 class="card-header">ใบสั่งยา</h5>
+                        <h5 class="card-header">ใบสั่งยา <button type="button" class="btn btn-warning btn-sm"
+                                data-toggle="modal" data-target=".bd-example-modal-xl"
+                                v-on:click="get_medicine_list()">เพิ่มยา</button></h5>
 
                         <div class="card-body" style='color:red'>
                             <table class="table table-bordered table-striped table-sm">
@@ -268,79 +271,39 @@
                                         <th class="table-dark">ลำดับ</th>
                                         <th class="table-dark">ชื่อยา/เวชภัทฑ์</th>
                                         <th class="table-dark">จำนวน</th>
-                                        <th class="table-dark"></th>
+                                        <th></th>
+                                        <th></th>
+
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="table-info">1</td>
-                                        <td class="table-info">Acetazolamide (อะเซตาโซลาไมด์) 3 % x 1 ขวด</td>
-                                        <td class="table-info">
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td class="table-info">
-                                            <center><button type="button" class="btn btn-danger btn-sm">ลบ</button>
-                                            </center>
-                                        </td>
+                                    <tr v-for='(item, index) in prescription'>
+                                        <td class="">[[ index+1 ]]</td>
+                                        <td class="">[[ item.name ]]</td>
+                                        <td class="">
+                                            <input class="form-control" type="number" :id='"prescription_item"+index'
+                                                v-model="item.amount" min="1" step="1" readonly />
 
+                                        </td>
+                                        <th>
+                                            <div class="btn-group ml-3" role="group" aria-label="First group">
+                                                <button type="button" class="btn-sm btn-success"
+                                                    v-on:click.prevent='item.amount++'>+</button>
+                                                <button type="button" class="btn-sm btn-danger ml-2"
+                                                    v-on:click.prevent='item.amount--'>-</button>
+                                            </div>
+                                        </th>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Albumin (อัลบูมิน) x 1 ขวด (500 ml.)</td>
-                                        <td>
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-danger btn-sm">ลบ</button>
-                                            </center>
-                                        </td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Aminoglycosides (อะมิโนไกลโคไซด์)</td>
-                                        <td>
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-danger btn-sm ">ลบ</button>
-                                            </center>
-                                        </td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>หน้ากากอนามัย</td>
-                                        <td>
-                                            <center><input type="number" value="" min="0" max="1000" step="1" />
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-danger btn-sm ">ลบ</button>
-                                            </center>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><br /></td>
-                                        <td><br /></td>
-                                        <td><br /></td>
-                                        <td>
-                                            <center><button type="button" class="btn btn-success btn-sm"
-                                                    data-toggle="modal"
-                                                    data-target=".bd-example-modal-xl" v-on:click="get_medicine_list()">เพิ่ม</button></center>
-                                        </td>
-                                    </tr>
 
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
+                    <button v-if='prescription[0]' class="btn btn-success btn-lg btn-block col-md-11 ml-2 mt-2"
+                        v-on:click='add_dispense()'>บันทึกการสั่งยา</button>
                 </div>
                 <!-- Modal -->
                 <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
@@ -364,7 +327,7 @@
                                             v-on:click='get_medicine_list()'>ค้นหา</button>
                                     </div>
                                 </div>
-                                <table class="table table-bordered table-hover table-sm" data-spy="scroll" >
+                                <table class="table table-bordered table-hover table-sm" data-spy="scroll">
                                     <thead>
                                         <tr>
                                             <th class="table-dark">No.</th>
@@ -376,12 +339,17 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for='(med, index) in medicine_list'>
-                                            <td>[[ index ]]</td>
-                                            <td>[[ med.drug_id]]</td>
-                                            <td>[[ med.name ]]</td>
-                                            <td>[[ med.amount ]]</td>
-                                            <td> <button class="btn-sm btn-success" v-on:click='add_dispense(med.med_sup_id)' >เลือก</button></td>
+
+                                            <td class="order_row">[[ index++ ]]</td>
+                                            <td class="order_row">[[ med.drug_id]]</td>
+                                            <td class="order_row">[[ med.name ]]</td>
+                                            <td class="order_row">[[ med.amount ]]</td>
+                                            <td class="order_row"> <input type='checkbox' :id='"medcheck" + index'
+                                                    class="form-check-input"
+                                                    :value="{ name: med.name , drug: med.med_sup_id , type: 'D', amount: 0 }"
+                                                    v-model='prescription'></td>
                                         </tr>
+
 
                                     </tbody>
                                 </table>
@@ -411,6 +379,9 @@
 {% endblock %}
 {% block footer %}
 <script>
+    axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#app',
@@ -420,15 +391,16 @@
             keywords_search: '',
             medicine_list: [],
             is_prescription: false,
-            prescription :[],
-            doctor_id:'{{complete_diagnosis.id}}'
+            prescription: [],
+            prescription_id: '{{ Prescription.id }}',
+            doctor_id: '{{complete_diagnosis.id}}'
 
         }, methods: {
             bmi_cal: function () {
                 var weight = document.querySelector('#weight').value
                 var height = document.querySelector('#height').value
                 this.bmi = (weight / ((height / 100) ** 2)).toFixed(2)
-            }, 
+            },
             get_medicine_list: function () {
                 let self = this;
                 axios.get('/treatment/patient/update/drug/', {
@@ -443,15 +415,44 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
-            }, add_dispense: function(med_sup_id){
-                console.log(med_sup_id)
-            },create_prescription: function(treatment_cn){
+            }
+            , create_prescription: function (treatment_cn) {
+                let self = this;
                 this.is_prescription = true
                 console.log(this.doctor_id, treatment_cn)
-                // axios.post('/medicine/prescription/0/pst_api/', {
-                //     doctor_id:,
-                //     treatment_cn:,
-                //     detail:
+                axios.post('/medicine/prescription/pst_api/', {
+                    doctor_id: self.doctor_id,
+                    treatment_cn: treatment_cn,
+                    detail: "-"
+                    // เมื่อทำงานสำเร็จ
+                }).then(function (response) {
+                    console.log(response.data);
+                    self.prescription_id = (response.data).id
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }, add_dispense: function () {
+                let self = this;
+                console.log(this.prescription)
+                this.prescription.forEach(element => {
+                    axios.post('/medicine/dispense/' + self.prescription_id + '/dispense_api/', {
+                        type: element.type,
+                        drug: element.drug,
+                        amount: element.amount
+                        // เมื่อทำงานสำเร็จ
+                    }).then(function (response) {
+                        console.log(response.data);
+                        self.medicine_list = response.data
+
+                    }).catch(function (error) {
+                        console.log(error);
+
+                    });
+
+                });
+                // axios.post('/medicine/dispense/'+this.prescription_id+'/dispense_api/', {
+                //     jsonData: JSON.stringify(this.prescription)
                 //     // เมื่อทำงานสำเร็จ
                 // }).then(function (response) {
                 //     console.log(response.data);
@@ -459,7 +460,8 @@
 
                 // }).catch(function (error) {
                 //     console.log(error);
-                // });
+
+                // }); 
             }
 
         }, created() {

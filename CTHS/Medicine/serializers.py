@@ -43,7 +43,7 @@ class DispenseSerializer(serializers.ModelSerializer):
     type = serializers.CharField(source="get_type_display")
     class Meta:
         model = Dispense
-        fields = ['id', 'amount' ,'type', 'drug', 'med_sup' ]
+        fields = ['id', 'amount' ,'type', 'drug', 'med_sup']
         read_only_fields = ['id']
     
 
@@ -62,4 +62,10 @@ class CreatePrescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prescription
         fields = ['id', 'detail', 'status', 'treatment_cn', 'doctor_id']
+        read_only_fields = ['id']
+
+class CreateDispenseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dispense
+        fields = ['id', 'amount' ,'type',]
         read_only_fields = ['id']
