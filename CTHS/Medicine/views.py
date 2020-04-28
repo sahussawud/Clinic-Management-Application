@@ -7,7 +7,7 @@ from User_app.models import Doctor
 from Medicine.models import Drug, Med_supply
 from Medicine.forms import MedicineSupplyForm
 from Medicine.forms import MedicineDrugForm,UpdateMedForm
-
+from django.contrib.auth.decorators import login_required, permission_required
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -24,15 +24,16 @@ from Treatment.models import Room_Queue
 ถ้า types == 2 แสดงว่าต้องการเพิ่มเวชภัณฑ์ จะเข้า elie เพื่อนำ
     form2 ที่จะนำไปเพิ่มลงdatabase Med_sup
 """
+@login_required
 def home_medicine(request):
     return render(request, 'Medicine/home_medicine.html')
-
+@login_required
 def comfirm_dispensing(request):
     nurse = Nurse.objects.get(user_id=request.user.id)
     return render(request, 'Medicine/comfirm_dispensing.html',{
         'nurse': nurse 
     })
-
+@login_required
 def add_medicine(request):
     if request.method == 'POST':
         if request.POST.get('types') == '1':
@@ -70,6 +71,8 @@ def add_medicine(request):
                 )
                 post.save()
                 messages.success(request, 'บันทึกข้อมูลเรียบร้อย!')
+            else:
+                messages.error(request, 'บันทึกข้อมูลไม่สำเร็จ!')
 
     medicine = MedicineDrugForm()
     supply = MedicineSupplyForm()
@@ -78,10 +81,10 @@ def add_medicine(request):
         'form2': supply, 
 })
 
-
+@login_required
 def update_medicine(request): 
     return render(request, 'Medicine/update_medicine.html')
- 
+@login_required
 def update(request, med_sup_id):
     """
     เมื่อกด เลือกยาที่จะ update จะเข้า view
@@ -90,7 +93,6 @@ def update(request, med_sup_id):
      """
     update_data = Drug.objects.get(med_sup_id=med_sup_id)
     if request.method == 'POST':
-
         form1 = UpdateMedForm(request.POST)     
         if form1.is_valid():
             update_data.name = request.POST.get('name')
@@ -103,7 +105,7 @@ def update(request, med_sup_id):
             messages.error(request,'บันทึกข้อมูลไม่สำเร็จ!!!!')
     return render(request, 'Medicine/update.html',context={
         'form1': update_data,})
-
+@login_required      
 def detail_med(request,med_sup_id):
     data = Drug.objects.get(med_sup_id=med_sup_id)
     form = MedicineDrugForm(request.POST) 
@@ -112,8 +114,6 @@ def detail_med(request,med_sup_id):
             data.name = request.POST.get('name')
             data.amount = request.POST.get('amount')
             data.description = request.POST.get('description')
-            
-
     return render(request, 'Medicine/detail_med.html',context={
         'form': data,})
 
@@ -147,14 +147,12 @@ class PrescriptionAPIView(APIView):
                         if med_data.amount >= data.amount:
                             med_data.amount -= data.amount
                         med_data.save()
-                
                 pst_data.nurse_id = Nurse.objects.get(id=request.data['nurse_id'])
                 pst_data.status = "C"
                 pst_data.save()
                 update_queue = Room_Queue.objects.get(treatment=pst_data.treatment_cn)
                 update_queue.delete()
             return Response(serializer.data, status=status.HTTP_200_OK)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PrescriptionAllWaitAPIView(APIView):
@@ -165,7 +163,7 @@ class PrescriptionAllWaitAPIView(APIView):
         pst_data = Prescription.objects.filter(status="W")
         serializer = PrescriptionSerializer(pst_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+        
     """
     API สร้างใบสั่งยา
     DATA REQUIRED:  detail : <string:ข้อมูลรายละเอียดการจ่ายยา>

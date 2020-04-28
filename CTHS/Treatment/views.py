@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.forms import modelformset_factory
 from django.forms.formsets import formset_factory
 from django.shortcuts import redirect, render
-
+from django.contrib.auth.decorators import login_required, permission_required
 from Treatment.forms import LesionForm
 from Medicine.models import Drug
 from rest_framework import status
@@ -22,15 +22,16 @@ from .serializers import *
 
 
 # Create your views here.
+@login_required
 def home_patient(request):
     return render(request, 'Treatment/home_patient.html')
-
+@login_required
 def find_patient(request):
     return render(request, 'Treatment/find_patient.html')
-
+@login_required
 def find_treatment(request):
     return render(request, 'Treatment/find_treatment.html')
-
+@login_required
 def create_patient(request):
     contexts={}
     if request.method == 'POST':
@@ -55,7 +56,7 @@ def create_patient(request):
 
 
     return render(request, 'Treatment/create_patient.html',context=contexts)
-
+@login_required
 def update_patient(request, patient_id):
     context = {}
     patient_data = Patient.objects.get(p_id=patient_id)
@@ -285,7 +286,7 @@ class PatientAPIView(APIView):
         serializer = PatientSerializer(items)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+@login_required
 def create_treatment(request, patient_id):
     
     contexts = {}
@@ -417,14 +418,14 @@ def create_treatment(request, patient_id):
 
     contexts['formset'] = formset
     return render(request, 'Treatment/create_treatment.html',context=contexts)
-
+@login_required
 def home_treatment(request):
     return render(request, 'Treatment/home_treatment.html')
 
-
+@login_required
 def home_diagnosis(request):
     return render(request, 'Treatment/home_diagnosis.html')
-
+@login_required
 def switch_symptom(symptom):
     switcher = {
         "non_form": {
@@ -463,7 +464,7 @@ def switch_symptom(symptom):
     return switcher.get(symptom, {
             "model" : Non_Form_Symptom,
             "form" : Non_Form_SymptomForm })
-
+@login_required
 def diagnosis_treatment(request, treatment_cn):
     contexts = {}
     contexts['treatment_cn'] = treatment_cn
@@ -559,7 +560,7 @@ def diagnosis_treatment(request, treatment_cn):
         print(e)
 
     return render(request, 'Treatment/create_diagnosis.html', context=contexts)
-
+@login_required
 def examination_room(request, room_id):
     return render(request, 'Treatment/examination_room.html')
 

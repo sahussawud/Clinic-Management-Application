@@ -6,8 +6,10 @@ from User_app.models import Patient
 from Treatment.models import Treatment, Symptom
 from Treatment.serializers import TreatmentSerializer, SymptomSerializer, SymptomTypeSerializer, PatientSerializer
 from django.db.models import Count
-# Create your views here.
+from django.contrib.auth.decorators import login_required, permission_required
 
+# Create your views here.
+@login_required
 def dashboard(request):
     contexts={}
     return render(request, 'Summary_app/dashboard.html', context=contexts)

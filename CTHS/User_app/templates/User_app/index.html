@@ -1,23 +1,19 @@
 {% extends "base.html" %}
-{% comment %} {% load static %} {% endcomment %}
-
+{% load static %}
 
 {% block scripts %}
 {% endblock %}
 
 {% block styles %}
 
-
     {% endblock %}
   
 {% block content %}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
-
-    <div class="bg">
-    
+  <!-- /static/img/pg.jpg -->
+    <div class="jumbotron" style="background-image: url('#'); background-repeat: no-repeat; background-size: cover; z-index: -1;">
+      
         <div class="container">
-        {% comment %} <img src="{% static '/img/wall.png' %}" width="1150" height="400" class="d-inline-block align-top" alt=""> {% endcomment %}
-
           <h1 class="display-3">Welcome Back! {{ request.user.username }}</h1>
           <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
           <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
@@ -26,20 +22,24 @@
       <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          <div class="col-md-4 text-center">
+            <h2>Treatments</h2>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo</p>
+            <p><a class="btn btn-warning" href="treatment/" role="button">View details »</a></p>
           </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          <div class="col-md-4 text-center">
+            <h2>Patients</h2>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam.  </p>
+            <br><p><a class="btn btn-warning" href="treatment/patient/" role="button">View details »</a></p>
           </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          <div class="col-md-4 text-center">
+            <h2>Medicine</h2>
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. </p>
+            <p><a class="btn btn-warning" href="medicine/" role="button">View details »</a></p>
           </div>
         </div>
 
