@@ -62,7 +62,7 @@ class Symptom(models.Model):
     symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE, null=True)
 
 class Prescription(models.Model):
-    detail = models.CharField(_("Prescription detail"), max_length=255)
+    detail = models.CharField(_("Prescription detail"), max_length=255, blank=True)
     doctor_id = models.ForeignKey(Doctor, verbose_name=_("Creator ID"), on_delete=models.CASCADE, null=True)
     treatment_cn = models.OneToOneField(Treatment, verbose_name=_("Treatment Clinic number"), on_delete=models.CASCADE)
     PRESCRIPTION_STATUS_CHOICE = [
