@@ -9,7 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 {% endblock %}
-
 {% block styles %}
 <style>
   tr:hover {
@@ -22,7 +21,7 @@
 
   .my-custom-scrollbar {
     position: relative;
-    height: 500px;
+    height: 700px;
     overflow: auto;
   }
 
@@ -31,8 +30,6 @@
   }
 </style>
 {% endblock %}
-
-
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
   <div class="container">
     <!-- topic and filter option -->
@@ -88,28 +85,17 @@
           </thead>
           <tbody id="data_list">
             <tr v-for='data in med'>
-
               <td>[[data.med_sup_id]]</td>
               <td>[[data.drug_id]]</td>
               <td>[[data.name]]</td>
               <td>[[data.amount]]</td>
               <td><a class="btn btn-success btn-sm btn-block" :href='"/medicine/updatemedicine/"+data.med_sup_id+"/"' >อัพเดท</a></td>
-
             </tr>
           </tbody>
-        </table>
-        
+        </table>  
       </div>
     </div>
     <hr>
-
-
-
-
-
-    
-
-
     </div>
   </div>
 </main>
@@ -129,42 +115,7 @@
 
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
-  //API
-  // function show_drug() {
-  //   let self = this;
-  //   axios.get('/treatment/patient/update/drug/', {
-  //    // เมื่อทำงานสำเร็จ
-  //   }).then(function (response) {
-  //     console.log(response.data);
-  //     show_table(response.data)
-
-  //   }).catch(function (error) {
-  //     console.log(error);
-  //   });
-  // }
-
-  // function show_table(data){
-  //   table = document.getElementById('data_list')
-  //   for(let i = 0;i < data.length; i++){
-  //     //สร้างแถว 
-  //     let tr = document.createElement('tr');
-  //     //เก็บข้อมูล ตาม index
-  //     let select_data = data[i]
-  //     let text = ''
-  //     text += `
-  //       <td>${i+1}</td>
-  //       <td>${select_data['drug_id']}</td>
-  //       <td >${select_data['name']}</td>
-  //       <td>${select_data['amount']}</td>
-  //       <td><button class="btn btn-success btn-sm" type="submit">อัพเดจ</button></td>
-  //     `
-  //     //onclick="showDetail(event)"
-  //     //$ใส่ค่ามองเป็น str  
-  //     tr.innerHTML = text;
-  //     table.append(tr);
-
-  //   }    
-  // }
+  
 
   var app = new Vue({
     delimiters: ['[[', ']]'],
@@ -175,7 +126,6 @@
       show_drug: function (med) {
         let self = this;
         axios.get('/treatment/patient/update/drug/', {
-
         }).then(function (response) {
           console.log(response.data);
           self.med = response.data
