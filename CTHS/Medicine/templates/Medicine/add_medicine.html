@@ -54,7 +54,7 @@
               <td>[[data.drug_id]]</td>
               <td>[[data.name]]</td>
               <td>[[data.amount]]</td>
-              <td><a class="btn btn-info btn-sm btn-block disabled" :href='"/medicine/addmedicine/"+data.med_sup_id+"/"' >รายละเอียด</a></td>
+              <td><a class="btn btn-info btn-sm btn-block " :href='"/medicine/addmedicine/"+data.med_sup_id+"/"' >รายละเอียด</a></td>
             </tr>
           </tbody>
         </table>
@@ -87,7 +87,7 @@
                 </div>
               </div>
 
-              <!-- from Drug -->
+              <!-- from Drug  and supply-->
               {% include "Medicine/form_addmed.html" %}
               <!----------->
             </form>
@@ -109,6 +109,7 @@
     show_drug()
     
   }
+
 
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'

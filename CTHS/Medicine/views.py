@@ -44,10 +44,13 @@ def add_medicine(request):
                     name=name,
                     amount=amount,
                     description=description,
-
                 )
                 post.save()
                 messages.success(request, 'บันทึกข้อมูลเรียบร้อย!')
+            else:
+                messages.error(request, 'บันทึกข้อมูลไม่สำเร็จ!')
+                
+        # types = supply
         else:
             form =  MedicineSupplyForm(request.POST)
             if form.is_valid():
@@ -73,8 +76,6 @@ def add_medicine(request):
 })
 
 
-    
-    return render(request, 'Medicine/addmedicine.html')
 def update_medicine(request): 
     return render(request, 'Medicine/update_medicine.html')
  
@@ -99,6 +100,20 @@ def update(request, med_sup_id):
             messages.error(request,'บันทึกข้อมูลไม่สำเร็จ!!!!')
     return render(request, 'Medicine/update.html',context={
         'form1': update_data,})
+
+def detail_med(request,med_sup_id):
+    data = Drug.objects.get(med_sup_id=med_sup_id)
+    form = MedicineDrugForm(request.POST) 
+    if form.is_valid():
+            data.drug_id = request.POST.get('drug_id')
+            data.name = request.POST.get('name')
+            data.amount = request.POST.get('amount')
+            data.description = request.POST.get('description')
+            
+
+    return render(request, 'Medicine/detail_med.html',context={
+        'form': data,})
+
 class PrescriptionAPIView(APIView):
     """
     API ดึงข้อมูลใบสั่งยาพร้อมยาที่ต้องจ่าย

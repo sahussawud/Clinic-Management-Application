@@ -9,7 +9,8 @@ urlpatterns = [
     path('', views.home_medicine, name = 'home_medicine'),
     #จัดการคลังยา มี formmodel
     path('addmedicine/', views.add_medicine, name = 'add_medicine'),
-    
+    #ดูรายละเอียดยา
+    path('addmedicine/<int:med_sup_id>/', views.detail_med, name = 'detail_med'),
     #จอัพเดจคลังยา มี formmodel
     path('updatemedicine/', views.update_medicine, name = 'update_medicine'),
     #ห้องจ่ายยา
