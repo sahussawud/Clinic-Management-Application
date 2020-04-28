@@ -204,14 +204,14 @@ class DispenseAPIView(APIView):
     """
     def post(self, request, pst_id):
         pst_data = Prescription.objects.get(id=pst_id)
-        serializer = DispenseSerializer(data=request.data)
+        serializer = CreateDispenseSerializer(data=request.data)
         if serializer.is_valid():
             new_dispense = Dispense.objects.create(prescription_id=pst_data, amount=serializer.validated_data['amount'])
             new_dispense.type = request.data['type']
             if request.data['type'] == "D":
-                new_dispense.dis_drug_id = Drug.objects.get(med_sup_id=request.data['drug'])
+                new_dispense.dis_drug_id = Drug.objects.get(med_sup_id=request.data['med_id'])
             elif request.data['type'] == "M":
-                new_dispense.dis_med_id = Med_supply.objects.get(med_sup_id=request.data['med_sup'])
+                new_dispense.dis_med_id = Med_supply.objects.get(med_sup_id=request.data['med_id'])
             
             new_dispense.save()
             items = Dispense.objects.filter(prescription_id=pst_data)
