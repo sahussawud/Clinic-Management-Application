@@ -233,7 +233,7 @@ class DispenseAPIView(APIView):
     """
     def post(self, request, pst_id):
         pst_data = Prescription.objects.get(id=pst_id)
-        serializer = DispenseSerializer(data=request.data)
+        serializer = DispenseSerializer(data=request.data, many=True)
         if serializer.is_valid():
             new_dispense = Dispense.objects.create(prescription_id=pst_data, amount=serializer.validated_data['amount'])
             new_dispense.type = request.data['type']
