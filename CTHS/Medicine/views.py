@@ -15,11 +15,25 @@ from rest_framework.views import APIView
 from .serializers import *
 from Treatment.models import Room_Queue
 # Create your views here.
+
+
+"""
+บันทึกยาลงฐานข้อมูล แบบเป็น 2ประเภท ยากับเวชภัณฑ์
+ถ้า types == 1 แสดงว่าต้องการเพิ่มยา จะเข้า if เพื่อนำ
+    form1 ที่จะนำไปเพิ่มลงdatabase  Drug
+ถ้า types == 2 แสดงว่าต้องการเพิ่มเวชภัณฑ์ จะเข้า elie เพื่อนำ
+    form2 ที่จะนำไปเพิ่มลงdatabase Med_sup
+"""
+def home_medicine(request):
+    return render(request, 'Medicine/home_medicine.html')
+
+def comfirm_dispensing(request):
+    return render(request, 'Medicine/comfirm_dispensing.html')
+
 def add_medicine(request):
     if request.method == 'POST':
         if request.POST.get('types') == '1':
             form =  MedicineDrugForm(request.POST)
-            
             if form.is_valid():
                 drug_id = form.cleaned_data['drug_id']
                 name = form.cleaned_data['name']
@@ -30,10 +44,13 @@ def add_medicine(request):
                     name=name,
                     amount=amount,
                     description=description,
-
                 )
                 post.save()
                 messages.success(request, 'บันทึกข้อมูลเรียบร้อย!')
+            else:
+                messages.error(request, 'บันทึกข้อมูลไม่สำเร็จ!')
+                
+        # types = supply
         else:
             form =  MedicineSupplyForm(request.POST)
             if form.is_valid():
@@ -53,95 +70,49 @@ def add_medicine(request):
 
     medicine = MedicineDrugForm()
     supply = MedicineSupplyForm()
-
     return render(request, 'Medicine/add_medicine.html',context={
         'form1': medicine,
-        'form2': supply,
-   
+        'form2': supply, 
 })
 
-    # บันทึก ลง DB
-    # if request.method == 'POST':
-        
-    #     med_id = request.POST.get('med_id')
-    #     name = request.POST.get('name')
-    #     amount = request.POST.get('amount')
-    #     types = request.POST.get('types')
-    #     description = request.POST.get('description')
-       
-    #     if types == 'Drug':
-    #         add_med = Drug(
-    #             drug_id=med_id,
-    #             name=name,
-    #             amount=amount,
-    #             description=description,
-    #         )
-    #         add_med.save()
-    #     else:
-    #         add_med = Med_supply(
-    #             sup_id=med_id,
-    #             name=name,
-    #             amount=amount,
-    #             description=description,  
-    #         )
-    #         add_med.save()     
-    # return render(request, 'Medicine/add_medicine.html',context={
-    #     'form': medicine,
-   
-    # })
-# --------------------------------
+
 def update_medicine(request): 
     return render(request, 'Medicine/update_medicine.html')
-
+ 
+def update(request, med_sup_id):
     """
     เมื่อกด เลือกยาที่จะ update จะเข้า view
     นี้ละเมื่อทำการบันทึกสำเร็จ จะrender กลับไปหน้า จัดการคลังยา
+
      """
-def update(request, med_sup_id):
     update_data = Drug.objects.get(med_sup_id=med_sup_id)
     if request.method == 'POST':
-        # update_data.name = request.POST.get('name')
-        update_data.amount = request.POST.get('amount')
-        update_data.save()
-        messages.success(request, 'อัพเดทข้อมูลเรียบร้อย!')
-        return render(request, 'Medicine/update_medicine.html')
+
+        form1 = UpdateMedForm(request.POST)     
+        if form1.is_valid():
+            update_data.name = request.POST.get('name')
+            update_data.amount = request.POST.get('amount')
+            update_data.save()
+            form1.save
+            messages.success(request, 'อัพเดทข้อมูลเรียบร้อย!')
+            return render(request, 'Medicine/update_medicine.html')
+        else:
+            messages.error(request,'บันทึกข้อมูลไม่สำเร็จ!!!!')
     return render(request, 'Medicine/update.html',context={
         'form1': update_data,})
 
-#  context = {}
-#     med_sup_id_data = Drug.objects.get(med_sup_id=med_sup_id)
-#     if request.method == 'POST':
-#         form1 =  UpdateMedForm(request.POST,instance=med_sup_id_data)
-#         context['form1'] = form1
-#         if form1.is_valid():
-#             # amount = form1.cleaned_data['amount']
-#             # post = Drug(
-#             #     amount=amount,
-#             # )
-#             update_data = form.save(commit=False)
-#             update_data.save()
-#             context['form1'] = UpdateMedForm(instance=update_data)
+def detail_med(request,med_sup_id):
+    data = Drug.objects.get(med_sup_id=med_sup_id)
+    form = MedicineDrugForm(request.POST) 
+    if form.is_valid():
+            data.drug_id = request.POST.get('drug_id')
+            data.name = request.POST.get('name')
+            data.amount = request.POST.get('amount')
+            data.description = request.POST.get('description')
+            
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def home_medicine(request):
-    return render(request, 'Medicine/home_medicine.html')
-
-def comfirm_dispensing(request):
-    return render(request, 'Medicine/comfirm_dispensing.html')
+    return render(request, 'Medicine/detail_med.html',context={
+        'form': data,})
 
 class PrescriptionAPIView(APIView):
     """

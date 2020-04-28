@@ -15,7 +15,7 @@
 <style>
  .my-custom-scrollbar {
     position: relative;
-    height: 500px;
+    height: 400px;
     overflow: auto;
   }
 
@@ -54,13 +54,8 @@
               <td>[[data.drug_id]]</td>
               <td>[[data.name]]</td>
               <td>[[data.amount]]</td>
-              <td>@</td>
-
-
-
-
+              <td><a class="btn btn-info btn-sm btn-block " :href='"/medicine/addmedicine/"+data.med_sup_id+"/"' >รายละเอียด</a></td>
             </tr>
-
           </tbody>
         </table>
         
@@ -92,7 +87,7 @@
                 </div>
               </div>
 
-              <!-- from Drug -->
+              <!-- from Drug  and supply-->
               {% include "Medicine/form_addmed.html" %}
               <!----------->
             </form>
@@ -106,7 +101,6 @@
     </div>
 </main>
 <script>
-
   window.onload = function () {
     initialize();
   };
@@ -117,45 +111,8 @@
   }
 
 
-
-
   axios.defaults.xsrfCookieName = 'csrftoken'
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
-  //API
-  // function show_drug() {
-  //   let self = this;
-  //   axios.get('/treatment/patient/update/drug/', {
-  //     // เมื่อทำงานสำเร็จ
-  //   }).then(function (response) {
-  //     console.log(response.data);
-  //     show_table(response.data)
-
-  //   }).catch(function (error) {
-  //     console.log(error);
-  //   });
-  // }
-
-  // function show_table(data) {
-  //   table = document.getElementById('data1')
-  //   for (let i = 0; i < data.length; i++) {
-  //     //สร้างแถว 
-  //     let tr = document.createElement('tr');
-  //     //เก็บข้อมูล ตาม index
-  //     let select_data = data[i]
-  //     let text = ''
-  //     text += `
-  //       <td>${i + 1}</td>
-  //       <td>${select_data['drug_id']}</td>
-  //       <td>${select_data['name']}</td>
-  //       <td>${select_data['amount']}</td>
-  //       <td>@</td>`
-  //     //$ใส่ค่ามองเป็น str  
-  //     tr.innerHTML = text;
-  //     table.append(tr);
-
-  //   }
-
-  // }
 
   var app = new Vue({
       delimiters: ['[[', ']]'],
@@ -166,10 +123,11 @@
         show_drug: function (med){
           let self = this;
           axios.get('/treatment/patient/update/drug/', {
-
+            //สำเร็จ
           }).then(function(response){
               console.log(response.data);
               self.med = response.data
+            //ไม่สำเร็จ
           }).catch(function(error){
               console.log(crror);
           });
