@@ -477,7 +477,16 @@ def diagnosis_treatment(request, treatment_cn):
                 diagnosis = Diagnosis.objects.get(treatment=treatment)
                 form =  DiagnosisForm(instance=diagnosis)
                 contexts['complete_diagnosis'] = doctor
-                messages.info(request, 'การวินิจฉัยถูกสร้างเเล้ว!') 
+                messages.info(request, 'การวินิจฉัยถูกสร้างเเล้ว!')
+                try:
+                    prescript = Prescription.objects.get(treatment_cn=treatment_cn)
+                    contexts['Prescription'] = prescript
+                    print('p_scriptionid_',prescript.id)
+                except Prescription.DoesNotExist:
+                    messages.error(request, 'ยังไม่มีการจ่ายยา!')
+                    contexts['Prescription'] = ''
+                    print('no_pre')
+                    
         except ObjectDoesNotExist:
             if request.method == 'GET':
                 form = DiagnosisForm()

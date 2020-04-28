@@ -191,6 +191,7 @@ class PrescriptionAllWaitAPIView(APIView):
         pst_data = Prescription.objects.filter(status="W")
         serializer = PrescriptionSerializer(pst_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
     """
     API สร้างใบสั่งยา
     DATA REQUIRED:  detail : <string:ข้อมูลรายละเอียดการจ่ายยา>
@@ -207,7 +208,7 @@ class PrescriptionAllWaitAPIView(APIView):
                 
                 serializer.save()
             except Doctor.DoesNotExist:
-                messages.error(request, ' Doctor.DoesNotExist!')
+                messages.error(request, 'Doctor.DoesNotExist!')
 
             
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -227,7 +228,7 @@ class DispenseAPIView(APIView):
     API สร้างรายการการจ่ายยา
     DATA REQUIRED:  type : <string: "D" ยา or "M" เวชภัณฑ์
                     *drug : <int: ID ของยาที่ต้องการจ่าย>
-                    *med_sup : <int: ID ของเวชภัณฑ์ที่ต้องการจ่าย>
+*                    med_sup : <int: ID ของเวชภัณฑ์ที่ต้องการจ่าย>
                     amount : <int:จำนวนการจ่ายยาหรือเวชภัณฑ์ของรายการนั้นๆ>
     * = ใส่ตาม type ที่กำหนด D = drug, M = med_sup
     """
