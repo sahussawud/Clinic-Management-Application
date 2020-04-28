@@ -2,9 +2,6 @@
 {% load static %}
 
 {% block scripts %}
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
@@ -13,259 +10,106 @@
 {% block styles %}
 {% endblock %}
 {% block content %}
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
-    <div class="container">
-        <!-- topic and filter option -->
-        <div class="row mb-3 mt-3">
-            <div class="col-lg-3">
-                <h1>OVERVIEW</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                 <h5>ตัวกรองการค้นหา</h5>
-            </div>
-           
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="input-group mb-3">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                          <input type="checkbox" aria-label="Checkbox for following text input" id='keyword'>
-                        </div>
-                      </div>
-                    <div class="input-group-append">
-                        <label class="input-group-text" for="keyword">ค้นหาตามคำค้น</label>
-                      </div>
-                    
-                    <div class="input-group-append">
-                        <select class="custom-select" id="inputGroupSelect02">
-                            <option selected>ทั้งหมด</option>
-                            <option value="1">โรค</option>
-                            <option value="2">สัญชาติ</option>
-                            <option value="3">ประเภทผู้ป่วย</option>
-                            <option value="3">ลักษณะการเข้ารักษา</option>
-
-                        </select>
-                    </div>
-
-
-                    <div class="input-group-append w-50">
-                        <input type="text" class="form-control" placeholder="คำค้นหา" aria-label="Recipient's username"
-                            aria-describedby="basic-addon2">
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="input-group mb-3">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                          <input type="checkbox" aria-label="Checkbox for following text input" id='duration'>
-                        </div>
-                      </div>
-                    <div class="input-group-append">
-                        <label class="input-group-text" for="duration">ค้นหาตามช่วงเวลา</label>
-                      </div>
-                    
-
-
-                    <div class="input-group-append">
-                        <input type="date" class="form-control" placeholder="" aria-label=""
-                            aria-describedby="">
-                    </div>
-                    <div class="input-group-append">
-                        
-                    </div>
-                        <label class="input-group-text">ถึง</label>
-                    <div class="input-group-append">
-                        <input type="date" class="form-control" placeholder="" aria-label=""
-                            aria-describedby="">
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-        <hr>
-        <!-- status -->
-        <div class="row mt-5">
-            <div class="col-lg-3 m-auto">
-                <div class="card text-white m-auto bg-success" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">รักษาไปเเล้ว</h5>
-                        <h6 class="card-subtitle mb-2">Recovery</h6>
-                        <h1 class="card-text">200</h1>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3  m-auto">
-                <div class="card text-white m-auto bg-danger" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">ผู้ป่วยฉุกเฉิน</h5>
-                        <h6 class="card-subtitle mb-2">Emergency</h6>
-                        <h1 class="card-text">200</h1>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3  m-auto">
-                <div class="card text-white m-auto bg-info" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">จำนวนผู้ป่วย</h5>
-                        <h6 class="card-subtitle mb-2">Patient</h6>
-                        <h1 class="card-text">200</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- graph -->
-        <div class="row mt-5">
-            <div class="col-lg-6">
-                <canvas id="linechart"></canvas>
-            </div>
-            <div class="col-lg-6">
-                <canvas id="piechart"></canvas>
-            </div>
-
-
-        </div>
-        <!-- table -->
-        <div class="row">
-            <h1>ข้อมูลที่พบ</h1>
-            <hr>
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Header</th>
-                      <th>Header</th>
-                      <th>Header</th>
-                      <th>Header</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1,001</td>
-                      <td>Lorem</td>
-                      <td>ipsum</td>
-                      <td>dolor</td>
-                      <td>sit</td>
-                    </tr>
-                    <tr>
-                      <td>1,002</td>
-                      <td>amet</td>
-                      <td>consectetur</td>
-                      <td>adipiscing</td>
-                      <td>elit</td>
-                    </tr>
-                    <tr>
-                      <td>1,003</td>
-                      <td>Integer</td>
-                      <td>nec</td>
-                      <td>odio</td>
-                      <td>Praesent</td>
-                    </tr>
-                    <tr>
-                      <td>1,003</td>
-                      <td>libero</td>
-                      <td>Sed</td>
-                      <td>cursus</td>
-                      <td>ante</td>
-                    </tr>
-                    <tr>
-                      <td>1,004</td>
-                      <td>dapibus</td>
-                      <td>diam</td>
-                      <td>Sed</td>
-                      <td>nisi</td>
-                    </tr>
-                    <tr>
-                      <td>1,005</td>
-                      <td>Nulla</td>
-                      <td>quis</td>
-                      <td>sem</td>
-                      <td>at</td>
-                    </tr>
-                    <tr>
-                      <td>1,006</td>
-                      <td>nibh</td>
-                      <td>elementum</td>
-                      <td>imperdiet</td>
-                      <td>Duis</td>
-                    </tr>
-                    <tr>
-                      <td>1,007</td>
-                      <td>sagittis</td>
-                      <td>ipsum</td>
-                      <td>Praesent</td>
-                      <td>mauris</td>
-                    </tr>
-                    <tr>
-                      <td>1,008</td>
-                      <td>Fusce</td>
-                      <td>nec</td>
-                      <td>tellus</td>
-                      <td>sed</td>
-                    </tr>
-                    <tr>
-                      <td>1,009</td>
-                      <td>augue</td>
-                      <td>semper</td>
-                      <td>porta</td>
-                      <td>Mauris</td>
-                    </tr>
-                    <tr>
-                      <td>1,010</td>
-                      <td>massa</td>
-                      <td>Vestibulum</td>
-                      <td>lacinia</td>
-                      <td>arcu</td>
-                    </tr>
-                    <tr>
-                      <td>1,011</td>
-                      <td>eget</td>
-                      <td>nulla</td>
-                      <td>Class</td>
-                      <td>aptent</td>
-                    </tr>
-                    <tr>
-                      <td>1,012</td>
-                      <td>taciti</td>
-                      <td>sociosqu</td>
-                      <td>ad</td>
-                      <td>litora</td>
-                    </tr>
-                    <tr>
-                      <td>1,013</td>
-                      <td>torquent</td>
-                      <td>per</td>
-                      <td>conubia</td>
-                      <td>nostra</td>
-                    </tr>
-                    <tr>
-                      <td>1,014</td>
-                      <td>per</td>
-                      <td>inceptos</td>
-                      <td>himenaeos</td>
-                      <td>Curabitur</td>
-                    </tr>
-                    <tr>
-                      <td>1,015</td>
-                      <td>sodales</td>
-                      <td>ligula</td>
-                      <td>in</td>
-                      <td>libero</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-        </div>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10" id='app'>
+  <div class="container">
+    <!-- topic and filter option -->
+    <div class="row mb-3 mt-3">
+      <div class="col-lg-3">
+        <h1>OVERVIEW</h1>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-md-8">
+        <h5>ตัวกรองการค้นหา</h5>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group mb-3">
+          <div class="input-group-append">
+            <label class="input-group-text" for="keyword">ค้นหาตามคำค้น</label>
+          </div>
+
+          <div class="input-group-append">
+            <select v-model="selected" class="custom-select" >
+              <option v-for="option in options" v-bind:value="option.value">
+                [[ option.text ]]
+              </option>
+            </select>
+          </div>
+
+          <div class="input-group-append">
+            <label class="input-group-text" for="duration">ค้นหาตามช่วงเวลา</label>
+          </div>
+
+
+
+          <div class="input-group-append">
+            <input v-model='start_date' type="date" class="form-control" placeholder="" aria-label="" aria-describedby="">
+          </div>
+          <div class="input-group-append">
+
+          </div>
+          <label class="input-group-text">ถึง</label>s
+          <div class="input-group-append">
+            <input v-model='end_date' type="date" class="form-control" placeholder="" aria-label="" aria-describedby="">
+          </div>
+          <div class="input-group-append">
+            <button class="btn btn-info" type="button" id="button-addon2" v-on:click.prevent='get_specific_data()'>ค้นหา</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <hr>
+    <!-- status -->
+    <div class="row mt-5">
+      <div class="col-lg-3 m-auto">
+        <div class="card text-white m-auto bg-success" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">รักษาไปเเล้ว</h5>
+            <h6 class="card-subtitle mb-2">Recovery</h6>
+            <h1 class="card-text">[[ sum_case ]]</h1>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3  m-auto">
+        <div class="card text-white m-auto bg-danger" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">ผู้ป่วยฉุกเฉิน</h5>
+            <h6 class="card-subtitle mb-2">Emergency</h6>
+            <h1 class="card-text">[[ sum_danger_case ]]</h1>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3  m-auto">
+        <div class="card text-white m-auto bg-info" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">จำนวนผู้ป่วย</h5>
+            <h6 class="card-subtitle mb-2">Patient</h6>
+            <h1 class="card-text">[[ sum_patient ]]</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- graph -->
+    <div class="row mt-5">
+      <div class="col-lg-6">
+        <canvas id="linechart"></canvas>
+      </div>
+      <div class="col-lg-6">
+        <canvas id="piechart" v-if='overview_dataset'></canvas>
+      </div>
+
+
+    </div>
+    <!-- table -->
+    
+  </div>
 
 </main>
 
@@ -274,89 +118,129 @@
 
 {% block footer %}
 <script>
-    var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
-    var ctxpie = document.getElementById('piechart').getContext('2d');
-    var myDoughnutChart = new Chart(ctxpie, {
-        type: 'doughnut',
-        data: {
-            labels: ['Bootstrap', 'Popper', 'Other'],
-            datasets: [
-                {
-                    backgroundColor: colors.slice(0, 3),
-                    borderWidth: 0,
-                    data: [74, 11, 40]
-                }
-            ]
-        },
-        options: {
-            legend: {
-                display: true,
-                position: 'bottom',
+  var app = new Vue({
+    delimiters: ['[[', ']]'],
+    el: '#app',
+    data: {
+      sum_case: 0,
+      sum_danger_case: 0,
+      sum_patient: 0,
+      overview: [],
+      symptom_data: [],
+      overview_dataset: [],
+      selected: 'non_form',
+      options: [
+        { text: 'ทั่วไป', value: 'non_form' },
+        { text: 'ผิวหนัง', value: 'skin' },
+        { text: 'อุบัติเหตุ', value: 'accident' },
+        { text: 'อุบัติเหตุต่อเนื่อง', value: 'con_accident' },
+        { text: 'ดวงตา', value: 'eyes' },
+        { text: 'อาการไข้', value: 'fever' },
+        { text: 'ท้องเสีย', value: 'diarrhea' },
+        { text: 'อาการปวดทุกเเห่ง', value: 'pain' }
+      ],
+      start_date:'',
+      end_date:''
 
-            }
+    }, methods: {
+      get_overview: function () {
+        let self = this;
+        axios.get('/summary/report/type_api', {
+          params: {
+            start_date: '',
+            end_date_date: ''
+          }
+
+        }).then(function (response) {
+          console.log(response.data);
+          self.overview = response.data
+
+          self.overview.forEach(element => {
+             self.overview_dataset.push(element.p_count)
+           });
+
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }, get_specific_data: function () {
+        let self = this;
+        axios.get('/summary/report/api', {
+          params: {
+            start_date: self.start_date,
+            end_date_date: self.end_date,
+            symptom_type: self.selected
+          }
+
+        }).then(function (response) {
+          console.log(response.data);
+          self.symptom_data = response.data
+
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    }, created() {
+      this.get_specific_data()
+      this.get_overview()
+    }
+  })
+
+  var colors = ['#007bff', '#28a745', '#333333', '#c3e6cb', '#20c997', '#6c757d'];
+  var ctxpie = document.getElementById('piechart').getContext('2d');
+
+  var myDoughnutChart = new Chart(ctxpie, {
+    type: 'pie',
+    data: {
+      labels: ['ทัวไป', 'ผิวหนัง', 'อุบัติเหตุ', 'อุบัติเหตุต่อเนื่อง', 'ดวงตา', 'อาการไข้', 'ท้องเสีย/ปวดท้อง', 'อาการปวดนอกเหนือ'],
+      datasets: [
+        {
+          backgroundColor: colors.slice(0, 6),
+          borderWidth: 0,
+          data: app.overview_dataset
         }
-    });
+      ]
+    },
+    options: {
+      legend: {
+        display: true,
+        position: 'bottom',
 
-    var ctx = document.getElementById('linechart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
+      }
+    }
+  });
 
-        // The data for our dataset
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'My First dataset',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45]
-            },
-            {
-                label: 'My Second dataset',
-                borderColor: 'rgb(90, 99, 132)',
-                data: [1, 40, 7, 5, 30, 40, 30]
-            }
-            ]
-        },
 
-        // Configuration options go here
-        options: {
-            legend: {
-                display: true,
-                position: 'bottom',
+  var ctx = document.getElementById('linechart').getContext('2d');
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
 
-            }
-        }
-    });
+    // The data for our dataset
+    data: {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [{
+        label: 'My First dataset',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [0, 10, 5, 2, 20, 30, 45]
+      },
+      {
+        label: 'My Second dataset',
+        borderColor: 'rgb(90, 99, 132)',
+        data: [1, 40, 7, 5, 30, 40, 30]
+      }
+      ]
+    },
+
+    // Configuration options go here
+    options: {
+      legend: {
+        display: true,
+        position: 'bottom',
+
+      }
+    }
+  });
 </script>
-<script type="text/javascript">
-    $(function () {
 
-        var start = moment().subtract(29, 'days');
-        var end = moment();
-
-        function cb(start, end) {
-            $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
-        }
-
-        $('#reportrange').daterangepicker({
-
-            startDate: start,
-            endDate: end,
-            ranges: {
-                'วันนี้': [moment(), moment()],
-                'เมื่อวาน': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                'This Year': [moment().startOf('year'), moment().endOf('year')],
-            },
-            "alwaysShowCalendars": true,
-        }, cb);
-
-        cb(start, end);
-
-    });
-</script>
 
 {% endblock %}

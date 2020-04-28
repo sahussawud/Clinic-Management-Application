@@ -290,7 +290,7 @@ def create_treatment(request, patient_id):
     
     contexts = {}
 
-    LesionFormSet = modelformset_factory(Lesion, extra=3, exclude=('wound_symptom',))
+    LesionFormSet = modelformset_factory(Lesion, extra=2 , max_num=3, exclude=('wound_symptom',))
     formset = LesionFormSet()
 
     non_form =  Non_Form_SymptomForm()
@@ -563,17 +563,7 @@ def diagnosis_treatment(request, treatment_cn):
 def examination_room(request, room_id):
     return render(request, 'Treatment/examination_room.html')
 
-# def lesion(request):
 
-#     form = LesionForm()
-#     LesionFormSet = formset_factory(LesionForm,extra=1)
-#     formset = LesionFormSet()
-#     print(formset)
-
-#     return render(request, 'Treatment/create_treatment.html', context={
-#         'formset' : formset,
-#         'form' : form,
-#         })
 
 class RoomQueueAPIView(APIView):
     """

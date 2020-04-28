@@ -16,10 +16,18 @@ class ReportAPIView(APIView):
     API ดึงข้อมูลรายงานประวัติการรักษาจากชนิดของอาการและ filter จากวันที่
     """
     def get(self, request):
-        symptom_type = request.GET.get('type')
+        symptom_type = request.GET.get('symptom_type')
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
-        items = Symptom.objects.filter(symptom_type=symtom_type, treatment__create_date__gte=start_date, treatment__create_date__lte=end_date)
+        if symptom_type:
+            items = Symptom.objects.filter(symptom_type=symptom_type)
+        elif start_date and end_date:
+            items = Symptom.objects.filter(treatment__create_date__gte=start_date, treatment__create_date__lte=end_date)
+        elif symptom_type and start_date and end_date:
+            items = Symptom.objects.filter(symptom_type=symptom_type, treatment__create_date__gte=start_date, treatment__create_date__lte=end_date)
+        else:
+            items = Symptom.objects.all()
+
         serializer = SymptomSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -28,8 +36,11 @@ class ReportTypeAPIView(APIView):
     API ดึงข้อมูลรายงานประวัติการรักษา filter จากวันที่ ของชนิดอาการแต่ละประเภท
     """
     def get(self, request):
-        start_date = request.GET.get('start_date')
-        end_date = request.GET.get('end_date')
-        items = Symptom.objects.filter(treatment__create_date__gte=start_date, treatment__create_date__lte=end_date).values('symptom_type').annotate(p_count=Count('symptom_type'))
+        if request.GET.get('start_date') and request.GET.get('end_date'):
+            start_date = request.GET.get('start_date')
+            end_date = request.GET.get('end_date')
+            items = Symptom.objects.filter(treatment__create_date__gte=start_date, treatment__create_date__lte=end_date).values('symptom_type').annotate(p_count=Count('symptom_type'))
+        else:
+            items = Symptom.objects.all().values('symptom_type').annotate(p_count=Count('symptom_type'))
         serializer = SymptomTypeSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

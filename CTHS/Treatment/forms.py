@@ -76,20 +76,21 @@ class Icd_10Form(ModelForm):
         fields = '__all__'
 
 class DiagnosisForm(ModelForm):
+    follow_up = forms.DateField(required=False, widget=TextInput(attrs={'class': 'form-control', 'type':'date'}))
+    follow_up_for = forms.CharField(required=False, widget= TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = Diagnosis
         exclude = ['treatment', 'doctor_id','icd_10']
         widgets = {
             'diagnosis_detail': Textarea(attrs={'class': 'form-control', 'rows':'7', 'cols': '4'}),
             'advice': Textarea(attrs={'class': 'form-control', 'rows':'7', 'cols': '4'}),
-            'follow_up': DateInput(attrs={'class': 'form-control', 'type':'date'}),
-            'follow_up_for': TextInput(attrs={'class': 'form-control'})
         }
 
     def clean_follow_up(self):
         current_date = datetime.now().date()
-        if self.cleaned_data['follow_up'] <= current_date:
-            raise forms.ValidationError("วันนัดไม่ถูกต้อง !")
+        if self.cleaned_data['follow_up']:
+            if self.cleaned_data['follow_up'] <= current_date:
+                raise forms.ValidationError("วันนัดไม่ถูกต้อง !")
         return self.cleaned_data['follow_up']
 
 

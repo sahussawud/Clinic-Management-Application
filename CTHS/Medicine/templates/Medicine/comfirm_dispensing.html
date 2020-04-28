@@ -20,7 +20,7 @@
                         <div class="card w-100">
                             <h5 class="card-header">รายการรอการจ่ายยา</h5>
                             <div class="card-body">
-                                <table class="table table-bordered table table-sm table table-striped">
+                                <table class="table table-bordered table-sm  table-striped">
                                     <thead>
                                         <tr>
                                             <th class="table-dark" scope="col">รหัสใบสั่งยา</th>
@@ -32,12 +32,12 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for='p_wait in precriptions_wait_list'>
-                                            <th class="text-center">[[ p_wait.id ]]</th>
-                                            <td class="text-center">[[ p_wait.treatment_cn.cn ]]</td>
-                                            <td class="text-center">[[ p_wait.treatment_cn.patient_p_id.fname ]] [[ p_wait.treatment_cn.patient_p_id.lname ]]</td>
-                                            <!-- <td class="text-center">[[ p_wait.doctor_id.user_id.fname ]] [[ p_wait.doctor_id.user_id.lname ]]</td> -->
-                                            <td class="text-center">[[ p_wait.detail ]]</td>
-                                            <td class="text-center"><button class="btn-sm btn-info" v-on:click.prevent='select_prescription(p_wait.id)' >รายละเอียด</button></td>
+                                            <th>[[ p_wait.id ]]</th>
+                                            <td>[[ p_wait.treatment_cn.cn ]]</td>
+                                            <td>[[ p_wait.treatment_cn.patient_p_id.fname ]] [[ p_wait.treatment_cn.patient_p_id.lname ]]</td>
+                                            <!-- <td>[[ p_wait.doctor_id.user_id.fname ]] [[ p_wait.doctor_id.user_id.lname ]]</td> -->
+                                            <td>[[ p_wait.detail ]]</td>
+                                            <td><button class="btn-sm btn-info" v-on:click.prevent='select_prescription(p_wait.id)' > > </button></td>
                                         </tr>
                                         
                                     </tbody>
@@ -62,11 +62,12 @@
                                     <p><b>ให้เเก่ :</b>  [[ prescription.treatment_cn.patient_p_id.fname ]] [[ prescription.treatment_cn.patient_p_id.lname ]] </p>
                             
                                     <p><b>โดย :</b> นพ./พญ. [[ prescription.doctor_id.user_id.first_name ]] [[ prescription.doctor_id.user_id.last_name ]]</p>
+                                    
                                     </div>
                                 
 
                             </div>
-                            <div class="row mt-4">
+                            <div class="row">
                                 <div class="card-body" style='color:red'>
                                     <table class="table table-bordered table-striped table-sm">
                                         <thead>
@@ -79,18 +80,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for='dispense in prescription.dispense '>
-                                                <td class="text-center">[[ dispense.id ]]</td>
-                                                <td class="table-info">[[ dispense.name ]]</td>
-                                                <td class="text-center">[[ dispense.amount ]]</td>
+                                            <tr v-for='(dispense, index) in prescription.dispense '>
+                                                <td >[[ index+1]]</td>
+                                                <td >[[ dispense.type ]]</td>
+                                                <td >[[ dispense.drug.name ]]</td>
+                                                <td >[[ dispense.amount ]]</td>
 
 
                                             </tr>
 
                                         </tbody>
                                     </table>
-                                    <button  type="button" class="btn btn-success btn-sm " style="float: right;">ยืนยันการจ่ายยา</button><br><br>
-                                    <p class="text-right ">โดย พว. XXXXXXXX XXXXXX</p>
+                                    <button  type="button" class="btn btn-success btn-sm " style="float: right;" v-on:click='confirm_prescription(prescription.id)'>ยืนยันการจ่ายยา</button><br><br>
                                 </div>
                             </div>
                         </div>
@@ -110,6 +111,8 @@
 
 {% block footer %}
 <script>
+    axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
     var app = new Vue({
         delimiters: ['[[', ']]'],
         el: '#app',
@@ -138,6 +141,19 @@
                     console.log(response.data);
                     self.precriptions_wait_list = response.data
 
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }, confirm_prescription: function(prescription_id){
+                let self = this;
+                console.log(prescription_id)
+                axios.patch('/medicine/prescription/'+prescription_id+'/pst_api/', {
+                    nurse_id: '{{ nurse.user_id.id }}'
+                
+                }).then(function (response) {
+                    self.not_provide_prescription()
+                    self.prescription = []
+                    
                 }).catch(function (error) {
                     console.log(error);
                 });
