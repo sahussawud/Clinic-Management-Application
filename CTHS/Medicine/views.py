@@ -7,7 +7,7 @@ from User_app.models import Doctor
 from Medicine.models import Drug, Med_supply
 from Medicine.forms import MedicineSupplyForm
 from Medicine.forms import MedicineDrugForm,UpdateMedForm
-
+from django.contrib.auth.decorators import login_required, permission_required
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -24,15 +24,16 @@ from Treatment.models import Room_Queue
 ถ้า types == 2 แสดงว่าต้องการเพิ่มเวชภัณฑ์ จะเข้า elie เพื่อนำ
     form2 ที่จะนำไปเพิ่มลงdatabase Med_sup
 """
+@login_required
 def home_medicine(request):
     return render(request, 'Medicine/home_medicine.html')
-
+@login_required
 def comfirm_dispensing(request):
     nurse = Nurse.objects.get(user_id=request.user.id)
     return render(request, 'Medicine/comfirm_dispensing.html',{
         'nurse': nurse 
     })
-
+@login_required
 def add_medicine(request):
     if request.method == 'POST':
         if request.POST.get('types') == '1':
@@ -80,10 +81,10 @@ def add_medicine(request):
         'form2': supply, 
 })
 
-
+@login_required
 def update_medicine(request): 
     return render(request, 'Medicine/update_medicine.html')
-
+@login_required
 def update(request, med_sup_id):
     """
     เมื่อกด เลือกยาที่จะ update จะเข้า view
@@ -104,7 +105,7 @@ def update(request, med_sup_id):
             messages.error(request,'บันทึกข้อมูลไม่สำเร็จ!!!!')
     return render(request, 'Medicine/update.html',context={
         'form1': update_data,})
-       
+@login_required      
 def detail_med(request,med_sup_id):
     data = Drug.objects.get(med_sup_id=med_sup_id)
     form = MedicineDrugForm(request.POST) 
