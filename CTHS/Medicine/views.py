@@ -201,10 +201,8 @@ class DispenseAPIView(APIView):
     """
     API สร้างรายการการจ่ายยา
     DATA REQUIRED:  type : <string: "D" ยา or "M" เวชภัณฑ์
-                    *drug : <int: ID ของยาที่ต้องการจ่าย>
-*                    med_sup : <int: ID ของเวชภัณฑ์ที่ต้องการจ่าย>
+                    med_id: <int: ID ของยาหรือเวชภัณฑ์>
                     amount : <int:จำนวนการจ่ายยาหรือเวชภัณฑ์ของรายการนั้นๆ>
-    * = ใส่ตาม type ที่กำหนด D = drug, M = med_sup
     """
     def post(self, request, pst_id):
         pst_data = Prescription.objects.get(id=pst_id)

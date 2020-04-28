@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from User_app.models import Patient
 from Treatment.models import Treatment, Symptom
-from Treatment.serializers import TreatmentSerializer, SymptomSerializer, SymptomTypeSerializer
+from Treatment.serializers import TreatmentSerializer, SymptomSerializer, SymptomTypeSerializer, PatientSerializer
 from django.db.models import Count
 # Create your views here.
 
@@ -43,4 +44,15 @@ class ReportTypeAPIView(APIView):
         else:
             items = Symptom.objects.all().values('symptom_type').annotate(p_count=Count('symptom_type'))
         serializer = SymptomTypeSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ReportPatientAPIView(APIView):
+    """
+    API ดึงข้อมูลรายงานจำนวนผู้ป่วย จากวันที่
+    """
+    def get(self, request):
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+        items = Patient.objects.filter(date__gte=start_date, date__lte=end_date)
+        serializer = PatientSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
