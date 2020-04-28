@@ -59,7 +59,7 @@
                 <div class="row mt-3">
                     <div class="card w-100">
                         <h5 class="card-header">ข้อมูลเบื้องต้น <a href="#" class="btn btn-info btn-sm"
-                                style="" >ข้อมูลเพิ่มเติม</a></h5>
+                                style="">ข้อมูลเพิ่มเติม</a></h5>
 
                         <div class="card-body">
                             <div class="row">
@@ -193,9 +193,10 @@
                                 <input type="hidden" name="_method" value="patch">
                                 โดย นพ./พญ. {{ complete_diagnosis.user_id.first_name }}
                                 {{ complete_diagnosis.user_id.last_name }}
-                                <a href="#" class="btn btn-info btn-sm" v-on:click.prevent='create_prescription({{ treatment_cn }})'>สร้างใบสั่งยา</a>
+                                <a href="#" class="btn btn-info btn-sm"
+                                    v-on:click.prevent='create_prescription({{ treatment_cn }})'>สร้างใบสั่งยา</a>
                                 {% endif %}
-                                </h5>
+                            </h5>
 
                             <div class="card-body">
                                 {{ diagnosis_form.non_field_error }}
@@ -260,8 +261,8 @@
                 <div class="row">
                     <div class="card w-100">
                         <h5 class="card-header">ใบสั่งยา <button type="button" class="btn btn-warning btn-sm"
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-xl" v-on:click="get_medicine_list()">เพิ่มยา</button></h5>
+                                data-toggle="modal" data-target=".bd-example-modal-xl"
+                                v-on:click="get_medicine_list()">เพิ่มยา</button></h5>
 
                         <div class="card-body" style='color:red'>
                             <table class="table table-bordered table-striped table-sm">
@@ -281,18 +282,21 @@
                                         <td class="">[[ index+1 ]]</td>
                                         <td class="">[[ item.name ]]</td>
                                         <td class="">
-                                            <input class="form-control" type="number" :id='"prescription_item"+index' v-model="item.amount" min="1"   step="1" readonly/>
-                                        
+                                            <input class="form-control" type="number" :id='"prescription_item"+index'
+                                                v-model="item.amount" min="1" step="1" readonly />
+
                                         </td>
                                         <th>
                                             <div class="btn-group ml-3" role="group" aria-label="First group">
-                                                <button type="button" class="btn-sm btn-success" v-on:click.prevent='item.amount++'>+</button>
-                                                <button type="button" class="btn-sm btn-danger ml-2"  v-on:click.prevent='item.amount--'>-</button>
-                                              </div>
-                                            </th>
+                                                <button type="button" class="btn-sm btn-success"
+                                                    v-on:click.prevent='item.amount++'>+</button>
+                                                <button type="button" class="btn-sm btn-danger ml-2"
+                                                    v-on:click.prevent='item.amount--'>-</button>
+                                            </div>
+                                        </th>
                                     </tr>
-                                    
-                                    
+
+
 
                                 </tbody>
                             </table>
@@ -323,7 +327,7 @@
                                             v-on:click='get_medicine_list()'>ค้นหา</button>
                                     </div>
                                 </div>
-                                <table class="table table-bordered table-hover table-sm" data-spy="scroll" >
+                                <table class="table table-bordered table-hover table-sm" data-spy="scroll">
                                     <thead>
                                         <tr>
                                             <th class="table-dark">No.</th>
@@ -334,15 +338,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for='(med, index) in medicine_list' >
-                                        
+                                        <tr v-for='(med, index) in medicine_list'>
+
                                             <td class="order_row">[[ index++ ]]</td>
                                             <td class="order_row">[[ med.drug_id]]</td>
                                             <td class="order_row">[[ med.name ]]</td>
                                             <td class="order_row">[[ med.amount ]]</td>
-                                            <td class="order_row"> <input type='checkbox' :id='"medcheck" + index' class="form-check-input" :value="{ name: med.name , drug: med.med_sup_id , type: 'D', amount: 0 }" v-model='prescription' ></td>
+                                            <td class="order_row"> <input type='checkbox' :id='"medcheck" + index'
+                                                    class="form-check-input"
+                                                    :value="{ name: med.name , drug: med.med_sup_id , type: 'D', amount: 0 }"
+                                                    v-model='prescription'></td>
                                         </tr>
-                                        
+
 
                                     </tbody>
                                 </table>
@@ -384,8 +391,8 @@
             keywords_search: '',
             medicine_list: [],
             is_prescription: false,
-            prescription :[],
-            prescription_id : '{{ Prescription.id }}',
+            prescription: [],
+            prescription_id: '{{ Prescription.id }}',
             doctor_id: '{{complete_diagnosis.id}}'
 
         }, methods: {
@@ -393,7 +400,7 @@
                 var weight = document.querySelector('#weight').value
                 var height = document.querySelector('#height').value
                 this.bmi = (weight / ((height / 100) ** 2)).toFixed(2)
-            }, 
+            },
             get_medicine_list: function () {
                 let self = this;
                 axios.get('/treatment/patient/update/drug/', {
@@ -409,7 +416,7 @@
                     console.log(error);
                 });
             }
-            ,create_prescription: function(treatment_cn){
+            , create_prescription: function (treatment_cn) {
                 let self = this;
                 this.is_prescription = true
                 console.log(this.doctor_id, treatment_cn)
@@ -424,21 +431,37 @@
 
                 }).catch(function (error) {
                     console.log(error);
-                }); 
-            },add_dispense: function(med_sup_id, amount, type){
+                });
+            }, add_dispense: function () {
                 let self = this;
-                console.log(med_sup_id, amount, type)
-                axios.post('/medicine/dispense/'+this.prescription_id+'/dispense_api/', {
-                    jsonData: JSON.stringify(this.prescription)
-                    // เมื่อทำงานสำเร็จ
-                }).then(function (response) {
-                    console.log(response.data);
-                    self.medicine_list = response.data
+                console.log(this.prescription)
+                this.prescription.forEach(element => {
+                    axios.post('/medicine/dispense/' + self.prescription_id + '/dispense_api/', {
+                        type: element.type,
+                        drug: element.drug,
+                        amount: element.amount
+                        // เมื่อทำงานสำเร็จ
+                    }).then(function (response) {
+                        console.log(response.data);
+                        self.medicine_list = response.data
 
-                }).catch(function (error) {
-                    console.log(error);
+                    }).catch(function (error) {
+                        console.log(error);
 
-                }); 
+                    });
+
+                });
+                // axios.post('/medicine/dispense/'+this.prescription_id+'/dispense_api/', {
+                //     jsonData: JSON.stringify(this.prescription)
+                //     // เมื่อทำงานสำเร็จ
+                // }).then(function (response) {
+                //     console.log(response.data);
+                //     self.medicine_list = response.data
+
+                // }).catch(function (error) {
+                //     console.log(error);
+
+                // }); 
             }
 
         }, created() {
