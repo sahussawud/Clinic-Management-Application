@@ -82,6 +82,7 @@ def create_patient(request):
 def update_patient(request, patient_id):
     context = {}
     patient_data = Patient.objects.get(p_id=patient_id)
+    patient_data.birth_day = str(patient_data.birth_day)
     if request.method == 'POST':
         form = PatientForm(request.POST, instance=patient_data)
         context['form'] = form
@@ -91,6 +92,7 @@ def update_patient(request, patient_id):
             update_data.public_health_id = creator
             update_data.save()
             form.save_m2m()
+            update_data.birth_day = str(update_data.birth_day)
             context['form'] = PatientForm(instance=update_data)
             messages.success(request, 'อัพเดทข้อมูลเรียบร้อย!')
         context['patient_id'] = patient_data.p_id
