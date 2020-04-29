@@ -25,12 +25,15 @@ from .serializers import *
 @login_required
 def home_patient(request):
     return render(request, 'Treatment/home_patient.html')
+
 @login_required
 def find_patient(request):
     return render(request, 'Treatment/find_patient.html')
+
 @login_required
 def find_treatment(request):
     return render(request, 'Treatment/find_treatment.html')
+
 @login_required
 def create_patient(request):
     contexts={}
@@ -56,6 +59,7 @@ def create_patient(request):
 
 
     return render(request, 'Treatment/create_patient.html',context=contexts)
+
 @login_required
 def update_patient(request, patient_id):
     context = {}
@@ -425,7 +429,8 @@ def home_treatment(request):
 @login_required
 def home_diagnosis(request):
     return render(request, 'Treatment/home_diagnosis.html')
-@login_required
+
+
 def switch_symptom(symptom):
     switcher = {
         "non_form": {
@@ -464,6 +469,7 @@ def switch_symptom(symptom):
     return switcher.get(symptom, {
             "model" : Non_Form_Symptom,
             "form" : Non_Form_SymptomForm })
+            
 @login_required
 def diagnosis_treatment(request, treatment_cn):
     contexts = {}
@@ -520,8 +526,6 @@ def diagnosis_treatment(request, treatment_cn):
                     messages.error(request, 'สร้างการวินิจฉัยไม่สำเร็จ!')
                     form =  DiagnosisForm(request.POST)
         
-
-            
 
         
         symptom_model = switch_symptom(symptom.symptom_type).get("model")
