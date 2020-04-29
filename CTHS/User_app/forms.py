@@ -15,7 +15,7 @@ class PatientForm(ModelForm):
             'fname': _('ชื่อ'),
             'lname': _('นามสกุล'),
             'idcard_number': _('รหัสบัตรประชาชน'),
-            'birth_day': _('วัน/เดือน/ปี เกิด'),
+            'birth_day': _('เดือน/วัน/ปี เกิด'),
             'race': _('เชื้อชาติ'),
             'nationality': _('สัญชาติ'),
             'status': _('สถานะ'),
