@@ -444,6 +444,7 @@
                     }).then(function (response) {
                         console.log(response.data);
                         self.medicine_list = response.data
+                        window.location.href = '/treatment/diagnosis/exroom/1/'
 
                     }).catch(function (error) {
                         console.log(error);
