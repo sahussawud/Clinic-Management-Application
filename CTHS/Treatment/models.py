@@ -18,6 +18,8 @@ class Icd_10(models.Model):
     code = models.CharField(_("code"), max_length=25)
     detail = models.CharField(_("detail"), max_length=255)
     symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE)
+    def __str__(self):
+        return '%s (%s)' %(self.code, self.symptom_type)
 
 class Treatment(models.Model):
     cn = models.AutoField(_("Clinic number"), primary_key=True)
@@ -59,10 +61,14 @@ class Diagnosis(models.Model):
     follow_up = models.DateField(_("วันนัด"), null=True)
     follow_up_for = models.CharField(_("เพื่อ"), max_length=100, blank=True)
     treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment ID"), on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return '%s (%s)' %(self.doctor_id, self.treatment.cn)
 
 class Symptom(models.Model):
     treatment = models.OneToOneField(Treatment, verbose_name=_("Treatment"), on_delete=models.CASCADE)
     symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE, null=True)
+    def __str__(self):
+        return 'ID : %s (%s)' %(self.id, self.symptom_type)
 
 class Prescription(models.Model):
     detail = models.CharField(_("Prescription detail"), max_length=255, blank=True)
@@ -74,6 +80,7 @@ class Prescription(models.Model):
     ]
     status = models.CharField(_("Prescription Status"), max_length=1, choices=PRESCRIPTION_STATUS_CHOICE, default="W")
     nurse_id = models.ForeignKey(Nurse, verbose_name=_("พยาบาลผู้จ่ายยา"), on_delete=models.CASCADE, null=True)
+
 
 class Non_Form_Symptom(models.Model):
     symptom = models.OneToOneField(Symptom, verbose_name=_("Symptom ID"), on_delete=models.CASCADE)
@@ -196,3 +203,5 @@ class Room_Queue(models.Model):
         ('WP', 'รอการจ่ายยา')
     ]
     status = models.CharField(_("Queue status"), max_length=2, choices=ROOM_QUEUE_STATUS, default="WD")
+    def __str__(self):
+        return '%s (%s)' %(self.treatment.cn, self.status)

@@ -80,17 +80,25 @@ class User(AbstractUser):
     idcard_number = models.CharField(_("ID card number"), max_length=13)
     nationality = models.CharField(_("Nationality"), max_length=25, default="", choices=NATIONALITIES_CHOICE)
     race = models.CharField(_("Race"), max_length=25, default="", choices=NATIONALITIES_CHOICE)
+    def __str__(self):
+        return '%s %s (%s)' %(self.first_name, self.last_name, self.id)
 
 class Nurse(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("User"), on_delete=models.CASCADE)
     department = models.CharField(_("Department"), max_length=255)
+    def __str__(self):
+        return '%s %s (%s)' %(self.user_id.first_name, self.user_id.last_name, self.id)
 
 class Doctor(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("User"), on_delete=models.CASCADE)
     specialized_branches = models.CharField(_("Specialized branches (Keen on)"), max_length=255)
+    def __str__(self):
+        return '%s %s (%s)' %(self.user_id.first_name, self.user_id.last_name, self.id)
 
 class Public_Health(models.Model):
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("User"), on_delete=models.CASCADE)
+    def __str__(self):
+        return '%s %s (%s)' %(self.user_id.first_name, self.user_id.last_name, self.id)
 
 class Patient(models.Model):
     p_id = models.AutoField(_("Patient ID"), primary_key=True)
@@ -144,6 +152,11 @@ class Patient(models.Model):
         return int(age_year), int(age_month), int(age_day)
     age = property(age)
 
+    def __str__(self):
+        return '%s %s (%s)' %(self.fname, self.lname, self.p_id)
+
 class Congenital_disease(models.Model):
     name = models.CharField(_("Congenital disease name"), max_length=255)
     patient_id = models.ManyToManyField(Patient, verbose_name=_("Patient ID"))
+    def __str__(self):
+        return '%s' %(self.name)
