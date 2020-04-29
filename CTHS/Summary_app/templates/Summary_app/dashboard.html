@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="input-group mb-3">
-          <div class="input-group-append">
+          <!-- <div class="input-group-append">
             <label class="input-group-text" for="keyword">ค้นหาตามคำค้น</label>
           </div>
 
@@ -38,7 +38,7 @@
                 [[ option.text ]]
               </option>
             </select>
-          </div>
+          </div> -->
 
           <div class="input-group-append">
             <label class="input-group-text" for="duration">ค้นหาตามช่วงเวลา</label>
@@ -47,17 +47,18 @@
 
 
           <div class="input-group-append">
-            <input v-model='start_date' type="date" class="form-control" placeholder="" aria-label="" aria-describedby="">
+            <input v-model='start_date' type="date" class="form-control">
           </div>
           <div class="input-group-append">
 
           </div>
-          <label class="input-group-text">ถึง</label>s
+          <label class="input-group-text">ถึง</label>
           <div class="input-group-append">
-            <input v-model='end_date' type="date" class="form-control" placeholder="" aria-label="" aria-describedby="">
+            <input v-model='end_date' type="date" class="form-control">
           </div>
           <div class="input-group-append">
-            <button class="btn btn-info" type="button" id="button-addon2" v-on:click.prevent='get_specific_data()'>ค้นหา</button>
+            <button class="btn btn-info" type="button" id="button-addon2"
+              v-on:click.prevent='get_overview()'>ค้นหา</button>
           </div>
 
         </div>
@@ -79,8 +80,8 @@
       <div class="col-lg-3  m-auto">
         <div class="card text-white m-auto bg-danger" style="width: 18rem;">
           <div class="card-body">
-            <h5 class="card-title">ผู้ป่วยฉุกเฉิน</h5>
-            <h6 class="card-subtitle mb-2">Emergency</h6>
+            <h5 class="card-title">จำนวนสูงสุด</h5>
+            <h6 class="card-subtitle mb-2">Max Case</h6>
             <h1 class="card-text">[[ sum_danger_case ]]</h1>
 
           </div>
@@ -108,7 +109,7 @@
 
     </div>
     <!-- table -->
-    
+
   </div>
 
 </main>
@@ -126,7 +127,7 @@
       sum_danger_case: 0,
       sum_patient: 0,
       overview: [],
-      symptom_data: [],
+      pateint_data: [],
       overview_dataset: [],
       selected: 'non_form',
       options: [
@@ -139,94 +140,106 @@
         { text: 'ท้องเสีย', value: 'diarrhea' },
         { text: 'อาการปวดทุกเเห่ง', value: 'pain' }
       ],
-      start_date:'',
-      end_date:''
+      start_date: '2020-01-01',
+      end_date: '2020-04-29'
 
     }, methods: {
       get_overview: function () {
         let self = this;
         axios.get('/summary/report/type_api', {
           params: {
-            start_date: '',
-            end_date_date: ''
+            start_date: self.start_date,
+            end_date: self.end_date
           }
 
         }).then(function (response) {
           console.log(response.data);
           self.overview = response.data
-
+          self.sum_case = 0
+          self.overview_dataset = []
           self.overview.forEach(element => {
-             self.overview_dataset.push(element.p_count)
-           });
+            self.overview_dataset.push(element.p_count)
+            self.sum_case = self.sum_case + element.p_count
+            if (element.p_count > self.sum_danger_case) {
+              self.sum_danger_case = element.p_count
+            }
+          });
+          self.get_patient()
+          
+          setTimeout(create_bar, 500);
+          setTimeout(create_pie, 500);
 
         }).catch(function (error) {
           console.log(error);
         });
-      }, get_specific_data: function () {
+      }, get_patient: function () {
         let self = this;
-        axios.get('/summary/report/api', {
+        axios.get('/summary/report/patient_api/', {
           params: {
             start_date: self.start_date,
-            end_date_date: self.end_date,
-            symptom_type: self.selected
+            end_date: self.end_date
           }
 
         }).then(function (response) {
           console.log(response.data);
-          self.symptom_data = response.data
+          self.pateint_data = response.data
+          self.sum_patient = self.pateint_data.length
+
 
         }).catch(function (error) {
           console.log(error);
         });
       }
     }, created() {
-      this.get_specific_data()
       this.get_overview()
+      this.get_patient()
+
     }
   })
 
-  var colors = ['#007bff', '#28a745', '#333333', '#c3e6cb', '#20c997', '#6c757d'];
+  var colors = ['#007bff', '#28a745', '#333333', '#c3e6cb', '#20c997', '#6c757d', '#ffc107', '#28a745'];
   var ctxpie = document.getElementById('piechart').getContext('2d');
 
-  var myDoughnutChart = new Chart(ctxpie, {
-    type: 'pie',
-    data: {
-      labels: ['ทัวไป', 'ผิวหนัง', 'อุบัติเหตุ', 'อุบัติเหตุต่อเนื่อง', 'ดวงตา', 'อาการไข้', 'ท้องเสีย/ปวดท้อง', 'อาการปวดนอกเหนือ'],
-      datasets: [
-        {
-          backgroundColor: colors.slice(0, 6),
-          borderWidth: 0,
-          data: app.overview_dataset
+  setTimeout(create_pie, 500);
+  setTimeout(create_bar, 500);
+  function create_pie() {
+    var myDoughnutChart = new Chart(ctxpie, {
+      type: 'pie',
+      data: {
+        labels: ['ทัวไป', 'ผิวหนัง', 'อุบัติเหตุ', 'อุบัติเหตุต่อเนื่อง', 'ดวงตา', 'อาการไข้', 'ท้องเสีย/ปวดท้อง', 'อาการปวดนอกเหนือ'],
+        datasets: [
+          {
+            backgroundColor: colors.slice(0, 8),
+            borderWidth: 0,
+            data: app.overview_dataset
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: true,
+          position: 'bottom',
+
         }
-      ]
-    },
-    options: {
-      legend: {
-        display: true,
-        position: 'bottom',
-
       }
-    }
-  });
+    });
 
+  }
 
-  var ctx = document.getElementById('linechart').getContext('2d');
-  var chart = new Chart(ctx, {
+  function create_bar(){
+    var ctx = document.getElementById('linechart').getContext('2d');
+    var chart = new Chart(ctx, {
     // The type of chart we want to create
-    type: 'line',
+    type: 'bar',
 
     // The data for our dataset
     data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['ทัวไป', 'ผิวหนัง', 'อุบัติเหตุ', 'อุบัติเหตุต่อเนื่อง', 'ดวงตา', 'อาการไข้', 'ท้องเสีย/ปวดท้อง', 'อาการปวดนอกเหนือ'],
       datasets: [{
-        label: 'My First dataset',
+        backgroundColor: colors.slice(0, 8),
+        label: 'ประเภทการรักษา',
         borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45]
-      },
-      {
-        label: 'My Second dataset',
-        borderColor: 'rgb(90, 99, 132)',
-        data: [1, 40, 7, 5, 30, 40, 30]
+        data: app.overview_dataset
       }
       ]
     },
@@ -240,6 +253,8 @@
       }
     }
   });
+  }
+  
 </script>
 
 
