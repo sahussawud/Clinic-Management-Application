@@ -434,7 +434,7 @@ def home_treatment(request):
 def home_diagnosis(request):
     return render(request, 'Treatment/home_diagnosis.html')
 
-@login_required
+
 def switch_symptom(symptom):
     switcher = {
         "non_form": {
@@ -531,8 +531,6 @@ def diagnosis_treatment(request, treatment_cn):
                     messages.error(request, 'สร้างการวินิจฉัยไม่สำเร็จ!')
                     form =  DiagnosisForm(request.POST)
         
-
-            
 
         
         symptom_model = switch_symptom(symptom.symptom_type).get("model")
