@@ -33,7 +33,13 @@ def comfirm_dispensing(request):
     return render(request, 'Medicine/comfirm_dispensing.html',{
         'nurse': nurse 
     })
+
+
+
 @login_required
+
+# pre Nurse
+@permission_required('Medicine.add_drug')
 def add_medicine(request):
     if request.method == 'POST':
         if request.POST.get('types') == '1':
@@ -85,6 +91,8 @@ def add_medicine(request):
 def update_medicine(request): 
     return render(request, 'Medicine/update_medicine.html')
 @login_required
+# pre Nurse
+@permission_required('Medicine.view_drug')
 def update(request, med_sup_id):
     """
     เมื่อกด เลือกยาที่จะ update จะเข้า view
@@ -116,6 +124,7 @@ def detail_med(request,med_sup_id):
             data.description = request.POST.get('description')
     return render(request, 'Medicine/detail_med.html',context={
         'form': data,})
+
 
 class PrescriptionAPIView(APIView):
     """

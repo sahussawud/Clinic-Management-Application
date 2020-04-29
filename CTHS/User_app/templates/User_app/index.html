@@ -22,18 +22,21 @@
       <div class="container">
         <!-- Example row of columns -->
         <div class="row">
+        {% if perms.Treatment.add_treatment %}
           <div class="col-md-4 text-center">
             <h2>Treatments</h2>
             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo</p>
             <p><a class="btn btn-warning" href="treatment/" role="button">View details »</a></p>
           </div>
+          {% endif %}
           <div class="col-md-4 text-center">
             <h2>Patients</h2>
             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam.  </p>
             <br><p><a class="btn btn-warning" href="treatment/patient/" role="button">View details »</a></p>
           </div>
+          {% if perms.Medicine.view_drug %}
           <div class="col-md-4 text-center">
             <h2>Medicine</h2>
             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
@@ -41,6 +44,7 @@
             <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. </p>
             <p><a class="btn btn-warning" href="medicine/" role="button">View details »</a></p>
           </div>
+          {% endif %}
         </div>
 
         <hr>
