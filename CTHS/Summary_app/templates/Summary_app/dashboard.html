@@ -156,6 +156,7 @@
           console.log(response.data);
           self.overview = response.data
           self.sum_case = 0
+          self.sum_danger_case = 0
           self.overview_dataset = []
           self.overview.forEach(element => {
             self.overview_dataset.push(element.p_count)
