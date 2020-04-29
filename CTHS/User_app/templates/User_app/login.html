@@ -31,7 +31,7 @@
       <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
       <input type="hidden" name='next_url' value="{{next_url}}">
       <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">Create your account <a href="{% url 'createAccount' %}">here</a> </p>
+      {% comment %} <p class="mt-5 mb-3 text-muted">Create your account <a href="{% url 'createAccount' %}">here</a> </p> {% endcomment %}
       <p class="mt-2 mb-5 text-muted">&copy; 2017-2018</p>
     </form>
   </div>
