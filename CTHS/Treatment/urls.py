@@ -21,7 +21,7 @@ urlpatterns = [
     path('queue/api/', views.RoomQueueAPIView.as_view(), name='queue_api'),
     path('queue/md_api/', views.RoomQueueMedicineAPIView.as_view(), name='queue_api'),
 
-    path('find/', views.find_treatment, name = 'find_treatment'),
+    path('find/<int:patient_id>/', views.find_treatment, name = 'find_treatment'),
     path('', views.home_treatment, name = 'home_treatment'),
     path('diagnosis/', views.home_diagnosis, name = 'home_diagnosis'),
     path('diagnosis/exroom/<int:room_id>/', views.examination_room, name = 'examination_room'),

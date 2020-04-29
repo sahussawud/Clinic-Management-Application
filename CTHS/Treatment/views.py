@@ -31,8 +31,24 @@ def find_patient(request):
     return render(request, 'Treatment/find_patient.html')
 
 @login_required
-def find_treatment(request):
-    return render(request, 'Treatment/find_treatment.html')
+def find_treatment(request, patient_id):
+    contexts = {}
+    try:
+        patient = Patient.objects.get(p_id=patient_id)
+    except Patient.DoesNotExist:
+        messages.error(request, 'ไม่มีผู้ป่วย!')
+        redirect('home_patient')
+    try:
+        Treatment_set = Treatment.objects.filter(patient_p_id=patient)
+        diagnosis = Diagnosis.objects.filter(treatment__in=Treatment_set)
+        print(diagnosis)
+        contexts['patient'] = patient
+        contexts['diagnosis'] =  diagnosis
+        messages.success(request, 'ค้นหาสำเร็จ!')
+    except Treatment.DoesNotExist:
+        messages.error(request, 'ยังไม่มีประวัติการรักษา!')
+
+    return render(request, 'Treatment/find_treatment.html', context=contexts)
 
 @login_required
 @permission_required('User_app.add_patient')
