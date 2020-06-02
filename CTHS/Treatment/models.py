@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from User_app.models import Patient, Nurse, Doctor
+
+
 # Create your models here.
 SYMPTOM_TYPE = [
         ('non_form', 'ทั่วไป'),
@@ -15,7 +17,7 @@ SYMPTOM_TYPE = [
         ('pain', 'อาการปวดนอกเหนือ')
 ]
 class Icd_10(models.Model):
-    code = models.CharField(_("code"), max_length=25)
+    code = models.CharField(_("code"), max_length=25, unique=True)
     detail = models.CharField(_("detail"), max_length=255)
     symptom_type = models.CharField(_("symptom_type"), max_length=12, choices=SYMPTOM_TYPE)
     def __str__(self):

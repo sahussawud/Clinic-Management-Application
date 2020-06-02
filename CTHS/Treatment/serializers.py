@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from User_app.models import Congenital_disease, Patient
 from .models import Treatment, Diagnosis, Symptom, Room_Queue
 from Medicine.models import Drug, Med_supply
@@ -12,7 +11,7 @@ class Congenital_diseaseSerializerWithoutPatient(serializers.Serializer):
         return Congenital_disease.objects.create(**validate_data)
 
     def update(self, instance, validate_data):
-        instance.name = validated_data.get('name', instance.name)
+        instance.name = validate_data.get('name', instance.name)
         instance.save()
         return instance
 

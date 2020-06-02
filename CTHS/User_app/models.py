@@ -105,7 +105,7 @@ class Patient(models.Model):
     fname = models.CharField(_("Firstname"), max_length=255)
     lname = models.CharField(_("Lastname"), max_length=255)
     idcard_number = models.CharField(_("ID card number"), max_length=13, default="")
-    age = models.IntegerField(_("Age"))
+    # age = models.IntegerField(_("Age"), blank=True)
     birth_day = models.DateField(_("Birth date"), auto_now=False, auto_now_add=False)
     nationality = models.CharField(_("Nationality"), max_length=25, choices=NATIONALITIES_CHOICE, default='Thai')
     race = models.CharField(_("Race"), max_length=25, choices=NATIONALITIES_CHOICE, default='Thai')
@@ -124,7 +124,8 @@ class Patient(models.Model):
     blood_type = models.CharField(_("Blood Type"), max_length=2, choices=PATIENT_BLOOD_TYPE_CHOICE)
     phone = models.CharField(_("Phone"), max_length=10)
     address = models.TextField(_("Address"))
-    public_health_id = models.ForeignKey(Public_Health, verbose_name=_("Creator ID"), on_delete=models.DO_NOTHING)
+    public_health_id = models.ForeignKey(Public_Health, verbose_name=_("Creator ID"), on_delete=models.SET_NULL, null=True)
+    # nurse_id = models.ForeignKey(Nurse, verbose_name=_("Creator ID"), on_delete=models.SET_NULL, null=True)
     date = models.DateField(_("Created Date"), auto_now=True)
     PATIENT_ROLE_CHOICE = [
         ('1', 'นักศึกษา'),

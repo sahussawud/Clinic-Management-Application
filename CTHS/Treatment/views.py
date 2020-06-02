@@ -56,6 +56,7 @@ def create_patient(request):
     contexts={}
     if request.method == 'POST':
         form = PatientForm(request.POST)
+        print(form)
         if form.is_valid():
             if request.user.id:
                 new_patient = form.save(commit=False)
@@ -128,7 +129,7 @@ class Conginetal_diseaseAPIView(APIView):
     def post(self, request, patient_id):
         print(request.data)
         serializer = Congenital_diseaseSerializer(data=request.data)
-        patient_data = Patient.objects.get(p_id=patient_id)
+        patient_data = Patient.objects.get(p_id=patient_id) 
         if 'id' in request.data:
             cd_data = Congenital_disease.objects.get(id=request.data['id'])
             cd_data.patient_id.add(patient_data)

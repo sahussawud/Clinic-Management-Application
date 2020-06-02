@@ -15,7 +15,20 @@
     <div class="container mt-3 mb-5">
         <div class="row" id="progress_bar">
             <div class="col-md-12">
-                {{ form.non_field_errors }}
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+                    <div id="form_errors">
+                        {% for key, value in form.errors.items %}
+                        <span class="fieldWrapper">
+                            {{ key }}:{{ value }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
 
                 {{ form.non_field_errors }}
 
@@ -27,17 +40,18 @@
                 {% else %}
                 <h2 class="mb-3">ลงทะเบียนข้อมูลผู้ป่วย</h2>
                 {% endif %}
-                
+
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
                         aria-valuemax="100">[[percent]] %</div>
                 </div>
                 <hr>
                 {% if update %}
-                    <form class="needs-validation" novalidate="" method="POST" action="{% url 'update_patient' patient_id %}">
-                {% else %}
+                <form class="needs-validation" novalidate="" method="POST"
+                    action="{% url 'update_patient' patient_id %}">
+                    {% else %}
                     <form class="needs-validation" novalidate="" method="POST" action="{% url 'create_patient' %}">
-                {% endif %}
+                        {% endif %}
                         {% csrf_token %}
 
                         <div class="row">
@@ -232,7 +246,8 @@
 
 
                         </div>
-                        <button class="btn btn-warning btn-lg btn-block" type="submit">{% if update %}อัพเดตข้อมูล{% else %}ขั้นตอนถัดไป{% endif %}</button>
+                        <button class="btn btn-warning btn-lg btn-block"
+                            type="submit">{% if update %}อัพเดตข้อมูล{% else %}ขั้นตอนถัดไป{% endif %}</button>
                     </form>
 
 
@@ -353,13 +368,15 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
 
-            
-            </li>
-            </ul>
-            <a class="btn btn-info btn-lg btn-block" :href='"/treatment/create/"+patient_id+"/" || ""'>สร้างประวัติการรักษา</a>
 
-            <a class="btn btn-secondary btn-lg btn-block" :href='"/treatment/find/"+patient_id+"/" || ""'>ดูประวัติการรักษา</a>
-        </div>
+                    </li>
+                </ul>
+                <a class="btn btn-info btn-lg btn-block"
+                    :href='"/treatment/create/"+patient_id+"/" || ""'>สร้างประวัติการรักษา</a>
+
+                <a class="btn btn-secondary btn-lg btn-block"
+                    :href='"/treatment/find/"+patient_id+"/" || ""'>ดูประวัติการรักษา</a>
+            </div>
 
         </div>
 
@@ -410,8 +427,8 @@
         },
         watch: {
             // whenever question changes, this function will run
-            
-            
+
+
         },
         methods: {
             // a computed getter
@@ -434,10 +451,10 @@
             drug_search: function () {
                 let self = this;
                 axios.get('/treatment/patient/update/' + this.patient_id + '/drug_api/', {
-                    params:{
-                       keywords: self.keywords 
+                    params: {
+                        keywords: self.keywords
                     }
-                    
+
                 }).then(function (response) {
                     console.log(response.data);
                     self.filter_drug = response.data
@@ -496,7 +513,7 @@
                 }).then(function (response) {
                     self.allegic_med = response.data
                     console.log(response.data);
-                   
+
 
                 }).catch(function (error) {
                     console.log(error);
@@ -512,7 +529,7 @@
                 }).then(function (response) {
                     self.cog_di = response.data
                     console.log(response.data);
-                  
+
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -529,7 +546,7 @@
                     }).then(function (response) {
                         console.log(response.data);
                         self.cog_di = response.data
-                        
+
                     }).catch(function (error) {
                         console.log(error);
                     });

@@ -10,7 +10,7 @@ class PatientForm(ModelForm):
     
     class Meta:
         model = Patient
-        exclude = ['p_id', 'age', 'public_health_id', 'date']
+        exclude = ['p_id', 'age', 'public_health_id', 'date', 'nurse_id']
         labels = {
             'fname': _('ชื่อ'),
             'lname': _('นามสกุล'),
