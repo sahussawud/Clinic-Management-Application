@@ -52,8 +52,12 @@ Runserver !
 python .\manage.py runserver
 ```
 
+<h1>Preview</h1>
+<br>
 
-
-
-
-
+<img src="img/Screenshot(76).png" width="800px" style="max-width:100%;">
+<img src="img/Screenshot(77).png" width="800px" style="max-width:100%;">
+<img src="img/Screenshot(80).png" width="800px" style="max-width:100%;">
+<img src="img/Screenshot(81).png" width="800px" style="max-width:100%;">
+<img src="img/Screenshot(82).png" width="800px" style="max-width:100%;">
+<img src="img/Screenshot(83).png" width="800px" style="max-width:100%;">
