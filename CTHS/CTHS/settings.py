@@ -25,7 +25,7 @@ SECRET_KEY = 'r6-(xb_2@la%j!bn+v%xo@^j*j=-ffl1q3*0xe+g&hojbeh$zq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'borrabeer.ddns.net', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -79,14 +79,6 @@ WSGI_APPLICATION = 'CTHS.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'cths',
-    #     'USER': 'root',
-    #     'PASSWORD': '',
-    #     'HOST': 'borrabeer.ddns.net',
-    #     'PORT': '3306',
-    # }
      'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
