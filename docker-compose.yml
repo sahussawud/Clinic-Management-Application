@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:12.0-alpine
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hopital_appication
+      - POSTGRES_PASSWORD=production_application_jookku
+      - POSTGRES_DB=db_dev
+  app:
+    build:
+      context: .
+    env_file:
+      - ./.env.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./CTHS:/CTHS
+    command: >
+      sh -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8080"
+    depends_on:
+     - db
+volumes:
+  postgres_data:
