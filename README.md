@@ -1,4 +1,4 @@
-# Clinic-Treatment-History-System
+# Clinic Management Application
 ระบบบันทึกประวัติการรักษาในสถานพยาบาลขนาดเล็ก
 Web Programming 2020 - ITKMITL 
 
